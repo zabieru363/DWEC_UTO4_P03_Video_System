@@ -13,25 +13,27 @@ class Person {
     #picture;
 
     constructor(name, lastName1, lastName2, born, picture) {
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        
         // Validación de campos:
         if(!name) throw new Exceptions.EmptyValueException(name);
         if(!lastName1) throw new Exceptions.EmptyValueException(lastName1);
         if(!born) throw new Exceptions.EmptyValueException(born);
         if(!(born instanceof Date)) throw Exceptions.IsNotADateException();
-
+        
         this.#name = name;
         this.#lastName1 = lastName1;
         this.#lastName2 = lastName2;
         this.#born = born;
         this.#picture = picture;
     }
-
+    
     /**
      * Getter que devuelve el nombre de la persona, por si se
      * llega a necesitar.
-     */
-    get name() {
-        return this.#name;
+    */
+   get name() {
+       return this.#name;
     }
 }
 
@@ -39,25 +41,27 @@ class Person {
  * Clase Category que permite crear una categoría.
  * @author Zabieru.
  * @version 1.0
- */
+*/
 class Category {
     #name;
     #description;
-
+    
     constructor(name, description) {
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        
         // Validación de campos:
         if(!name) throw new Exceptions.EmptyValueException(name);
-
+        
         this.#name = name;
         this.#description = description;
     }
-
+    
     /**
      * Getter que devuelve el nombre de la categoría, por si
      * se llega a necesitar.
-     */
-    get name() {
-        return this.#name;
+    */
+   get name() {
+       return this.#name;
     }
 }
 
@@ -65,12 +69,14 @@ class Category {
  * Clase que permite crear un recurso.
  * @author Zabieru.
  * @version 1.0
- */
+*/
 class Resource {
     #duration;
     #link;
-
+    
     constructor(duration, link) {
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+
         // Validación de campos:
         if(!duration) throw new Exceptions.EmptyValueException(duration);
 
@@ -126,6 +132,7 @@ class Movie extends Production {
     #locations;
 
     constructor(title, nationality, publication, synopsis, image, resource, locations) {
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
@@ -149,6 +156,7 @@ class Serie extends Production {
     #seasons;
 
     constructor(title, nationality, publication, synopsis, image, resources, locations, seasons) {
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
@@ -173,6 +181,8 @@ class User {
     #password;
 
     constructor(username, email, password) {
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+
         // Validación de campos:
         if(!username) throw new Exceptions.EmptyValueException(username);
         if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NotValidEmailException();
@@ -198,6 +208,8 @@ class Coordinate {
     #longitude;
 
     constructor(latitude, longitude) {
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        
         // Validación de campos:
         if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException();
         if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException();
