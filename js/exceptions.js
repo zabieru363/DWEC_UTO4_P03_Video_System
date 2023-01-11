@@ -48,4 +48,10 @@ class EmptyValueException extends BaseException {
       this.param = param;
       this.name = "EmptyValueException";
     }
-  }
+}
+
+export {
+    InvalidAccessConstructorException,
+    AbstractClassException,
+    EmptyValueException
+};
