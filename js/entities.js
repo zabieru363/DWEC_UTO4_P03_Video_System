@@ -33,3 +33,29 @@ class Person {
         return this.#name;
     }
 }
+
+/**
+ * Clase Category que permite crear una categoría.
+ * @author Zabieru.
+ * @version 1.0
+ */
+class Category {
+    #name;
+    #description;
+
+    constructor(name, description) {
+        // Validación de campos:
+        if(!name) throw new Exceptions.EmptyValueException(name);
+
+        this.#name = name;
+        this.#description = description;
+    }
+
+    /**
+     * Getter que devuelve el nombre de la categoría, por si
+     * se llega a necesitar.
+     */
+    get name() {
+        return this.#name;
+    }
+}
