@@ -59,3 +59,21 @@ class Category {
         return this.#name;
     }
 }
+
+/**
+ * Clase que permite crear un recurso.
+ * @author Zabieru.
+ * @version 1.0
+ */
+class Resource {
+    #duration;
+    #link;
+
+    constructor(duration, link) {
+        // Validación de campos:
+        if(!duration) throw new Exceptions.EmptyValueException(duration);
+
+        this.#duration = duration;
+        this.#link = link;
+    }
+}
