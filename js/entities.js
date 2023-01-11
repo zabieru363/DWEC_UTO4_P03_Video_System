@@ -17,6 +17,7 @@ class Person {
         if(!name) throw new Exceptions.EmptyValueException(name);
         if(!lastName1) throw new Exceptions.EmptyValueException(lastName1);
         if(!born) throw new Exceptions.EmptyValueException(born);
+        if(!(born instanceof Date)) throw Exceptions.IsNotADateException();
 
         this.#name = name;
         this.#lastName1 = lastName1;
@@ -96,6 +97,7 @@ class Production {
         // Validación de campos:
         if(!title) throw new Exceptions.EmptyValueException(title);
         if(!publication) throw new Exceptions.EmptyValueException(publication);
+        if(!(publication instanceof Date)) throw new Exceptions.IsNotADateException();
 
         this.#title = title;
         this.#nationality = nationality;
@@ -128,6 +130,7 @@ class Movie extends Production {
 
         // Validación de campos:
         if(!(resource instanceof Resource)) throw new Exceptions.IsNotAResourceException();
+        if(!(Array.isArray(locations))) throw new Exceptions.IsNotAnArrayException();
 
         this.#resource = resource;
         this.#locations = locations;
@@ -149,8 +152,8 @@ class Serie extends Production {
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
-        if(!(Array.isArray(resources))) throw new IsNotAnArrayException();
-        if(typeof seasons !== "number") throw new InvalidTypeException();
+        if(!(Array.isArray(resources))) throw new Exceptions.IsNotAnArrayException();
+        if(typeof seasons !== "number") throw new Exceptions.InvalidTypeException();
 
         this.#resources = resources;
         this.#locations = locations;
