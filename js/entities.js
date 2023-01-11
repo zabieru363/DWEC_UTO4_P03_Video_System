@@ -77,3 +77,38 @@ class Resource {
         this.#link = link;
     }
 }
+
+/**
+ * Clase Production que permite crear un contenido.
+ * @author Zabieru.
+ * @version 1.0
+ */
+class Production {
+    #title;
+    #nationality;
+    #publication;
+    #synopsis;
+    #image;
+
+    constructor(title = "Unknown", nationality, publication, synopsis, image) {
+        if(new.target) throw new Exceptions.AbstractClassException();   // ! Esta clase es abstracta:
+
+        // Validación de campos:
+        if(!title) throw new Exceptions.EmptyValueException(title);
+        if(!publication) throw new Exceptions.EmptyValueException(publication);
+
+        this.#title = title;
+        this.#nationality = nationality;
+        this.#publication = publication;
+        this.#synopsis = synopsis;
+        this.#image = image;
+    }
+
+    /**
+     * Getter que devuelve el titulo de la producción, por si
+     * se llega a necesitar.
+     */
+    get title() {
+        return this.#title;
+    }
+}
