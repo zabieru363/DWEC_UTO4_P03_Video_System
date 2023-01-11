@@ -112,3 +112,24 @@ class Production {
         return this.#title;
     }
 }
+
+/**
+ * Clas Movie que hereda de Production que permite
+ * crear objetos de tipo película.
+ * @author Zabieru.
+ * @version 1.0
+ */
+class Movie extends Production {
+    #resource;
+    #locations;
+
+    constructor(title, nationality, publication, synopsis, image, resource, locations) {
+        super(title, nationality, publication, synopsis, image);
+
+        // Validación de campos:
+        if(!(resource instanceof Resource)) throw new IsNotAResourceException();
+
+        this.#resource = resource;
+        this.#locations = locations;
+    }
+}
