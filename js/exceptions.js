@@ -62,7 +62,7 @@ class IsNotAResourceException extends BaseException {
 }
 
 /**
- * Clase que genera un error si el parámetro que se le pasa
+ * Clase de excepción que genera un error si el parámetro que se le pasa
  * no es un array.
  */
 class IsNotAnArrayException extends BaseException {
@@ -72,10 +72,25 @@ class IsNotAnArrayException extends BaseException {
   }
 }
 
+/**
+ * Clase de excepción que genera un error si el argumento que se
+ * recibe no es del tipo esperado.
+ */
 class InvalidTypeException extends BaseException {
   constructor(fileName, lineNumber) {
     super("El tipo del argumento que se le está pasando a este constructor no es válido ", fileName, lineNumber);
     this.name = "InvalidTypeException";
+  }
+}
+
+/**
+ * Clase de excepción que genera un error si un objeto
+ * no es un instancia del objeto Date.
+ */
+class IsNotADateException extends BaseException {
+  constructor(fileName, lineNumber) {
+    super("El tipo del argumento que se le está pasando a este constructor no es válido ", fileName, lineNumber);
+    this.name = "IsNotADateException";
   }
 }
 
@@ -85,5 +100,6 @@ export {
     EmptyValueException,
     IsNotAResourceException,
     IsNotAnArrayException,
-    InvalidTypeException
+    InvalidTypeException,
+    IsNotADateException
 };
