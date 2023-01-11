@@ -50,8 +50,16 @@ class EmptyValueException extends BaseException {
     }
 }
 
+class IsNotAResourceException extends BaseException {
+  constructor(fileName, lineNumber) {
+    super("El objeto que se está pasando no es un objeto Resource.", fileName, lineNumber);
+    this.name = "IsNotAResourceException";
+  }
+}
+
 export {
     InvalidAccessConstructorException,
     AbstractClassException,
-    EmptyValueException
+    EmptyValueException,
+    IsNotAResourceException
 };
