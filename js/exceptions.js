@@ -50,6 +50,10 @@ class EmptyValueException extends BaseException {
     }
 }
 
+/**
+ * Clase de excepción que genera un error si el objeto que
+ * se le pasa no es un objeto Resource.
+ */
 class IsNotAResourceException extends BaseException {
   constructor(fileName, lineNumber) {
     super("El objeto que se está pasando no es un objeto Resource.", fileName, lineNumber);
@@ -57,9 +61,29 @@ class IsNotAResourceException extends BaseException {
   }
 }
 
+/**
+ * Clase que genera un error si el parámetro que se le pasa
+ * no es un array.
+ */
+class IsNotAnArrayException extends BaseException {
+  constructor(fileName, lineNumber) {
+    super("El objeto que se está pasando no es un array.", fileName, lineNumber);
+    this.name = "IsNotAnArrayException";
+  }
+}
+
+class InvalidTypeException extends BaseException {
+  constructor(fileName, lineNumber) {
+    super("El tipo del argumento que se le está pasando a este constructor no es válido ", fileName, lineNumber);
+    this.name = "InvalidTypeException";
+  }
+}
+
 export {
     InvalidAccessConstructorException,
     AbstractClassException,
     EmptyValueException,
-    IsNotAResourceException
+    IsNotAResourceException,
+    IsNotAnArrayException,
+    InvalidTypeException
 };
