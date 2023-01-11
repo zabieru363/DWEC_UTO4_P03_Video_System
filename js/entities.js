@@ -160,3 +160,30 @@ class Serie extends Production {
         this.#seasons = seasons;
     }
 }
+
+/**
+ * Clase User que permite crear objetos de tipo
+ * usuario. Es un recurso del sistema.
+ * @author Zabieru.
+ * @version 1.0
+ */
+class User {
+    #username;
+    #email;
+    #password;
+
+    constructor(username, email, password) {
+        // Validación de campos:
+        if(!username) throw new Exceptions.EmptyValueException(username);
+        if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NotValidEmailException();
+        if(!password) throw new Exceptions.EmptyValueException();
+
+        this.#username = username;
+        this.#email = email;
+        this.#password = password;
+    }
+
+    get username() {
+        return this.#username;
+    }
+}
