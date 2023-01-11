@@ -187,3 +187,22 @@ class User {
         return this.#username;
     }
 }
+
+/**
+ * Clase Coordinate que permite crear coordenadas.
+ * @author Zabieru.
+ * @version 1.0
+ */
+class Coordinate {
+    #latitude;
+    #longitude;
+
+    constructor(latitude, longitude) {
+        // Validación de campos:
+        if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException();
+        if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException();
+
+        this.#latitude = latitude;
+        this.#longitude = longitude;
+    }
+}
