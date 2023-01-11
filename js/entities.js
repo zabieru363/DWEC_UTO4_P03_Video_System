@@ -91,7 +91,7 @@ class Production {
     #image;
 
     constructor(title = "Unknown", nationality, publication, synopsis, image) {
-        if(new.target) throw new Exceptions.AbstractClassException();   // ! Esta clase es abstracta:
+        if(new.target) throw new Exceptions.AbstractClassException(Production);   // ! Esta clase es abstracta:
 
         // Validación de campos:
         if(!title) throw new Exceptions.EmptyValueException(title);
@@ -127,9 +127,33 @@ class Movie extends Production {
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
-        if(!(resource instanceof Resource)) throw new IsNotAResourceException();
+        if(!(resource instanceof Resource)) throw new Exceptions.IsNotAResourceException();
 
         this.#resource = resource;
         this.#locations = locations;
+    }
+}
+
+/**
+ * Clase Serie que hereda de Production que sirve
+ * para crear objetos de tipo serie.
+ * @author Zabieru.
+ * @version 1.0
+ */
+class Serie extends Production {
+    #resources;
+    #locations;
+    #seasons;
+
+    constructor(title, nationality, publication, synopsis, image, resources, locations, seasons) {
+        super(title, nationality, publication, synopsis, image);
+
+        // Validación de campos:
+        if(!(Array.isArray(resources))) throw new IsNotAnArrayException();
+        if(typeof seasons !== "number") throw new InvalidTypeException();
+
+        this.#resources = resources;
+        this.#locations = locations;
+        this.#seasons = seasons;
     }
 }
