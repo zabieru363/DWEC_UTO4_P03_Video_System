@@ -94,6 +94,16 @@ class IsNotADateException extends BaseException {
   }
 }
 
+/**
+ * Clase de excepción que genera un error si el email no es válido.
+ */
+class NotValidEmailException extends BaseException {
+  constructor(fileName, lineNumber) {
+    super("El email no es válido", fileName, lineNumber);
+    this.name = "IsNotADateException";
+  }
+}
+
 export {
     InvalidAccessConstructorException,
     AbstractClassException,
@@ -101,5 +111,6 @@ export {
     IsNotAResourceException,
     IsNotAnArrayException,
     InvalidTypeException,
-    IsNotADateException
+    IsNotADateException,
+    NotValidEmailException
 };
