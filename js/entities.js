@@ -209,6 +209,14 @@ class User {
     get username() {
         return this.#username;
     }
+
+    /**
+     * Setter para cambiar el nombre de usuario, por si
+     * en algún momento se llega a necesitar.
+     */
+    set username(value) {
+        this.#username = value;
+    }
 }
 
 /**
