@@ -16,9 +16,9 @@ class Person {
         if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Person);
         
         // Validación de campos:
-        if(!name) throw new Exceptions.EmptyValueException(Person, name);
-        if(!lastName1) throw new Exceptions.EmptyValueException(Person, lastName1);
-        if(!born) throw new Exceptions.EmptyValueException(Person, born);
+        if(!name) throw new Exceptions.EmptyValueException(Person, "name");
+        if(!lastName1) throw new Exceptions.EmptyValueException(Person, "lastName1");
+        if(!born) throw new Exceptions.EmptyValueException(Person, "born");
         if(!(born instanceof Date)) throw Exceptions.IsNotADateException(Person);
         
         this.#name = name;
@@ -50,7 +50,7 @@ class Category {
         if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Category);
         
         // Validación de campos:
-        if(!name) throw new Exceptions.EmptyValueException(Category, name);
+        if(!name) throw new Exceptions.EmptyValueException(Category, "name");
         
         this.#name = name;
         this.#description = description;
@@ -78,7 +78,7 @@ class Resource {
         if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Resource);
 
         // Validación de campos:
-        if(!duration) throw new Exceptions.EmptyValueException(Resource, duration);
+        if(!duration) throw new Exceptions.EmptyValueException(Resource, "duration");
 
         this.#duration = duration;
         this.#link = link;
@@ -101,8 +101,8 @@ class Production {
         if(new.target) throw new Exceptions.AbstractClassException(Production);   // ! Esta clase es abstracta:
 
         // Validación de campos:
-        if(!title) throw new Exceptions.EmptyValueException(Production, title);
-        if(!publication) throw new Exceptions.EmptyValueException(Production, publication);
+        if(!title) throw new Exceptions.EmptyValueException(Production, "title");
+        if(!publication) throw new Exceptions.EmptyValueException(Production, "publication");
         if(!(publication instanceof Date)) throw new Exceptions.IsNotADateException(Production);
 
         this.#title = title;
@@ -184,9 +184,9 @@ class User {
         if(!new.target) throw new Exceptions.InvalidAccessConstructorException(User);
 
         // Validación de campos:
-        if(!username) throw new Exceptions.EmptyValueException(User, username);
+        if(!username) throw new Exceptions.EmptyValueException(User, "username");
         if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NotValidEmailException(User);
-        if(!password) throw new Exceptions.EmptyValueException(User);
+        if(!password) throw new Exceptions.EmptyValueException(User, "password");
 
         this.#username = username;
         this.#email = email;
