@@ -170,7 +170,7 @@ class Serie extends Production {
         // Validación de campos:
         if(!(Array.isArray(resources))) throw new Exceptions.NoValidObjectException("resources", Array);
         if(!(Array.isArray(locations))) throw new Exceptions.NoValidObjectException("locations", Array);
-        if(typeof seasons !== "number") throw new Exceptions.InvalidTypeException();
+        if(typeof seasons !== "number") throw new Exceptions.InvalidTypeException("seasons");
 
         this.#resources = resources;
         this.#locations = locations;
@@ -232,8 +232,8 @@ class Coordinate {
         if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Coordinate);
         
         // Validación de campos:
-        if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException();
-        if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException();
+        if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException("latitude");
+        if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException("longitude");
 
         this.#latitude = latitude;
         this.#longitude = longitude;
