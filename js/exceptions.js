@@ -33,7 +33,7 @@ class InvalidAccessConstructorException extends BaseException {
  */
 class AbstractClassException extends BaseException {
     constructor(className, fileName, lineNumber) {
-      super(`La clase ${className} es abstracta.`, fileName, lineNumber);
+      super(`La clase ${className.name} es abstracta.`, fileName, lineNumber);
       this.className = className;
       this.name = "AbstractClassException";
     }
