@@ -229,6 +229,11 @@ import * as Entities from "./entities.js";
         console.error(error);   // El constructor debe invocarse con new.
     }
 
+    // Probando a cambiar el nombre de usuario
+    user.username = "ginescorreguela";
+    console.log(user.username);
+    user.username = "zabieru363";
+
     // El nombre de usuario no puede estar vacío.
     try {
         const user = new Entities.User("", "zabierujlc@gmail.com", "12345678910");
