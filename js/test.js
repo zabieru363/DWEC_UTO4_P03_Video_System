@@ -109,43 +109,100 @@ import * as Entities from "./entities.js";
     // ? Objeto Movie
     console.log("Objeto Movie");
 
-    const movie = new Entities.Movie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', resource, []);
+    const movie = new Entities.Movie("Avatar 2", "random", new Date(2022, 10, 12), "Una serie de hombres azules", 'C:\\Users\\images', resource, []);
     console.log(movie); // {}
-    console.log(movie.title); // Wednesday
+    console.log(movie.title); // Avatar 2
     
     // ! EXCEPCIONES DEL OBJETO MOVIE.
     
     // * Cómo el titulo tiene el valor por defecto de Unknown nunca le llegará vacío
 
     // Probando a cambiar el título.
-    movie.title = "Alice in bordeland";
+    movie.title = "Interestellar";
     console.log(movie.title);
+
+    // El constructor debe invocarse con new.
+    try {
+        const movie = Entities.Movie("Avatar 2", "random", new Date(2022, 10, 12), "Una serie de hombres azules", 'C:\\Users\\images', resource, []);
+    }catch(error) {
+        console.error(error);   // El constructor debe invocarse con new.
+    }
     
     // El campo publication está vacío.
     try {
-        const movie = new Entities.Movie("Wednesday", "random", null, "Una serie de comedia", 'C:\\Users\\images', resource, []);
+        const movie = new Entities.Movie("Avatar 2", "random", null, "Una serie de hombres azules", 'C:\\Users\\images', resource, []);
     }catch(error) {
         console.error(error);   // El campo publication no puede estar vacío.
     }
 
     // El campo publication no es una fecha.
     try {
-        const movie = new Entities.Movie("Wednesday", "random", "2020, 8, 10", "Una serie de comedia", 'C:\\Users\\images', resource, []);
+        const movie = new Entities.Movie("Avatar 2", "random", "2022, 10, 12", "Una serie de hombres azules", 'C:\\Users\\images', resource, []);
     }catch(error) {
         console.error(error);   // El objeto que se está pasando no es una fecha.
     }
 
     // El objeto que se le está pasando no es un recurso.
     try {
-        const movie = new Entities.Movie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', "resource", []);
+        const movie = new Entities.Movie("Avatar 2", "random", new Date(2022, 10, 12), "Una serie de hombres azules", 'C:\\Users\\images', "resource", []);
     }catch(error) {
         console.error(error);   // El objeto que se le está pasando no es un recurso.
     }
 
     // El objeto que se está pasando no es un array.
     try {
-        const movie = new Entities.Movie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', resource, "recursos");
+        const movie = new Entities.Movie("Avatar 2", "random", new Date(2022, 10, 12), "Una serie de hombres azules", 'C:\\Users\\images', resource, "recursos");
     }catch(error) {
         console.error(error);   // El objeto que se está pasando no es un array.
+    }
+
+    // ? Objeto Serie
+    console.log("Objeto Serie");
+
+    const serie = new Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
+    console.log(serie); // {}
+    console.log(serie.title);   // Wednesday
+    
+    // ! EXCEPCIONES DEL OBJETO SERIE.
+    
+    // * Cómo el titulo tiene el valor por defecto de Unknown nunca le llegará vacío
+    
+    // Probando a cambiar el título.
+    serie.title = "Alice in bordeland";
+    console.log(serie.title);
+
+    // El constructor debe invocarse con new.
+    try {
+        const serie = Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
+    }catch(error) {
+        console.error(error);   // El constructor debe invocarse con new.
+    }
+    
+    // El campo publication está vacío.
+    try {
+        const serie = new Entities.Serie("Wednesday", "random", null, "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
+    }catch(error) {
+        console.error(error);   // El campo publication no puede estar vacío.
+    }
+    
+    // El campo publication no es una fecha.
+    try {
+        const serie = new Entities.Serie("Wednesday", "random", "2020, 8, 10", "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
+    }catch(error) {
+        console.error(error);   // El objeto que se está pasando no es una fecha.
+    }
+    
+    // El campo de array de recursos no es un array.
+    try {
+        const serie = new Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', "recursos", [], 1);
+    }catch(error) {
+        console.error(error);   // El objeto que se le está pasando no es un recurso.
+    }
+    
+    // El número de temporadas no es un Number.
+    try {
+        const serie = new Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], [], "una");
+    }catch(error) {
+        console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido.
     }
 })();
