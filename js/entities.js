@@ -169,6 +169,7 @@ class Serie extends Production {
 
         // Validación de campos:
         if(!(Array.isArray(resources))) throw new Exceptions.IsNotAnArrayException();
+        if(!(Array.isArray(locations))) throw new Exceptions.IsNotAnArrayException();
         if(typeof seasons !== "number") throw new Exceptions.InvalidTypeException();
 
         this.#resources = resources;
