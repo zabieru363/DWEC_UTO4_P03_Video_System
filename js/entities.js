@@ -98,7 +98,7 @@ class Production {
     #image;
 
     constructor(title = "Unknown", nationality, publication, synopsis, image) {
-        if(new.target) throw new Exceptions.AbstractClassException(Production);   // ! Esta clase es abstracta:
+        if(new.target === Production) throw new Exceptions.AbstractClassException(Production);   // ! Esta clase es abstracta:
 
         // Validación de campos:
         if(!title) throw new Exceptions.EmptyValueException("title");
