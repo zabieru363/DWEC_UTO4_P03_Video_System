@@ -89,7 +89,7 @@ class InvalidTypeException extends BaseException {
  */
 class IsNotADateException extends BaseException {
   constructor(fileName, lineNumber) {
-    super("El tipo del argumento que se le está pasando a este constructor no es válido ", fileName, lineNumber);
+    super("El objeto que se está pasando no es una fecha. ", fileName, lineNumber);
     this.name = "IsNotADateException";
   }
 }
