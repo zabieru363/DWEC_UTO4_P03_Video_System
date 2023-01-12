@@ -212,4 +212,41 @@ import * as Entities from "./entities.js";
     }catch(error) {
         console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido.
     }
+
+    // ? Objeto User
+    console.log("Objeto User");
+
+    const user = new Entities.User("zabieru363", "zabierujlc@gmail.com", "12345678910");
+    console.log(user);
+    console.log(user.username);
+
+    // ! EXCEPCIONES DEL OBJETO USER.
+
+    // El constructor debe invocarse con new.
+    try {
+        const user = Entities.User("zabieru363", "zabierujlc@gmail.com", "12345678910");
+    }catch(error) {
+        console.error(error);   // El constructor debe invocarse con new.
+    }
+
+    // El nombre de usuario no puede estar vacío.
+    try {
+        const user = new Entities.User("", "zabierujlc@gmail.com", "12345678910");
+    }catch(error) {
+        console.error(error);   // El campo username no puede estar vacío.
+    }
+
+    // El email no es válido.
+    try {
+        const user = new Entities.User("zabieru363", "email-gmail.com", "12345678910");
+    }catch(error) {
+        console.error(error);   // El email no es válido.
+    }
+
+    // La contraseña no puede estar vacía.
+    try {
+        const user = new Entities.User("zabieru363", "zabierujlc@gmail.com", "");
+    }catch(error) {
+        console.error(error);   // El campo password no puede estar vacío.
+    }
 })();
