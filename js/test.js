@@ -23,21 +23,21 @@ import * as Entities from "./entities.js";
     
     // El nombre está sin definir:
     try {
-        const person = new Entities.Person("López", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
+        const person = new Entities.Person("", "López", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
     }catch(error) {
         console.error(error);   // El campo name no puede estar vacío.
     }
     
     // El primer apellido está sin definir:
     try {
-        const person = new Entities.Person("Javier", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
+        const person = new Entities.Person("Javier", "", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
     }catch(error) {
         console.error(error);   // El campo lastName1 no puede estar vacío.
     }
     
     // La fecha de nacimiento está sin definir:
     try {
-        const person = new Entities.Person("Javier", "López", "Carretero", 'C:\\Users\\images');
+        const person = new Entities.Person("Javier", "López", "Carretero", "", 'C:\\Users\\images');
     }catch(error) {
         console.error(error);   // El campo born no puede estar vacío.
     }
@@ -67,7 +67,7 @@ import * as Entities from "./entities.js";
     
     // El nombre de la categoría está sin definir.
     try {
-        const category = Entities.Category("Hablando sobre videojuegos.");
+        const category = new Entities.Category("", "Hablando sobre videojuegos.");
     }catch(error) {
         console.error(error);   // El campo nombre no puede estar vacio.
     }
@@ -82,14 +82,14 @@ import * as Entities from "./entities.js";
     
     // Invocar al constructor sin new:
     try {
-        const resource = new Entities.Resource(120, "videosystem.com\\recurso1");
+        const resource = Entities.Resource(120, "videosystem.com\\recurso1");
     }catch(error) {
         console.error(error);   // El constructor no puede ser invocado sin new.
     }
 
     // La duración en minutos está sin definir:
     try {
-        const resource = new Entities.Resource("videosystem.com\\recurso1");
+        const resource = new Entities.Resource("", "videosystem.com\\recurso1");
     }catch(error) {
         console.error(error);   // El constructor no puede ser invocado sin new.
     }
