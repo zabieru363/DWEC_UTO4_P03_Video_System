@@ -64,11 +64,33 @@ import * as Entities from "./entities.js";
     }catch(error) {
         console.error(error);   // El constructor no puede ser invocado sin new.
     }
-
+    
     // El nombre de la categoría está sin definir.
     try {
         const category = Entities.Category("Hablando sobre videojuegos.");
     }catch(error) {
         console.error(error);   // El campo nombre no puede estar vacio.
+    }
+    
+    // ? Objeto Resource
+    console.log("Objeto Resource");
+
+    const resource = new Entities.Resource(120, "videosystem.com\\recurso1");
+    console.log(resource);
+    
+    // ! EXCEPCIONES DEL OBJETO RESOURCE.
+    
+    // Invocar al constructor sin new:
+    try {
+        const resource = new Entities.Resource(120, "videosystem.com\\recurso1");
+    }catch(error) {
+        console.error(error);   // El constructor no puede ser invocado sin new.
+    }
+
+    // La duración en minutos está sin definir:
+    try {
+        const resource = new Entities.Resource("videosystem.com\\recurso1");
+    }catch(error) {
+        console.error(error);   // El constructor no puede ser invocado sin new.
     }
 })();
