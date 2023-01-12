@@ -96,12 +96,13 @@ class IsNotADateException extends BaseException {
 }
 
 /**
- * Clase de excepción que genera un error si el email no es válido.
+ * Clase de excepción que genera un error si el campo que se testea
+ * con una regex no coincide con el patrón especificado.
 */
-class NotValidEmailException extends BaseException {
-  constructor(fileName, lineNumber) {
-    super("El email no es válido", fileName, lineNumber);
-    this.name = "IsNotADateException";
+class NoValidFieldException extends BaseException {
+  constructor(param, fileName, lineNumber) {
+    super("El campo " + param + " no es válido.", fileName, lineNumber);
+    this.name = "NoValidFieldException";
   }
 }
 
@@ -113,5 +114,5 @@ export {
     IsNotAnArrayException,
     InvalidTypeException,
     IsNotADateException,
-    NotValidEmailException
+    NoValidFieldException
 };
