@@ -13,13 +13,13 @@ class Person {
     #picture;
 
     constructor(name, lastName1, lastName2, born, picture) {
-        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException(this);
         
         // Validación de campos:
-        if(!name) throw new Exceptions.EmptyValueException(name);
-        if(!lastName1) throw new Exceptions.EmptyValueException(lastName1);
-        if(!born) throw new Exceptions.EmptyValueException(born);
-        if(!(born instanceof Date)) throw Exceptions.IsNotADateException();
+        if(!name) throw new Exceptions.EmptyValueException(this, name);
+        if(!lastName1) throw new Exceptions.EmptyValueException(this, lastName1);
+        if(!born) throw new Exceptions.EmptyValueException(this, born);
+        if(!(born instanceof Date)) throw Exceptions.IsNotADateException(this);
         
         this.#name = name;
         this.#lastName1 = lastName1;
@@ -47,10 +47,10 @@ class Category {
     #description;
     
     constructor(name, description) {
-        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException(this);
         
         // Validación de campos:
-        if(!name) throw new Exceptions.EmptyValueException(name);
+        if(!name) throw new Exceptions.EmptyValueException(this, name);
         
         this.#name = name;
         this.#description = description;
@@ -75,10 +75,10 @@ class Resource {
     #link;
     
     constructor(duration, link) {
-        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException(this);
 
         // Validación de campos:
-        if(!duration) throw new Exceptions.EmptyValueException(duration);
+        if(!duration) throw new Exceptions.EmptyValueException(this, duration);
 
         this.#duration = duration;
         this.#link = link;
@@ -101,9 +101,9 @@ class Production {
         if(new.target) throw new Exceptions.AbstractClassException(Production);   // ! Esta clase es abstracta:
 
         // Validación de campos:
-        if(!title) throw new Exceptions.EmptyValueException(title);
-        if(!publication) throw new Exceptions.EmptyValueException(publication);
-        if(!(publication instanceof Date)) throw new Exceptions.IsNotADateException();
+        if(!title) throw new Exceptions.EmptyValueException(this, title);
+        if(!publication) throw new Exceptions.EmptyValueException(this, publication);
+        if(!(publication instanceof Date)) throw new Exceptions.IsNotADateException(this);
 
         this.#title = title;
         this.#nationality = nationality;
@@ -132,12 +132,12 @@ class Movie extends Production {
     #locations;
 
     constructor(title, nationality, publication, synopsis, image, resource, locations) {
-        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException(this);
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
-        if(!(resource instanceof Resource)) throw new Exceptions.IsNotAResourceException();
-        if(!(Array.isArray(locations))) throw new Exceptions.IsNotAnArrayException();
+        if(!(resource instanceof Resource)) throw new Exceptions.IsNotAResourceException(this);
+        if(!(Array.isArray(locations))) throw new Exceptions.IsNotAnArrayException(this);
 
         this.#resource = resource;
         this.#locations = locations;
@@ -156,12 +156,12 @@ class Serie extends Production {
     #seasons;
 
     constructor(title, nationality, publication, synopsis, image, resources, locations, seasons) {
-        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException(this);
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
-        if(!(Array.isArray(resources))) throw new Exceptions.IsNotAnArrayException();
-        if(typeof seasons !== "number") throw new Exceptions.InvalidTypeException();
+        if(!(Array.isArray(resources))) throw new Exceptions.IsNotAnArrayException(this);
+        if(typeof seasons !== "number") throw new Exceptions.InvalidTypeException(this);
 
         this.#resources = resources;
         this.#locations = locations;
@@ -181,12 +181,12 @@ class User {
     #password;
 
     constructor(username, email, password) {
-        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException(this);
 
         // Validación de campos:
-        if(!username) throw new Exceptions.EmptyValueException(username);
-        if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NotValidEmailException();
-        if(!password) throw new Exceptions.EmptyValueException();
+        if(!username) throw new Exceptions.EmptyValueException(this, username);
+        if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NotValidEmailException(this);
+        if(!password) throw new Exceptions.EmptyValueException(this);
 
         this.#username = username;
         this.#email = email;
@@ -212,11 +212,11 @@ class Coordinate {
     #longitude;
 
     constructor(latitude, longitude) {
-        if(!new.target) throw new Exceptions.InvalidAccessConstructorException();
+        if(!new.target) throw new Exceptions.InvalidAccessConstructorException(this);
         
         // Validación de campos:
-        if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException();
-        if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException();
+        if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException(this);
+        if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException(this);
 
         this.#latitude = latitude;
         this.#longitude = longitude;
