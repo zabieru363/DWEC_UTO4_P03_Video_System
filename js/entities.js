@@ -193,6 +193,10 @@ class User {
         this.#password = password;
     }
 
+    /**
+     * Getter que obtiene el nombre de usuario del usuario, por
+     * si acaso hiciera falta más adelante.
+     */
     get username() {
         return this.#username;
     }
@@ -218,3 +222,14 @@ class Coordinate {
         this.#longitude = longitude;
     }
 }
+
+export {
+    Person,
+    Category,
+    Resource,
+    Production,
+    Movie,
+    Serie,
+    User,
+    Coordinate
+};
