@@ -119,7 +119,7 @@ import * as Entities from "./entities.js";
 
     // Probando a cambiar el título.
     movie.title = "Interestellar";
-    console.log(movie.title);
+    console.log(movie.title);   // Interestellar
 
     // El constructor debe invocarse con new.
     try {
@@ -169,7 +169,7 @@ import * as Entities from "./entities.js";
     
     // Probando a cambiar el título.
     serie.title = "Alice in bordeland";
-    console.log(serie.title);
+    console.log(serie.title);   // Alice in bordeland
 
     // El constructor debe invocarse con new.
     try {
@@ -217,8 +217,8 @@ import * as Entities from "./entities.js";
     console.log("Objeto User");
 
     const user = new Entities.User("zabieru363", "zabierujlc@gmail.com", "12345678910");
-    console.log(user);
-    console.log(user.username);
+    console.log(user);  // {}
+    console.log(user.username); // zabieru363
 
     // ! EXCEPCIONES DEL OBJETO USER.
 
@@ -230,9 +230,9 @@ import * as Entities from "./entities.js";
     }
 
     // Probando a cambiar el nombre de usuario
-    user.username = "ginescorreguela";
+    user.username = "ginescorreguela";  // ginescorreguela
     console.log(user.username);
-    user.username = "zabieru363";
+    user.username = "zabieru363";   // zabieru363
 
     // El nombre de usuario no puede estar vacío.
     try {
@@ -253,5 +253,36 @@ import * as Entities from "./entities.js";
         const user = new Entities.User("zabieru363", "zabierujlc@gmail.com", "");
     }catch(error) {
         console.error(error);   // El campo password no puede estar vacío.
+    }
+
+    // ? Objeto Coordinate
+    console.log("Objeto Coordinate");
+
+    const coordinate1 = new Entities.Coordinate(49, 50);
+    console.log(coordinate1);   // {}
+    const coordinate2 = new Entities.Coordinate(32, 68);
+    console.log(coordinate2);   // {}
+    
+    // ! EXCEPCIONES DEL OBJETO COORDINATE.
+    
+    // El constructor se debe invocar con new:
+    try {
+        const coordinate = Entities.Coordinate(49, 50);
+    }catch(error) {
+        console.error(error);   // El constructor se debe invocar con new:
+    }
+
+    // La latitud no es un Number.
+    try {
+        const coordinate = new Entities.Coordinate("aaaa", 50);
+    }catch(error) {
+        console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido
+    }
+
+    // La latitud no es un Number.
+    try {
+        const coordinate = new Entities.Coordinate(49, "aaaa");
+    }catch(error) {
+        console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido
     }
 })();
