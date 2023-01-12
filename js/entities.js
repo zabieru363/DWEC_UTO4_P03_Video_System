@@ -19,7 +19,7 @@ class Person {
         if(!name) throw new Exceptions.EmptyValueException("name");
         if(!lastName1) throw new Exceptions.EmptyValueException("lastName1");
         if(!born) throw new Exceptions.EmptyValueException("born");
-        if(!(born instanceof Date)) throw Exceptions.IsNotADateException(Person);
+        if(!(born instanceof Date)) throw Exceptions.IsNotADateException();
         
         this.#name = name;
         this.#lastName1 = lastName1;
@@ -103,7 +103,7 @@ class Production {
         // Validación de campos:
         if(!title) throw new Exceptions.EmptyValueException("title");
         if(!publication) throw new Exceptions.EmptyValueException("publication");
-        if(!(publication instanceof Date)) throw new Exceptions.IsNotADateException(Production);
+        if(!(publication instanceof Date)) throw new Exceptions.IsNotADateException();
 
         this.#title = title;
         this.#nationality = nationality;
@@ -136,8 +136,8 @@ class Movie extends Production {
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
-        if(!(resource instanceof Resource)) throw new Exceptions.IsNotAResourceException(Movie);
-        if(!(Array.isArray(locations))) throw new Exceptions.IsNotAnArrayException(Movie);
+        if(!(resource instanceof Resource)) throw new Exceptions.IsNotAResourceException();
+        if(!(Array.isArray(locations))) throw new Exceptions.IsNotAnArrayException();
 
         this.#resource = resource;
         this.#locations = locations;
@@ -160,8 +160,8 @@ class Serie extends Production {
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
-        if(!(Array.isArray(resources))) throw new Exceptions.IsNotAnArrayException(Serie);
-        if(typeof seasons !== "number") throw new Exceptions.InvalidTypeException(Serie);
+        if(!(Array.isArray(resources))) throw new Exceptions.IsNotAnArrayException();
+        if(typeof seasons !== "number") throw new Exceptions.InvalidTypeException();
 
         this.#resources = resources;
         this.#locations = locations;
@@ -185,7 +185,7 @@ class User {
 
         // Validación de campos:
         if(!username) throw new Exceptions.EmptyValueException("username");
-        if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NotValidEmailException(User);
+        if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NotValidEmailException();
         if(!password) throw new Exceptions.EmptyValueException("password");
 
         this.#username = username;
@@ -215,8 +215,8 @@ class Coordinate {
         if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Coordinate);
         
         // Validación de campos:
-        if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException(Coordinate);
-        if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException(Coordinate);
+        if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException();
+        if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException();
 
         this.#latitude = latitude;
         this.#longitude = longitude;
