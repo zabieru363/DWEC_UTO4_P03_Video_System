@@ -194,7 +194,6 @@ class User {
 
         // Validación de campos:
         if(!username) throw new Exceptions.EmptyValueException("username");
-        if(!email) throw new Exceptions.EmptyValueException("email");
         if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NotValidEmailException();
         if(!password) throw new Exceptions.EmptyValueException("password");
 
