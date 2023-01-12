@@ -116,6 +116,10 @@ import * as Entities from "./entities.js";
     // ! EXCEPCIONES DEL OBJETO MOVIE.
     
     // * Cómo el titulo tiene el valor por defecto de Unknown nunca le llegará vacío
+
+    // Probando a cambiar el título.
+    movie.title = "Alice in bordeland";
+    console.log(movie.title);
     
     // El campo publication está vacío.
     try {
