@@ -101,7 +101,7 @@ class Production {
         if(new.target === Production) throw new Exceptions.AbstractClassException(Production);   // ! Esta clase es abstracta:
 
         // Validación de campos:
-        if(!title) throw new Exceptions.EmptyValueException("title");
+        // if(!title) throw new Exceptions.EmptyValueException("title");    No hace falta validar este campo porque nunca le llegará vacío.
         if(!publication) throw new Exceptions.EmptyValueException("publication");
         if(!(publication instanceof Date)) throw new Exceptions.IsNotADateException();
 
