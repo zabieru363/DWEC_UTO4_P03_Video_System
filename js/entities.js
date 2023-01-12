@@ -119,6 +119,14 @@ class Production {
     get title() {
         return this.#title;
     }
+
+    /**
+     * Setter que permite cambiar el nombre del título de la
+     * producción por si acaso se llega a necesitar más adelante.
+     */
+    set title(value) {
+        this.#title = value;
+    }
 }
 
 /**
