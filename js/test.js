@@ -196,7 +196,14 @@ import * as Entities from "./entities.js";
     try {
         const serie = new Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', "recursos", [], 1);
     }catch(error) {
-        console.error(error);   // El objeto que se le está pasando no es un recurso.
+        console.error(error);   // El objeto que se le está pasando no es un array.
+    }
+
+    // El campo de array de locations no es un array.
+    try {
+        const serie = new Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], "aaa", 1);
+    }catch(error) {
+        console.error(error);   // El objeto que se le está pasando no es un array.
     }
     
     // El número de temporadas no es un Number.
