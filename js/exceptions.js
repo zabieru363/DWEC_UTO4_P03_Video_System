@@ -20,8 +20,9 @@ class BaseException extends Error {
  * sido invocado sin new.
  */
 class InvalidAccessConstructorException extends BaseException {
-    constructor(fileName, lineNumber) {
+    constructor(className, fileName, lineNumber) {
       super("El constructor no puede ser invocado sin new.", fileName, lineNumber);
+      this.className = className;
       this.name = "InvalidAccessConstructorException";
     }
 }
@@ -43,8 +44,9 @@ class AbstractClassException extends BaseException {
  * parametro está vacío.
  */
 class EmptyValueException extends BaseException {
-    constructor(param, fileName, lineNumber) {
+    constructor(className, param, fileName, lineNumber) {
       super("El campo  " + param + " no puede estar vacío.", fileName, lineNumber);
+      this.className = className;
       this.param = param;
       this.name = "EmptyValueException";
     }
@@ -53,10 +55,11 @@ class EmptyValueException extends BaseException {
 /**
  * Clase de excepción que genera un error si el objeto que
  * se le pasa no es un objeto Resource.
- */
+*/
 class IsNotAResourceException extends BaseException {
-  constructor(fileName, lineNumber) {
+  constructor(className, fileName, lineNumber) {
     super("El objeto que se está pasando no es un objeto Resource.", fileName, lineNumber);
+    this.className = className;
     this.name = "IsNotAResourceException";
   }
 }
@@ -64,10 +67,11 @@ class IsNotAResourceException extends BaseException {
 /**
  * Clase de excepción que genera un error si el parámetro que se le pasa
  * no es un array.
- */
+*/
 class IsNotAnArrayException extends BaseException {
-  constructor(fileName, lineNumber) {
+  constructor(className, fileName, lineNumber) {
     super("El objeto que se está pasando no es un array.", fileName, lineNumber);
+    this.className = className;
     this.name = "IsNotAnArrayException";
   }
 }
@@ -75,10 +79,11 @@ class IsNotAnArrayException extends BaseException {
 /**
  * Clase de excepción que genera un error si el argumento que se
  * recibe no es del tipo esperado.
- */
+*/
 class InvalidTypeException extends BaseException {
-  constructor(fileName, lineNumber) {
+  constructor(className, fileName, lineNumber) {
     super("El tipo del argumento que se le está pasando a este constructor no es válido ", fileName, lineNumber);
+    this.className = className;
     this.name = "InvalidTypeException";
   }
 }
@@ -86,20 +91,22 @@ class InvalidTypeException extends BaseException {
 /**
  * Clase de excepción que genera un error si un objeto
  * no es un instancia del objeto Date.
- */
+*/
 class IsNotADateException extends BaseException {
-  constructor(fileName, lineNumber) {
-    super("El tipo del argumento que se le está pasando a este constructor no es válido ", fileName, lineNumber);
+  constructor(className, fileName, lineNumber) {
+    super("El objeto que se está pasando no es una fecha. ", fileName, lineNumber);
+    this.className = className;
     this.name = "IsNotADateException";
   }
 }
 
 /**
  * Clase de excepción que genera un error si el email no es válido.
- */
+*/
 class NotValidEmailException extends BaseException {
-  constructor(fileName, lineNumber) {
+  constructor(className, fileName, lineNumber) {
     super("El email no es válido", fileName, lineNumber);
+    this.className = className;
     this.name = "IsNotADateException";
   }
 }
