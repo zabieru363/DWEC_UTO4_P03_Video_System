@@ -7,7 +7,7 @@ import * as Entities from "./entities.js";
 
     // ? Objeto Person
     console.log("Objeto Person");
-
+    
     const person = new Entities.Person("Javier", "López", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
     console.log(person);    // {}
     console.log(person.name);   // Javier
@@ -47,5 +47,28 @@ import * as Entities from "./entities.js";
         const person = new Entities.Person("Javier", "López", "Carretero", "2000, 8, 6", 'C:\\Users\\images');
     }catch(error) {
         console.error(error);   // EL objeto que se está pasando no es una fecha.
+    }
+    
+    // ? Objeto Category
+    console.log("Objeto Category");
+    
+    const category = new Entities.Category("Videojuegos", "Hablando sobre videojuegos.");
+    console.log(category);
+    console.log(category.name);
+    
+    // ! EXCEPCIONES DEL OBJETO CATEGORY.
+    
+    // Invocar al constructor sin new:
+    try {
+        const category = Entities.Category("Videojuegos", "Hablando sobre videojuegos.");
+    }catch(error) {
+        console.error(error);   // El constructor no puede ser invocado sin new.
+    }
+
+    // El nombre de la categoría está sin definir.
+    try {
+        const category = Entities.Category("Hablando sobre videojuegos.");
+    }catch(error) {
+        console.error(error);   // El campo nombre no puede estar vacio.
     }
 })();
