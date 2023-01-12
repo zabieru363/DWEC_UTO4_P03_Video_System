@@ -53,8 +53,8 @@ import * as Entities from "./entities.js";
     console.log("Objeto Category");
     
     const category = new Entities.Category("Videojuegos", "Hablando sobre videojuegos.");
-    console.log(category);
-    console.log(category.name);
+    console.log(category);  // {}
+    console.log(category.name);     //Videojuegos
     
     // ! EXCEPCIONES DEL OBJETO CATEGORY.
     
@@ -69,14 +69,14 @@ import * as Entities from "./entities.js";
     try {
         const category = new Entities.Category("", "Hablando sobre videojuegos.");
     }catch(error) {
-        console.error(error);   // El campo nombre no puede estar vacio.
+        console.error(error);   // El campo name no puede estar vacio.
     }
     
     // ? Objeto Resource
     console.log("Objeto Resource");
 
     const resource = new Entities.Resource(120, "videosystem.com\\recurso1");
-    console.log(resource);
+    console.log(resource);  // {}
     
     // ! EXCEPCIONES DEL OBJETO RESOURCE.
     
@@ -91,6 +91,6 @@ import * as Entities from "./entities.js";
     try {
         const resource = new Entities.Resource("", "videosystem.com\\recurso1");
     }catch(error) {
-        console.error(error);   // El constructor no puede ser invocado sin new.
+        console.error(error);   // El campo duration no está definido.
     }
 })();
