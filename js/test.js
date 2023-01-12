@@ -103,12 +103,45 @@ import * as Entities from "./entities.js";
     try {
         const p = new Entities.Production("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia.", 'C:\\Users\\images');
     }catch(error) {
-        console.error(error);
+        console.error(error);   // La clase Production es abstracta.
     }
     
     // ? Objeto Movie
     console.log("Objeto Movie");
 
-    const movie = new Entities.Movie(resource, []);
-    console.log(movie);
+    const movie = new Entities.Movie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', resource, []);
+    console.log(movie); // {}
+    console.log(movie.title); // Wednesday
+    
+    // ! EXCEPCIONES DEL OBJETO MOVIE.
+    
+    // * Cómo el titulo tiene el valor por defecto de Unknown nunca le llegará vacío
+    
+    // El campo publication está vacío.
+    try {
+        const movie = new Entities.Movie("Wednesday", "random", null, "Una serie de comedia", 'C:\\Users\\images', resource, []);
+    }catch(error) {
+        console.error(error);   // El campo publication no puede estar vacío.
+    }
+
+    // El campo publication no es una fecha.
+    try {
+        const movie = new Entities.Movie("Wednesday", "random", "2020, 8, 10", "Una serie de comedia", 'C:\\Users\\images', resource, []);
+    }catch(error) {
+        console.error(error);   // El objeto que se está pasando no es una fecha.
+    }
+
+    // El objeto que se le está pasando no es un recurso.
+    try {
+        const movie = new Entities.Movie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', "resource", []);
+    }catch(error) {
+        console.error(error);   // El objeto que se le está pasando no es un recurso.
+    }
+
+    // El objeto que se está pasando no es un array.
+    try {
+        const movie = new Entities.Movie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', resource, "recursos");
+    }catch(error) {
+        console.error(error);   // El objeto que se está pasando no es un array.
+    }
 })();
