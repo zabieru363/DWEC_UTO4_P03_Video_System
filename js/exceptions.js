@@ -56,9 +56,8 @@ class EmptyValueException extends BaseException {
  * se le pasa no es un objeto Resource.
 */
 class IsNotAResourceException extends BaseException {
-  constructor(className, fileName, lineNumber) {
+  constructor(fileName, lineNumber) {
     super("El objeto que se está pasando no es un objeto Resource.", fileName, lineNumber);
-    this.className = className;
     this.name = "IsNotAResourceException";
   }
 }
@@ -68,9 +67,8 @@ class IsNotAResourceException extends BaseException {
  * no es un array.
 */
 class IsNotAnArrayException extends BaseException {
-  constructor(className, fileName, lineNumber) {
+  constructor(fileName, lineNumber) {
     super("El objeto que se está pasando no es un array.", fileName, lineNumber);
-    this.className = className;
     this.name = "IsNotAnArrayException";
   }
 }
@@ -80,9 +78,8 @@ class IsNotAnArrayException extends BaseException {
  * recibe no es del tipo esperado.
 */
 class InvalidTypeException extends BaseException {
-  constructor(className, fileName, lineNumber) {
+  constructor(fileName, lineNumber) {
     super("El tipo del argumento que se le está pasando a este constructor no es válido ", fileName, lineNumber);
-    this.className = className;
     this.name = "InvalidTypeException";
   }
 }
@@ -92,9 +89,8 @@ class InvalidTypeException extends BaseException {
  * no es un instancia del objeto Date.
 */
 class IsNotADateException extends BaseException {
-  constructor(className, fileName, lineNumber) {
+  constructor(fileName, lineNumber) {
     super("El objeto que se está pasando no es una fecha. ", fileName, lineNumber);
-    this.className = className;
     this.name = "IsNotADateException";
   }
 }
@@ -103,9 +99,8 @@ class IsNotADateException extends BaseException {
  * Clase de excepción que genera un error si el email no es válido.
 */
 class NotValidEmailException extends BaseException {
-  constructor(className, fileName, lineNumber) {
+  constructor(fileName, lineNumber) {
     super("El email no es válido", fileName, lineNumber);
-    this.className = className;
     this.name = "IsNotADateException";
   }
 }
