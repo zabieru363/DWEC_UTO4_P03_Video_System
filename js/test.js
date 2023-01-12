@@ -96,13 +96,19 @@ import * as Entities from "./entities.js";
 
     // ? Objeto Production
     console.log("Objeto Production");
-
+    
     // ! PRODUCTION ES UNA CLASE ABSTRACTA, POR LO QUE NO SE PUEDE INSTANCIAR.
-
+    
     // Intentando instanciar Production:
     try {
         const p = new Entities.Production("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia.", 'C:\\Users\\images');
     }catch(error) {
         console.error(error);
     }
+    
+    // ? Objeto Movie
+    console.log("Objeto Movie");
+
+    const movie = new Entities.Movie(resource, []);
+    console.log(movie);
 })();
