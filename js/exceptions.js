@@ -78,8 +78,8 @@ class IsNotAnArrayException extends BaseException {
  * recibe no es del tipo esperado.
 */
 class InvalidTypeException extends BaseException {
-  constructor(fileName, lineNumber) {
-    super("El tipo del argumento que se le está pasando a este constructor no es válido ", fileName, lineNumber);
+  constructor(param, fileName, lineNumber) {
+    super("El tipo del argumento " + param + " que se le está pasando a este constructor no es válido ", fileName, lineNumber);
     this.name = "InvalidTypeException";
   }
 }
