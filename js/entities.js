@@ -6,7 +6,7 @@ import * as Exceptions from "./exceptions.js";
  * @author Zabieru.
  * @version 1.0
  */
-export function ObjectFactory() {
+export default function ObjectFactory() {
     /**
      * Clase Person que permite crear personas.
      * @author Zabieru.
