@@ -9,7 +9,7 @@ const factory = new ExceptionFactory();
  * @author Zabieru.
  * @version 1.0
  */
-export default function ObjectFactory() {
+export function ObjectFactory() {
     /**
      * Clase Person que permite crear personas.
      * @author Zabieru.
