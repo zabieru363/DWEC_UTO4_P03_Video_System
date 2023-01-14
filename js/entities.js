@@ -20,8 +20,6 @@ export default function ObjectFactory() {
         #picture;
 
         constructor(name, lastName1, lastName2, born, picture) {
-            if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Person);
-            
             // Validación de campos:
             if(!name) throw new Exceptions.EmptyValueException("name");
             if(!lastName1) throw new Exceptions.EmptyValueException("lastName1");
@@ -54,8 +52,6 @@ export default function ObjectFactory() {
         #description;
         
         constructor(name, description) {
-            if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Category);
-            
             // Validación de campos:
             if(!name) throw new Exceptions.EmptyValueException("name");
             
@@ -82,8 +78,6 @@ export default function ObjectFactory() {
         #link;
         
         constructor(duration, link) {
-            if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Resource);
-
             // Validación de campos:
             if(!duration) throw new Exceptions.EmptyValueException("duration");
 
@@ -147,7 +141,6 @@ export default function ObjectFactory() {
         #locations;
 
         constructor(title, nationality, publication, synopsis, image, resource, locations) {
-            if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Movie);
             super(title, nationality, publication, synopsis, image);
 
             // Validación de campos:
@@ -171,7 +164,6 @@ export default function ObjectFactory() {
         #seasons;
 
         constructor(title, nationality, publication, synopsis, image, resources, locations, seasons) {
-            if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Serie);
             super(title, nationality, publication, synopsis, image);
 
             // Validación de campos:
@@ -197,8 +189,6 @@ export default function ObjectFactory() {
         #password;
 
         constructor(username, email, password) {
-            if(!new.target) throw new Exceptions.InvalidAccessConstructorException(User);
-
             // Validación de campos:
             if(!username) throw new Exceptions.EmptyValueException("username");
             if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NoValidFieldException("email");
@@ -236,8 +226,6 @@ export default function ObjectFactory() {
         #longitude;
 
         constructor(latitude, longitude) {
-            if(!new.target) throw new Exceptions.InvalidAccessConstructorException(Coordinate);
-            
             // Validación de campos:
             if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException("latitude");
             if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException("longitude");
