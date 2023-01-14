@@ -1,6 +1,6 @@
 "use strict";
 
-import ObjectFactory from "./entities.js";
+import {ObjectFactory} from "./entities.js";
 
 (function() {
 
