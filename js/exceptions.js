@@ -5,7 +5,7 @@
 /* No incluyo la excepción que no permite invocar a un constructor
 sin new, ya que estoy utilizando un patrón factory en entities.js*/
 
-export default function ExceptionFactory() {
+export function ExceptionFactory() {
   /**
    * Clase de excepción base que mejora las instancias
    * creadas de objetos Error.
