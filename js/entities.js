@@ -1,4 +1,7 @@
-import * as Exceptions from "./exceptions.js";
+import ExceptionFactory from "./exceptions.js";
+
+// ? Creando una factoría de excepciones.
+const factory = new ExceptionFactory();
 
 /**
  * Factoria de objetos que permite crear objetos de 
@@ -21,10 +24,10 @@ export default function ObjectFactory() {
 
         constructor(name, lastName1, lastName2, born, picture) {
             // Validación de campos:
-            if(!name) throw new Exceptions.EmptyValueException("name");
-            if(!lastName1) throw new Exceptions.EmptyValueException("lastName1");
-            if(!born) throw new Exceptions.EmptyValueException("born");
-            if(!(born instanceof Date)) throw Exceptions.NoValidObjectException("born", Date);
+            if(!name) throw factory.throwError("EmptyValueException", null, "name");
+            if(!lastName1) throw factory.throwError("EmptyValueException", null, "lastName1");
+            if(!born) throw factory.throwError("EmptyValueException", null, "born");
+            if(!(born instanceof Date)) throw factory.throwError("NoValidObjectException", Date, "born");
             
             this.#name = name;
             this.#lastName1 = lastName1;
@@ -53,7 +56,7 @@ export default function ObjectFactory() {
         
         constructor(name, description) {
             // Validación de campos:
-            if(!name) throw new Exceptions.EmptyValueException("name");
+            if(!name) throw factory.throwError("EmptyValueException", null, "name");
             
             this.#name = name;
             this.#description = description;
@@ -79,7 +82,7 @@ export default function ObjectFactory() {
         
         constructor(duration, link) {
             // Validación de campos:
-            if(!duration) throw new Exceptions.EmptyValueException("duration");
+            if(!duration) throw factory.throwError("EmptyValueException", null, "duration");
 
             this.#duration = duration;
             this.#link = link;
@@ -99,12 +102,11 @@ export default function ObjectFactory() {
         #image;
 
         constructor(title = "Unknown", nationality, publication, synopsis, image) {
-            if(new.target === Production) throw new Exceptions.AbstractClassException(Production);   // ! Esta clase es abstracta:
+            if(new.target === Production) throw factory.throwError("AbstractClassException", Production);   // ! Esta clase es abstracta:
 
             // Validación de campos:
-            // if(!title) throw new Exceptions.EmptyValueException("title");    No hace falta validar este campo porque nunca le llegará vacío.
-            if(!publication) throw new Exceptions.EmptyValueException("publication");
-            if(!(publication instanceof Date)) throw new Exceptions.NoValidObjectException("publication", Date);
+            if(!publication) throw factory.throwError("EmptyValueException", null, "publication");
+            if(!(publication instanceof Date)) throw factory.throwError("NoValidObjectException", Date, "publication");
 
             this.#title = title;
             this.#nationality = nationality;
@@ -144,8 +146,8 @@ export default function ObjectFactory() {
             super(title, nationality, publication, synopsis, image);
 
             // Validación de campos:
-            if(!(resource instanceof Resource)) throw new Exceptions.NoValidObjectException("resource", Resource);
-            if(!(Array.isArray(locations))) throw new Exceptions.NoValidObjectException("locations", Array);
+            if(!(resource instanceof Resource)) throw factory.throwError("NoValidObjectException", Resource, "resource");
+            if(!(Array.isArray(locations))) throw factory.throwError("NoValidObjectException", Array, "locations");
 
             this.#resource = resource;
             this.#locations = locations;
@@ -167,9 +169,9 @@ export default function ObjectFactory() {
             super(title, nationality, publication, synopsis, image);
 
             // Validación de campos:
-            if(!(Array.isArray(resources))) throw new Exceptions.NoValidObjectException("resources", Array);
-            if(!(Array.isArray(locations))) throw new Exceptions.NoValidObjectException("locations", Array);
-            if(typeof seasons !== "number") throw new Exceptions.InvalidTypeException("seasons");
+            if(!(Array.isArray(resources))) throw factory.throwError("NoValidObjectException", Array, "resources");
+            if(!(Array.isArray(locations))) throw factory.throwError("NoValidObjectException", Array, "locations");
+            if(typeof seasons !== "number") throw factory.throwError("InvalidTypeException",null, "seasons");
 
             this.#resources = resources;
             this.#locations = locations;
@@ -190,9 +192,9 @@ export default function ObjectFactory() {
 
         constructor(username, email, password) {
             // Validación de campos:
-            if(!username) throw new Exceptions.EmptyValueException("username");
-            if(!(/\S+@\S+\.\S+/.test(email))) throw new Exceptions.NoValidFieldException("email");
-            if(!password) throw new Exceptions.EmptyValueException("password");
+            if(!username) throw factory.throwError("EmptyValueException", null, "username");
+            if(!(/\S+@\S+\.\S+/.test(email))) throw factory.throwError("NoValidFieldException", null, "email");
+            if(!password) throw factory.throwError("EmptyValueException", null, "password");
 
             this.#username = username;
             this.#email = email;
@@ -227,8 +229,8 @@ export default function ObjectFactory() {
 
         constructor(latitude, longitude) {
             // Validación de campos:
-            if(typeof latitude !== "number") throw new Exceptions.InvalidTypeException("latitude");
-            if(typeof longitude !== "number") throw new Exceptions.InvalidTypeException("longitude");
+            if(typeof latitude !== "number") throw factory.throwError("InvalidTypeException",null, "latitude");
+            if(typeof longitude !== "number") throw factory.throwError("InvalidTypeException",null, "longitude");
 
             this.#latitude = latitude;
             this.#longitude = longitude;
