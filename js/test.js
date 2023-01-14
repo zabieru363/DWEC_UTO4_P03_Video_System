@@ -84,7 +84,7 @@ import ObjectFactory from "./entities.js";
     
     // Intentando instanciar Production:
     try {
-        const p = new Entities.Production("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia.", 'C:\\Users\\images');
+        const p = factory.createProduction();
     }catch(error) {
         console.error(error);   // La clase Production es abstracta.
     }
@@ -92,7 +92,7 @@ import ObjectFactory from "./entities.js";
     // ? Objeto Movie
     console.log("Objeto Movie");
 
-    const movie = new Entities.Movie("Avatar 2", "random", new Date(2022, 10, 12), "Una serie de hombres azules", 'C:\\Users\\images', resource, []);
+    const movie = factory.createMovie("Avatar 2", "random", new Date(2022, 10, 12), "Una pelicula de hombres azules", 'C:\\Users\\images', resource, []);
     console.log(movie); // {}
     console.log(movie.title); // Avatar 2
     
@@ -103,38 +103,31 @@ import ObjectFactory from "./entities.js";
     // Probando a cambiar el título.
     movie.title = "Interestellar";
     console.log(movie.title);   // Interestellar
-
-    // El constructor debe invocarse con new.
-    try {
-        const movie = Entities.Movie("Avatar 2", "random", new Date(2022, 10, 12), "Una serie de hombres azules", 'C:\\Users\\images', resource, []);
-    }catch(error) {
-        console.error(error);   // El constructor debe invocarse con new.
-    }
     
     // El campo publication está vacío.
     try {
-        const movie = new Entities.Movie("Avatar 2", "random", null, "Una serie de hombres azules", 'C:\\Users\\images', resource, []);
+        const movie = factory.createMovie("Avatar 2", "random", null, "Una pelicula de hombres azules", 'C:\\Users\\images', resource, []);
     }catch(error) {
         console.error(error);   // El campo publication no puede estar vacío.
     }
 
     // El campo publication no es una fecha.
     try {
-        const movie = new Entities.Movie("Avatar 2", "random", "2022, 10, 12", "Una serie de hombres azules", 'C:\\Users\\images', resource, []);
+        const movie = factory.createMovie("Avatar 2", "random", "2022, 10, 12", "Una pelicula de hombres azules", 'C:\\Users\\images', resource, []);
     }catch(error) {
         console.error(error);   // El objeto que se está pasando no es una fecha.
     }
 
     // El objeto que se le está pasando no es un recurso.
     try {
-        const movie = new Entities.Movie("Avatar 2", "random", new Date(2022, 10, 12), "Una serie de hombres azules", 'C:\\Users\\images', "resource", []);
+        const movie = factory.createMovie("Avatar 2", "random", new Date(2022, 10, 12), "Una pelicula de hombres azules", 'C:\\Users\\images', "resource", []);
     }catch(error) {
         console.error(error);   // El objeto que se le está pasando no es un recurso.
     }
 
     // El objeto que se está pasando no es un array.
     try {
-        const movie = new Entities.Movie("Avatar 2", "random", new Date(2022, 10, 12), "Una serie de hombres azules", 'C:\\Users\\images', resource, "recursos");
+        const movie = factory.createMovie("Avatar 2", "random", new Date(2022, 10, 12), "Una pelicula de hombres azules", 'C:\\Users\\images', resource, "recursos");
     }catch(error) {
         console.error(error);   // El objeto que se está pasando no es un array.
     }
@@ -142,7 +135,7 @@ import ObjectFactory from "./entities.js";
     // ? Objeto Serie
     console.log("Objeto Serie");
 
-    const serie = new Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
+    const serie = factory.createSerie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
     console.log(serie); // {}
     console.log(serie.title);   // Wednesday
     
@@ -153,45 +146,38 @@ import ObjectFactory from "./entities.js";
     // Probando a cambiar el título.
     serie.title = "Alice in bordeland";
     console.log(serie.title);   // Alice in bordeland
-
-    // El constructor debe invocarse con new.
-    try {
-        const serie = Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
-    }catch(error) {
-        console.error(error);   // El constructor debe invocarse con new.
-    }
     
     // El campo publication está vacío.
     try {
-        const serie = new Entities.Serie("Wednesday", "random", null, "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
+        const serie = factory.createSerie("Wednesday", "random", null, "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
     }catch(error) {
         console.error(error);   // El campo publication no puede estar vacío.
     }
     
     // El campo publication no es una fecha.
     try {
-        const serie = new Entities.Serie("Wednesday", "random", "2020, 8, 10", "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
+        const serie = factory.createSerie("Wednesday", "random", "2020, 8, 10", "Una serie de comedia", 'C:\\Users\\images', [], [], 1);
     }catch(error) {
         console.error(error);   // El objeto que se está pasando no es una fecha.
     }
     
     // El campo de array de recursos no es un array.
     try {
-        const serie = new Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', "recursos", [], 1);
+        const serie = factory.createSerie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', "recursos", [], 1);
     }catch(error) {
         console.error(error);   // El objeto que se le está pasando no es un array.
     }
 
     // El campo de array de locations no es un array.
     try {
-        const serie = new Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], "aaa", 1);
+        const serie = factory.createSerie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], "aaa", 1);
     }catch(error) {
         console.error(error);   // El objeto que se le está pasando no es un array.
     }
     
     // El número de temporadas no es un Number.
     try {
-        const serie = new Entities.Serie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], [], "una");
+        const serie = factory.createSerie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", 'C:\\Users\\images', [], [], "una");
     }catch(error) {
         console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido.
     }
@@ -199,18 +185,11 @@ import ObjectFactory from "./entities.js";
     // ? Objeto User
     console.log("Objeto User");
 
-    const user = new Entities.User("zabieru363", "zabierujlc@gmail.com", "12345678910");
+    const user = factory.createUser("zabieru363", "zabierujlc@gmail.com", "12345678910");
     console.log(user);  // {}
     console.log(user.username); // zabieru363
 
     // ! EXCEPCIONES DEL OBJETO USER.
-
-    // El constructor debe invocarse con new.
-    try {
-        const user = Entities.User("zabieru363", "zabierujlc@gmail.com", "12345678910");
-    }catch(error) {
-        console.error(error);   // El constructor debe invocarse con new.
-    }
 
     // Probando a cambiar el nombre de usuario
     user.username = "ginescorreguela";  // ginescorreguela
@@ -219,21 +198,21 @@ import ObjectFactory from "./entities.js";
 
     // El nombre de usuario no puede estar vacío.
     try {
-        const user = new Entities.User("", "zabierujlc@gmail.com", "12345678910");
+        const user = factory.createUser("", "zabierujlc@gmail.com", "12345678910");
     }catch(error) {
         console.error(error);   // El campo username no puede estar vacío.
     }
 
     // El email no es válido.
     try {
-        const user = new Entities.User("zabieru363", "email-gmail.com", "12345678910");
+        const user = factory.createUser("zabieru363", "email-gmail.com", "12345678910");
     }catch(error) {
         console.error(error);   // El email no es válido.
     }
 
     // La contraseña no puede estar vacía.
     try {
-        const user = new Entities.User("zabieru363", "zabierujlc@gmail.com", "");
+        const user = factory.createUser("zabieru363", "zabierujlc@gmail.com", "");
     }catch(error) {
         console.error(error);   // El campo password no puede estar vacío.
     }
@@ -241,30 +220,23 @@ import ObjectFactory from "./entities.js";
     // ? Objeto Coordinate
     console.log("Objeto Coordinate");
 
-    const coordinate1 = new Entities.Coordinate(49, 50);
+    const coordinate1 = factory.createCoordinate(49, 50);
     console.log(coordinate1);   // {}
-    const coordinate2 = new Entities.Coordinate(32, 68);
+    const coordinate2 = factory.createCoordinate(32, 68);
     console.log(coordinate2);   // {}
     
     // ! EXCEPCIONES DEL OBJETO COORDINATE.
-    
-    // El constructor se debe invocar con new:
-    try {
-        const coordinate = Entities.Coordinate(49, 50);
-    }catch(error) {
-        console.error(error);   // El constructor se debe invocar con new:
-    }
 
     // La latitud no es un Number.
     try {
-        const coordinate = new Entities.Coordinate("aaaa", 50);
+        const coordinate = factory.createCoordinate("aaaa", 50);
     }catch(error) {
         console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido
     }
 
     // La latitud no es un Number.
     try {
-        const coordinate = new Entities.Coordinate(49, "aaaa");
+        const coordinate = factory.createCoordinate(49, "aaaa");
     }catch(error) {
         console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido
     }
