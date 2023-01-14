@@ -1,5 +1,9 @@
 "use strict";
 
+// * OBSERVACIONES:
+/* No incluyo la excepción que no permite invocar a un constructor
+sin new, ya que estoy utilizando un patrón factory en entities.js*/
+
 /**
  * Clase de excepción base que mejora las instancias
  * creadas de objetos Error.
@@ -12,19 +16,6 @@ class BaseException extends Error {
       Error.captureStackTrace(this, BaseException);
     }
   }
-}
-
-/**
- * Clase de excepción personalizada para mostrar un
- * mensaje de error en el case de que un constructor haya
- * sido invocado sin new.
- */
-class InvalidAccessConstructorException extends BaseException {
-    constructor(className, fileName, lineNumber) {
-      super("El constructor no puede ser invocado sin new.", fileName, lineNumber);
-      this.className = className;
-      this.name = "InvalidAccessConstructorException";
-    }
 }
 
 /**
