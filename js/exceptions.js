@@ -80,7 +80,7 @@ export function ExceptionFactory() {
   this.throwError = function(error, object = null, value = "") {
     let exception = null;
 
-    switch(error.name) {
+    switch(error) {
       case "AbstractClassException":
         exception = new AbstractClassException(object.name);
         break;
