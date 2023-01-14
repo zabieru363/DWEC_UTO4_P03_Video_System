@@ -249,33 +249,88 @@ export function ObjectFactory() {
 
     // * Métodos públicos de la factoria.
 
+    /**
+     * Método que crea un objeto Person.
+     * @param {*} name El nombre de la persona.
+     * @param {*} lastName1 El primer apellido de la persona.
+     * @param {*} lastName2 El segundo apellido de la persona.
+     * @param {*} born La fecha de nacimiento de la persona.
+     * @param {*} picture Ruta de una foto de la persona.
+     * @returns Un nuevo objeto Person.
+     */
     this.createPerson = function(name, lastName1, lastName2, born, picture) {
         return new Person(name, lastName1, lastName2, born, picture);
     };
 
+    /**
+     * Método que crea un objeto Category.
+     * @param {*} name EL nombre de la categoria.
+     * @param {*} description La descripción de la categoria.
+     * @returns Un nuevo objeto Category.
+     */
     this.createCategory = function(name, description) {
         return new Category(name, description);
     };
 
+    /**
+     * Método que crea un objeto Resource.
+     * @param {*} duration La duración del recurso.
+     * @param {*} link El link con la ruta del recurso.
+     * @returns Un nuevo objeto Resource.
+     */
     this.createResource = function(duration, link) {
         return new Resource(duration, link);
     };
 
+    /**
+     * Método que crea un objeto Movie.
+     * @param {*} title El título de la pelicula.
+     * @param {*} nationality La nacionalidad de la película.
+     * @param {*} publication La fecha de publicación de la película.
+     * @param {*} synopsis De que trata la película.
+     * @param {*} image Ruta de la imagen de la película.
+     * @param {*} resource Un objeto Resource .
+     * @param {*} locations Array de objetos Coordinate donde transcurre la película. 
+     * @returns Un nuevo objeto Movie.
+     */
     this.createMovie = function(title, nationality, publication, synopsis, image, resource, locations) {
         return new Movie(title, nationality, publication, synopsis, image, resource, locations);
     };
 
+    /**
+     * Método que crea un objeto Serie.
+     * @param {*} title El título de la pelicula.
+     * @param {*} nationality La nacionalidad de la película.
+     * @param {*} publication La fecha de publicación de la película.
+     * @param {*} synopsis De que trata la película.
+     * @param {*} image Ruta de la imagen de la película.
+     * @param {*} resources Array de objetos Resource para la película.
+     * @param {*} locations Array de objetos Coordinate donde transcurre la película. 
+     * @param {*} seasons Number con el número de temporadas.
+     * @returns Un nuevo objeto Serie.
+     */
     this.createSerie = function(title, nationality, publication, synopsis, image, resources, locations, seasons) {
         return new Serie(title, nationality, publication, synopsis, image, resources, locations, seasons);
     };
 
+    /**
+     * Método que crea un objeto User.
+     * @param {*} username El nombre de usuario del usuario.
+     * @param {*} email El email del usuario.
+     * @param {*} password La contraseña del usuario.
+     * @returns Un nuevo objeto User.
+     */
     this.createUser = function(username, email, password) {
         return new User(username, email, password);
     };
 
+    /**
+     * Método que crea un objeto Coordinate.
+     * @param {*} latitude Latitud de la coordenada.
+     * @param {*} longitude Longitud de la coordenada.
+     * @returns Un nuevo objeto Coordinate.
+     */
     this.createCoordinate = function(latitude, longitude) {
         return new Coordinate(latitude, longitude);
     };
 }
-
-export {ObjectFactory};
