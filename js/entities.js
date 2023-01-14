@@ -273,6 +273,14 @@ export default function ObjectFactory() {
     };
 
     /**
+     * Método para probar que la clase Production no se puede instanciar.
+     * @throws Una excepción tipo AbstractClassException.
+     */
+    this.createProduction = function() {
+        return new Production();
+    }
+
+    /**
      * Método que crea un objeto Resource.
      * @param {*} duration La duración del recurso.
      * @param {*} link El link con la ruta del recurso.
