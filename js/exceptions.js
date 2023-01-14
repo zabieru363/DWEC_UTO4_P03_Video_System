@@ -77,7 +77,7 @@ export default function ExceptionFactory() {
     }
   }
 
-  this.throwError(error, object = null, value = "") {
+  this.throwError = function(error, object = null, value = "") {
     let exception = null;
 
     switch(error.name) {
