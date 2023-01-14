@@ -88,7 +88,7 @@ export default function ExceptionFactory() {
         exception = new EmptyValueException(value);
         break;
       case "NoValidObjectException":
-        exception = new NoValidObjectException(value, object.name):
+        exception = new NoValidObjectException(value, object.name);
         break;
       case "InvalidTypeException":
         exception = new InvalidTypeException(value);
