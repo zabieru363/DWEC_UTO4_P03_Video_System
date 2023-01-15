@@ -24,10 +24,12 @@ export function ObjectFactory() {
 
         constructor(name, lastName1, lastName2, born, picture) {
             // Validación de campos:
-            if(!name) throw factory.throwError("EmptyValueException", null, "name");
-            if(!lastName1) throw factory.throwError("EmptyValueException", null, "lastName1");
+            if(/\d/g.test(name)) throw factory.throwError("NoValidFieldException", null, "name");
+            if(/\d/g.test(lastName1)) throw factory.throwError("NoValidFieldException", null, "lastName1");
+            if(/\d/g.test(lastName2)) throw factory.throwError("NoValidFieldException", null, "lastName2");
             if(!born) throw factory.throwError("EmptyValueException", null, "born");
             if(!(born instanceof Date)) throw factory.throwError("NoValidObjectException", Date, "born");
+            if(!(/[A-Z]{1}:\\\w/.test(picture))) throw factory.throwError("NoValidFieldException", null, "picture");
             
             this.#name = name;
             this.#lastName1 = lastName1;
@@ -83,6 +85,7 @@ export function ObjectFactory() {
         constructor(duration, link) {
             // Validación de campos:
             if(!duration) throw factory.throwError("EmptyValueException", null, "duration");
+            if(!(/videosystem.com\\\w/.test(link))) throw factory.throwError("NoValidFieldException", null, "link");
 
             this.#duration = duration;
             this.#link = link;
@@ -107,6 +110,7 @@ export function ObjectFactory() {
             // Validación de campos:
             if(!publication) throw factory.throwError("EmptyValueException", null, "publication");
             if(!(publication instanceof Date)) throw factory.throwError("NoValidObjectException", Date, "publication");
+            if(!(/[A-Z]{1}:\\\w/.test(picture))) throw factory.throwError("NoValidFieldException", null, "picture");
 
             this.#title = title;
             this.#nationality = nationality;
@@ -194,7 +198,8 @@ export function ObjectFactory() {
             // Validación de campos:
             if(!username) throw factory.throwError("EmptyValueException", null, "username");
             if(!(/\S+@\S+\.\S+/.test(email))) throw factory.throwError("NoValidFieldException", null, "email");
-            if(!password) throw factory.throwError("EmptyValueException", null, "password");
+            // Incluimos letras y números y cómo mínimo 8 caracteres.
+            if(!(/\w{8}/.test(password))) throw factory.throwError("NoValidFieldException", null, "password");
 
             this.#username = username;
             this.#email = email;
