@@ -17,6 +17,21 @@ export const VideoSystem = (function() {
                 if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
                 this.#name = name;
             }
+
+            /**
+             * Getter que devuelve el nombre del sistema.
+             */
+            get name() {
+                return this.#name;
+            }
+
+            /**
+             * Setter qeu permite cambiar el nombre del sistema.
+             */
+            set name(value) {
+                if(!value) throw exceptionFactory.throwError("EmptyValueException", null, "name");
+                this.#name = value;
+            }
         }
     }
 
