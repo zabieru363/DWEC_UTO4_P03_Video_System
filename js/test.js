@@ -210,6 +210,13 @@ import {ObjectFactory} from "./entities.js";
         console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido.
     }
 
+    // La ruta de la imagen no es válida.
+    try {
+        const serie = factory.createSerie("Wednesday", "random", new Date(2020, 8, 10), "Una serie de comedia", "nose", [], [], 1);
+    }catch(error) {
+        console.error(error);   // El campo image no es válido.
+    }
+
     // ? Objeto User
     console.log("Objeto User");
 
@@ -238,11 +245,11 @@ import {ObjectFactory} from "./entities.js";
         console.error(error);   // El email no es válido.
     }
 
-    // La contraseña no puede estar vacía.
+    // La contraseña no es válida.
     try {
-        const user = factory.createUser("zabieru363", "zabierujlc@gmail.com", "");
+        const user = factory.createUser("zabieru363", "zabierujlc@gmail.com", "123");
     }catch(error) {
-        console.error(error);   // El campo password no puede estar vacío.
+        console.error(error);   // El campo password no es válido.
     }
 
     // ? Objeto Coordinate
