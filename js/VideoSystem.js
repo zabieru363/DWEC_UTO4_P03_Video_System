@@ -13,6 +13,7 @@ export const VideoSystem = (function() {
         class VideoSystem {
             #name;
             #categories = [];
+            #users = [];
 
             constructor(name) {
                 if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
@@ -78,6 +79,21 @@ export const VideoSystem = (function() {
                 this.#categories.splice(pos, 1);
 
                 return this.#categories.length;
+            }
+
+            /**
+             * Getter que devuelve un iterador que permite recorrer
+             * los usuarios del sistema.
+             * @returns Un iterador de objetos User.
+             */
+            get users() {
+                const users = this.#users;
+
+                return {
+                    * [Symbol.iterator]() {
+                        for(let i = 0; i < users.length; i++) yield users[i];
+                    }
+                }
             }
         }
     }
