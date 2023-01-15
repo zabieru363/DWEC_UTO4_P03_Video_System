@@ -64,6 +64,21 @@ export const VideoSystem = (function() {
 
                 return this.#categories.push(category);
             }
+
+            /**
+             * Método que elimina una categoría del sistema. La categoría debe de
+             * estar registrada previamente, de lo contrario se lanzará una excepción.
+             * @param {*} category Un objeto Category.
+             * @returns Número de categorias que hay en total en el sistema.
+             */
+            removeCategory(category) {
+                const pos = this.#categories.findIndex(cat => cat.name === category.name);
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredCategoryException");
+
+                this.#categories.splice(pos, 1);
+
+                return this.#categories.length;
+            }
         }
     }
 
