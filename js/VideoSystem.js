@@ -50,6 +50,12 @@ export const VideoSystem = (function() {
                     }
                 }
             }
+
+            addCategory(category) {
+                if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
+                
+                const exists = this.#categories.some(cat => cat.name === category.name);
+            }
         }
     }
 
