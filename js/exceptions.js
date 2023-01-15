@@ -77,6 +77,17 @@ export function ExceptionFactory() {
     }
   }
 
+  /**
+   * Clase de excepción que genera un error si la categoria
+   * ya existe en la colección de categorias.
+   */
+  class CategoryExistsException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("La categoria ya existe.", fileName, lineNumber);
+      this.name = "CategoryExistsException";
+    }
+  }
+
   this.throwError = function(error, object = null, value = "") {
     let exception = null;
 
@@ -95,6 +106,9 @@ export function ExceptionFactory() {
         break;
       case "NoValidFieldException":
         exception = new NoValidFieldException(value);
+        break;
+      case "CategoryExistsException":
+        exception = new CategoryExistsException();
         break;
       default: exception = new BaseException("No se especifico ningún error");
     }
