@@ -88,6 +88,17 @@ export function ExceptionFactory() {
     }
   }
 
+  /**
+   * Clase de excepción que genera un error si la categoría
+   * no está registrada en el sistema.
+   */
+  class NotRegisteredCategoryException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("La categoria no está registrada.", fileName, lineNumber);
+      this.name = "NotRegisteredCategoryException";
+    }
+  }
+
   this.throwError = function(error, object = null, value = "") {
     let exception = null;
 
@@ -109,6 +120,9 @@ export function ExceptionFactory() {
         break;
       case "CategoryExistsException":
         exception = new CategoryExistsException();
+        break;
+      case "NotRegisteredCategoryException":
+        exception = new NotRegisteredCategoryException();
         break;
       default: exception = new BaseException("No se especifico ningún error");
     }
