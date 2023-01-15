@@ -110,7 +110,7 @@ export function ObjectFactory() {
             // Validación de campos:
             if(!publication) throw factory.throwError("EmptyValueException", null, "publication");
             if(!(publication instanceof Date)) throw factory.throwError("NoValidObjectException", Date, "publication");
-            if(!(/[A-Z]{1}:\\\w/.test(picture))) throw factory.throwError("NoValidFieldException", null, "picture");
+            if(!(/[A-Z]{1}:\\\w/.test(image))) throw factory.throwError("NoValidFieldException", null, "picture");
 
             this.#title = title;
             this.#nationality = nationality;
