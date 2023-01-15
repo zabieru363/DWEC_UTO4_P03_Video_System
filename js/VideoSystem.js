@@ -12,6 +12,7 @@ export const VideoSystem = (function() {
     function init() {
         class VideoSystem {
             #name;
+            #categories = [];
 
             constructor(name) {
                 if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
@@ -20,6 +21,7 @@ export const VideoSystem = (function() {
 
             /**
              * Getter que devuelve el nombre del sistema.
+             * @returns El nombre del sistema.
              */
             get name() {
                 return this.#name;
@@ -27,10 +29,26 @@ export const VideoSystem = (function() {
 
             /**
              * Setter qeu permite cambiar el nombre del sistema.
+             * @param value El nuevo valor para el nombre.
              */
             set name(value) {
                 if(!value) throw exceptionFactory.throwError("EmptyValueException", null, "name");
                 this.#name = value;
+            }
+
+            /**
+             * Getter que devuelve un iterador que permite recorrer
+             * las categorias del sistema.
+             * @returns Un iterador de categorias.
+             */
+            get categories() {
+                const categories = this.#categories;
+
+                return {
+                    * [Symbol.iterator]() {
+                        for(let i = 0; i < categories.length; i++) yield categories[i];
+                    }
+                }
             }
         }
     }
