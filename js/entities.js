@@ -198,7 +198,8 @@ export function ObjectFactory() {
             // Validación de campos:
             if(!username) throw factory.throwError("EmptyValueException", null, "username");
             if(!(/\S+@\S+\.\S+/.test(email))) throw factory.throwError("NoValidFieldException", null, "email");
-            if(!password) throw factory.throwError("EmptyValueException", null, "password");
+            // Incluimos letras y números y cómo mínimo 8 caracteres.
+            if(!(/\w{8}/.test(password))) throw factory.throwError("NoValidFieldException", null, "password");
 
             this.#username = username;
             this.#email = email;
