@@ -96,13 +96,23 @@ export const VideoSystem = (function() {
                 }
             }
 
+            /**
+             * Añade un nuevo usuario al sistema. Su nombre de usuario y email
+             * no deben de existir ya en el sistema para poder añadirse, de lo
+             * contrario se lanzará una excepción.
+             * @param {*} user Un objeto user.
+             * @returns El total de usuarios registrados en el sistema.
+             */
             addUser(user) {
                 if(!user) throw exceptionFactory.throwError("EmptyValueException", null, "user");
 
                 const usernameExists = this.#users.some(u => u.username === user.username);
                 const emailExists = this.#users.some(u => u.email === user.email);
 
-                
+                if(usernameExists) throw exceptionFactory.throwError("UsernameExistsException");
+                if(emailExists) throw exceptionFactory.throwError("EmailExistsException");
+
+                return this.#users.push(user);
             }
         }
     }
