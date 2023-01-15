@@ -18,18 +18,25 @@ import {ObjectFactory} from "./entities.js";
     
     // ! EXCEPCIONES DEL OBJETO PERSON.
     
-    // El nombre está sin definir:
+    // El nombre contiene números:
     try {
-        const person = factory.createPerson("", "López", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
+        const person = factory.createPerson("Javier2", "López", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
     }catch(error) {
-        console.error(error);   // El campo name no puede estar vacío.
+        console.error(error);   // El campo name no es válido.
     }
     
-    // El primer apellido está sin definir:
+    // El primer apellido contiene números:
     try {
-        const person = factory.createPerson("Javier", "", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
+        const person = factory.createPerson("Javier", "López2", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
     }catch(error) {
-        console.error(error);   // El campo lastName1 no puede estar vacío.
+        console.error(error);   // El campo lastName1 no es válido.
+    }
+
+    // El segundo apellido contiene números:
+    try {
+        const person = factory.createPerson("Javier", "López", "Carretero2", new Date(2000, 8, 6), 'C:\\Users\\images');
+    }catch(error) {
+        console.error(error);   // El campo lastName2 no es válido.
     }
     
     // La fecha de nacimiento está sin definir:
@@ -43,7 +50,14 @@ import {ObjectFactory} from "./entities.js";
     try {
         const person = factory.createPerson("Javier", "López", "Carretero", "2000, 8, 6", 'C:\\Users\\images');
     }catch(error) {
-        console.error(error);   // EL objeto que se está pasando no es una fecha.
+        console.error(error);   // Objeto no válido born, se esperaba un objeto de tipo Date.
+    }
+
+    // La ruta de la imagen no es válida:
+    try {
+        const person = factory.createPerson("Javier", "López", "Carretero", new Date(2000, 8, 6), "nose");
+    }catch(error) {
+        console.error(error);   // El campo picture no es válido.
     }
     
     // ? Objeto Category
@@ -75,6 +89,13 @@ import {ObjectFactory} from "./entities.js";
         const resource = factory.createResource("", "videosystem.com\\recurso1");
     }catch(error) {
         console.error(error);   // El campo duration no está definido.
+    }
+
+    // La ruta del recurso no es válida:
+    try {
+        const resource = factory.createResource(80, "random");
+    }catch(error) {
+        console.error(error);   // El campo link no es válido.
     }
 
     // ? Objeto Production
@@ -130,6 +151,13 @@ import {ObjectFactory} from "./entities.js";
         const movie = factory.createMovie("Avatar 2", "random", new Date(2022, 10, 12), "Una pelicula de hombres azules", 'C:\\Users\\images', resource, "recursos");
     }catch(error) {
         console.error(error);   // El objeto que se está pasando no es un array.
+    }
+
+    // La ruta de la imagen no es válida.
+    try {
+        const movie = factory.createMovie("Avatar 2", "random", new Date(2022, 10, 12), "Una pelicula de hombres azules", 'nose', resource, "recursos");
+    }catch(error) {
+        console.error(error);   // El campo image no es válido.
     }
 
     // ? Objeto Serie
