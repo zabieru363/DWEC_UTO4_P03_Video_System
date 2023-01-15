@@ -84,11 +84,11 @@ import {ObjectFactory} from "./entities.js";
     
     // ! EXCEPCIONES DEL OBJETO RESOURCE.
 
-    // La duración en minutos está sin definir:
+    // La duración en minutos no es un number:
     try {
-        const resource = factory.createResource("", "videosystem.com\\recurso1");
+        const resource = factory.createResource("minutos", "videosystem.com\\recurso1");
     }catch(error) {
-        console.error(error);   // El campo duration no está definido.
+        console.error(error);   // El tipo del argumento duration que se le está pasando a este constructor no es válido.
     }
 
     // La ruta del recurso no es válida:
