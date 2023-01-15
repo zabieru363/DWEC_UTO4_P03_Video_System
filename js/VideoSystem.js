@@ -51,10 +51,18 @@ export const VideoSystem = (function() {
                 }
             }
 
+            /**
+             * Método que añade una categoría al sistema.
+             * @param {*} category La categoría a añadir, debe de ser un objeto Category.
+             * @returns Número de categorias que hay en total en el sistema.
+             */
             addCategory(category) {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
                 
                 const exists = this.#categories.some(cat => cat.name === category.name);
+                if(exists) throw exceptionFactory.throwError("CategoryExistsException");
+
+                return this.#categories.push(category);
             }
         }
     }
