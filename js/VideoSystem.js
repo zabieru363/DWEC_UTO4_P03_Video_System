@@ -1,8 +1,10 @@
 "use strict";
 
+import { ExceptionFactory } from "./exceptions.js";
 import { ObjectFactory } from "./entities.js";
 
-const factory = new ObjectFactory();
+const exceptionFactory = new ExceptionFactory();
+const objectFactory = new ObjectFactory();
 
 export const VideoSystem = (function() {
     let instantiated;
@@ -11,7 +13,8 @@ export const VideoSystem = (function() {
         class VideoSystem {
             #name;
 
-            constructor(name = "VideoSystem") {
+            constructor(name) {
+                if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
                 this.#name = name;
             }
         }
