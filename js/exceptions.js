@@ -82,13 +82,13 @@ export function ExceptionFactory() {
 
     switch(error) {
       case "AbstractClassException":
-        exception = new AbstractClassException(object.name);
+        exception = new AbstractClassException(object);
         break;
       case "EmptyValueException":
         exception = new EmptyValueException(value);
         break;
       case "NoValidObjectException":
-        exception = new NoValidObjectException(value, object.name);
+        exception = new NoValidObjectException(value, object);
         break;
       case "InvalidTypeException":
         exception = new InvalidTypeException(value);
