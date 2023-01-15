@@ -84,7 +84,7 @@ export function ObjectFactory() {
         
         constructor(duration, link) {
             // Validación de campos:
-            if(!duration) throw factory.throwError("EmptyValueException", null, "duration");
+            if(typeof duration !== "number") throw factory.throwError("InvalidTypeException", null, "duration");
             if(!(/videosystem.com\\\w/.test(link))) throw factory.throwError("NoValidFieldException", null, "link");
 
             this.#duration = duration;
@@ -110,7 +110,7 @@ export function ObjectFactory() {
             // Validación de campos:
             if(!publication) throw factory.throwError("EmptyValueException", null, "publication");
             if(!(publication instanceof Date)) throw factory.throwError("NoValidObjectException", Date, "publication");
-            if(!(/[A-Z]{1}:\\\w/.test(image))) throw factory.throwError("NoValidFieldException", null, "picture");
+            if(!(/[A-Z]{1}:\\\w/.test(image))) throw factory.throwError("NoValidFieldException", null, "image");
 
             this.#title = title;
             this.#nationality = nationality;
