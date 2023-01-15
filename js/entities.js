@@ -85,6 +85,7 @@ export function ObjectFactory() {
         constructor(duration, link) {
             // Validación de campos:
             if(!duration) throw factory.throwError("EmptyValueException", null, "duration");
+            if(!(/videosystem.com\\\w/.test(link))) throw factory.throwError("NoValidFieldException", null, "link");
 
             this.#duration = duration;
             this.#link = link;
