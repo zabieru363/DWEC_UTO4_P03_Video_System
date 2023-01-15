@@ -95,6 +95,15 @@ export const VideoSystem = (function() {
                     }
                 }
             }
+
+            addUser(user) {
+                if(!user) throw exceptionFactory.throwError("EmptyValueException", null, "user");
+
+                const usernameExists = this.#users.some(u => u.username === user.username);
+                const emailExists = this.#users.some(u => u.email === user.email);
+
+                
+            }
         }
     }
 
