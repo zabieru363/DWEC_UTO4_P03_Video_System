@@ -99,6 +99,27 @@ export function ExceptionFactory() {
     }
   }
 
+  /**
+   * Clase de excepción que genera un error si el nombre
+   * de usuario ya existe.
+   */
+  class UsernameExistsException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("Este nombre de usuario ya existe.", fileName, lineNumber);
+      this.name = "UsernameExistsException";
+    }
+  }
+
+  /**
+   * Clase de excepción que genera un error si el email ya existe.
+   */
+  class EmailExistsException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("Este email ya existe.", fileName, lineNumber);
+      this.name = "EmailExistsException";
+    }
+  }
+
   this.throwError = function(error, object = null, value = "") {
     let exception = null;
 
@@ -123,6 +144,12 @@ export function ExceptionFactory() {
         break;
       case "NotRegisteredCategoryException":
         exception = new NotRegisteredCategoryException();
+        break;
+      case "UsernameExistsException":
+        exception = new UsernameExistsException();
+        break;
+      case "EmailExistsException":
+        exception = new EmailExistsException();
         break;
       default: exception = new BaseException("No se especifico ningún error");
     }
