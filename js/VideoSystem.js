@@ -15,6 +15,7 @@ export const VideoSystem = (function() {
             #categories = [];
             #users = [];
             #productions = [];
+            #actors = [];
 
             constructor(name) {
                 if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
@@ -178,6 +179,20 @@ export const VideoSystem = (function() {
                 this.#productions.splice(pos, 1);
 
                 return this.#productions.length;
+            }
+
+            /**
+             * Getter que devuelve un iterador que permite obtener
+             * los actores que hay registrados en el sistema.
+             */
+            get actors() {
+                const actors = this.#actors;
+
+                return {
+                    * [Symbol.iterator]() {
+                        for(let i = 0; i < actors.length; i++) yield actors[i];
+                    }
+                }
             }
         }
     }
