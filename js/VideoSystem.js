@@ -147,6 +147,21 @@ export const VideoSystem = (function() {
                     }
                 }
             }
+
+            /**
+             * Método que añade una producción al sistema. Si ya está
+             * registrada se lanzará una excepción.
+             * @param {*} production Un objeto Production.
+             * @returns El número total de producciones que hay en el sistema.
+             */
+            addProduction(production) {
+                if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+
+                const productionExists = this.#productions.some(p => p.title === production.title);
+                if(productionExists) throw exceptionFactory.throwError("ProductionExistsException");
+
+                return this.#productions.push(production);
+            }
         }
     }
 
