@@ -14,6 +14,7 @@ export const VideoSystem = (function() {
             #name;
             #categories = [];
             #users = [];
+            #productions = [];
 
             constructor(name) {
                 if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
@@ -130,6 +131,21 @@ export const VideoSystem = (function() {
                 this.#users.splice(pos, 1);
 
                 return this.#users.length;
+            }
+
+            /**
+             * Getter que devuelve un iterador que permite obtener las
+             * producciones que hay registradas en el sistema.
+             * @returns Un iterador de objetos Production.
+             */
+            get productions() {
+                const productions = this.#productions;
+
+                return {
+                    * [Symbol.iterator]() {
+                        for(let i = 0; i < productions.length; i++) yield productions[i];
+                    }
+                }
             }
         }
     }
