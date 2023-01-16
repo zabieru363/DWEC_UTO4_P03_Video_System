@@ -120,6 +120,17 @@ export function ExceptionFactory() {
     }
   }
 
+  /**
+   * Clase de excepción que genera un error si se quiere
+   * eliminar un usuario que no existe.
+   */
+  class NotRegisteredUserException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("El usuario que se quiere eliminar no existe en el sistema", fileName, lineNumber);
+      this.name = "EmailExistsException";
+    }
+  }
+
   this.throwError = function(error, object = null, value = "") {
     let exception = null;
 
@@ -150,6 +161,9 @@ export function ExceptionFactory() {
         break;
       case "EmailExistsException":
         exception = new EmailExistsException();
+        break;
+      case "NotRegisteredUserException":
+        exception = new NotRegisteredUserException();
         break;
       default: exception = new BaseException("No se especifico ningún error");
     }
