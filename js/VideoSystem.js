@@ -114,6 +114,23 @@ export const VideoSystem = (function() {
 
                 return this.#users.push(user);
             }
+
+            /**
+             * Método que elimina un usuario del sistema. Si no está
+             * registrado se lanzará una excepción.
+             * @param {*} user Un objeto User.
+             * @returns El número total de usuarios que hay en el sistema.
+             */
+            removeUser(user) {
+                if(!user) throw exceptionFactory.throwError("EmptyValueException", null, "user");
+
+                const pos = this.#users.findIndex(u => u.username === user.username);
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredUserException");
+
+                this.#users.splice(pos, 1);
+
+                return this.#users.length;
+            }
         }
     }
 
