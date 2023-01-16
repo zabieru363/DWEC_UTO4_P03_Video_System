@@ -162,6 +162,23 @@ export const VideoSystem = (function() {
 
                 return this.#productions.push(production);
             }
+
+            /**
+             * Método que elimina una producción del sistema. Si no está
+             * registrada, lanzará una excepción.
+             * @param {*} production Un objeto Production.
+             * @returns El número total de producciones que hay en el sistema.
+             */
+            removeProduction(production) {
+                if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+
+                const pos = this.#productions.findIndex(p => p.title === production.title);
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredProductionException");
+
+                this.#productions.splice(pos, 1);
+
+                return this.#productions.length;
+            }
         }
     }
 
