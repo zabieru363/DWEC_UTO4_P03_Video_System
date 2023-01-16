@@ -184,6 +184,8 @@ export const VideoSystem = (function() {
             /**
              * Getter que devuelve un iterador que permite obtener
              * los actores que hay registrados en el sistema.
+             * @returns Un iterador de objetos Person que son los
+             * actores almacenados en el sistema.
              */
             get actors() {
                 const actors = this.#actors;
