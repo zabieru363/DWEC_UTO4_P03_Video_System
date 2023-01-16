@@ -127,7 +127,28 @@ export function ExceptionFactory() {
   class NotRegisteredUserException extends BaseException {
     constructor(fileName, lineNumber) {
       super("El usuario que se quiere eliminar no existe en el sistema", fileName, lineNumber);
-      this.name = "EmailExistsException";
+      this.name = "NotRegisteredUserException";
+    }
+  }
+
+  /**
+   * Clase de excepción que genera un error si la producción ya existe.
+   */
+  class ProductionExistsException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("La producción ya existe.", fileName, lineNumber);
+      this.name = "ProductionExistsException";
+    }
+  }
+
+  /**
+   * Clase de excepción que genera un error si la producción
+   * no está registrada en el sistema.
+   */
+  class NotRegisteredProductionException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("El usuario que se quiere eliminar no existe en el sistema", fileName, lineNumber);
+      this.name = "NotRegisteredUserException";
     }
   }
 
@@ -164,6 +185,15 @@ export function ExceptionFactory() {
         break;
       case "NotRegisteredUserException":
         exception = new NotRegisteredUserException();
+        break;
+      case "NotRegisteredUserException":
+        exception = new NotRegisteredUserException();
+        break;
+      case "ProductionExistsException":
+        exception = new ProductionExistsException();
+        break;
+      case "NotRegisteredProductionException":
+        exception = new NotRegisteredProductionException();
         break;
       default: exception = new BaseException("No se especifico ningún error");
     }
