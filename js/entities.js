@@ -16,6 +16,7 @@ class Person {
     #picture;
 
     constructor(name, lastName1, lastName2, born, picture) {
+        if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         // Validación de campos:
         if(/\d/g.test(name)) throw factory.throwError("NoValidFieldException", null, "name");
         if(/\d/g.test(lastName1)) throw factory.throwError("NoValidFieldException", null, "lastName1");
@@ -50,6 +51,7 @@ class Category {
     #description;
     
     constructor(name, description) {
+        if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         // Validación de campos:
         if(!name) throw factory.throwError("EmptyValueException", null, "name");
         
@@ -76,6 +78,7 @@ class Resource {
     #link;
     
     constructor(duration, link) {
+        if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         // Validación de campos:
         if(typeof duration !== "number") throw factory.throwError("InvalidTypeException", null, "duration");
         if(!(/videosystem.com\\\w/.test(link))) throw factory.throwError("NoValidFieldException", null, "link");
@@ -140,6 +143,7 @@ class Movie extends Production {
     #locations;
 
     constructor(title, nationality, publication, synopsis, image, resource, locations) {
+        if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
@@ -163,6 +167,7 @@ class Serie extends Production {
     #seasons;
 
     constructor(title, nationality, publication, synopsis, image, resources, locations, seasons) {
+        if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         super(title, nationality, publication, synopsis, image);
 
         // Validación de campos:
@@ -188,6 +193,7 @@ class User {
     #password;
 
     constructor(username, email, password) {
+        if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         // Validación de campos:
         if(!username) throw factory.throwError("EmptyValueException", null, "username");
         if(!(/\S+@\S+\.\S+/.test(email))) throw factory.throwError("NoValidFieldException", null, "email");
@@ -226,6 +232,7 @@ class Coordinate {
     #longitude;
 
     constructor(latitude, longitude) {
+        if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         // Validación de campos:
         if(typeof latitude !== "number") throw factory.throwError("InvalidTypeException",null, "latitude");
         if(typeof longitude !== "number") throw factory.throwError("InvalidTypeException",null, "longitude");
