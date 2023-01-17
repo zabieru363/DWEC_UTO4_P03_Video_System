@@ -1,10 +1,9 @@
 "use strict";
 
 import { ExceptionFactory } from "./exceptions.js";
-import { ObjectFactory } from "./entities.js";
+import * as Entities from "./entities.js";
 
 const exceptionFactory = new ExceptionFactory();
-const objectFactory = new ObjectFactory();
 
 export const VideoSystem = (function() {
     let instantiated;
