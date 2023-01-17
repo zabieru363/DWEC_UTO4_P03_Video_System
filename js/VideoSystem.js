@@ -64,7 +64,7 @@ export const VideoSystem = (function() {
                     throw exceptionFactory.throwError("NoValidObjectException", Entities.Category, "category");
                 
                 const exists = this.#categories.some(cat => cat.name === category.name);
-                if(exists) throw exceptionFactory.throwError("CategoryExistsException");
+                if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Category);
 
                 return this.#categories.push(category);
             }
@@ -81,7 +81,7 @@ export const VideoSystem = (function() {
                     throw exceptionFactory.throwError("NoValidObjectException", Entities.Category, "category");
 
                 const pos = this.#categories.findIndex(cat => cat.name === category.name);
-                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredCategoryException");
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredObjectException", Entities.Category);
 
                 this.#categories.splice(pos, 1);
 
@@ -136,7 +136,7 @@ export const VideoSystem = (function() {
                     throw exceptionFactory.throwError("NoValidObjectException", Entities.User, "user");
 
                 const pos = this.#users.findIndex(u => u.username === user.username);
-                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredUserException");
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredObjectException", Entities.User);
 
                 this.#users.splice(pos, 1);
 
@@ -170,7 +170,7 @@ export const VideoSystem = (function() {
                     throw exceptionFactory.throwError("NoValidObjectException", Entities.Production, "production");
 
                 const productionExists = this.#productions.some(p => p.title === production.title);
-                if(productionExists) throw exceptionFactory.throwError("ProductionExistsException");
+                if(productionExists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Production);
 
                 return this.#productions.push(production);
             }
@@ -187,7 +187,7 @@ export const VideoSystem = (function() {
                     throw exceptionFactory.throwError("NoValidObjectException", Entities.Production, "production");
 
                 const pos = this.#productions.findIndex(p => p.title === production.title);
-                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredProductionException");
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredObjectException", Entities.Production);
 
                 this.#productions.splice(pos, 1);
 
