@@ -241,3 +241,5 @@ class Coordinate {
         this.#longitude = longitude;
     }
 }
+
+export {Person, Category, Resource, Production, Movie, Serie, User, Coordinate};
