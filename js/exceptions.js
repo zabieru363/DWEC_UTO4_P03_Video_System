@@ -21,6 +21,17 @@ export function ExceptionFactory() {
   }
 
   /**
+   * Clase de excepción que genera un error si se invoca
+   * al constructor sin el operador new.
+   */
+  class InvalidAccessConstructorException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("El constructor se debe de invocar con new.", fileName, lineNumber);
+      this.name = "InvalidAccessConstructorException";
+    }
+  }  
+
+  /**
    * Clase de excepción que genera un error cada vez que intentamos
    * instanciar una clase abstracta.
    */
@@ -156,6 +167,9 @@ export function ExceptionFactory() {
     let exception = null;
 
     switch(error) {
+      case "InvalidAccessConstructorException":
+        exception = new InvalidAccessConstructorException();
+        break;
       case "AbstractClassException":
         exception = new AbstractClassException(object);
         break;
