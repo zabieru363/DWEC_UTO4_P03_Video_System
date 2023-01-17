@@ -76,6 +76,10 @@ export const VideoSystem = (function() {
              * @returns Número de categorias que hay en total en el sistema.
              */
             removeCategory(category) {
+                if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
+                if(!(category instanceof Entities.Category)) 
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Category, "category");
+                    
                 const pos = this.#categories.findIndex(cat => cat.name === category.name);
                 if(pos === -1) throw exceptionFactory.throwError("NotRegisteredCategoryException");
 
