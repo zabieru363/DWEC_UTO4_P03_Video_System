@@ -183,6 +183,8 @@ export const VideoSystem = (function() {
              */
             removeProduction(production) {
                 if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                if(!(production instanceof Entities.Production)) 
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Production, "production");
 
                 const pos = this.#productions.findIndex(p => p.title === production.title);
                 if(pos === -1) throw exceptionFactory.throwError("NotRegisteredProductionException");
