@@ -132,6 +132,8 @@ export const VideoSystem = (function() {
              */
             removeUser(user) {
                 if(!user) throw exceptionFactory.throwError("EmptyValueException", null, "user");
+                if(!(user instanceof Entities.User)) 
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.User, "user");
 
                 const pos = this.#users.findIndex(u => u.username === user.username);
                 if(pos === -1) throw exceptionFactory.throwError("NotRegisteredUserException");
