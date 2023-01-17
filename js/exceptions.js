@@ -94,7 +94,7 @@ export function ExceptionFactory() {
    */
   class RegisteredObjectException extends BaseException {
     constructor(object, fileName, lineNumber) {
-      super("Este objeto de tipo " object.name + " ya está registrado en el sistema.", fileName, lineNumber);
+      super("Este objeto de tipo " + object.name + " ya está registrado en el sistema.", fileName, lineNumber);
       this.name = "RegisteredObjectException";
     }
   }
@@ -105,7 +105,7 @@ export function ExceptionFactory() {
    */
   class NotRegisteredObjectException extends BaseException {
     constructor(object, fileName, lineNumber) {
-      super("Este objeto de tipo " object.name + " no está registrado en el sistema.", fileName, lineNumber);
+      super("Este objeto de tipo " + object.name + " no está registrado en el sistema.", fileName, lineNumber);
       this.name = "NotRegisteredObjectException";
     }
   }
