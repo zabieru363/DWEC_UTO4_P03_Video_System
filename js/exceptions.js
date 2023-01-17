@@ -21,6 +21,17 @@ export function ExceptionFactory() {
   }
 
   /**
+   * Clase de excepción que genera un error si se invoca
+   * al constructor sin el operador new.
+   */
+  class InvalidAccessConstructorException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("El constructor se debe de invocar con new.", fileName, lineNumber);
+      this.name = "InvalidAccessConstructorException";
+    }
+  }  
+
+  /**
    * Clase de excepción que genera un error cada vez que intentamos
    * instanciar una clase abstracta.
    */
@@ -77,10 +88,88 @@ export function ExceptionFactory() {
     }
   }
 
+  /**
+   * Clase de excepción que genera un error si la categoria
+   * ya existe en la colección de categorias.
+   */
+  class CategoryExistsException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("La categoria ya existe.", fileName, lineNumber);
+      this.name = "CategoryExistsException";
+    }
+  }
+
+  /**
+   * Clase de excepción que genera un error si la categoría
+   * no está registrada en el sistema.
+   */
+  class NotRegisteredCategoryException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("La categoria no está registrada.", fileName, lineNumber);
+      this.name = "NotRegisteredCategoryException";
+    }
+  }
+
+  /**
+   * Clase de excepción que genera un error si el nombre
+   * de usuario ya existe.
+   */
+  class UsernameExistsException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("Este nombre de usuario ya existe.", fileName, lineNumber);
+      this.name = "UsernameExistsException";
+    }
+  }
+
+  /**
+   * Clase de excepción que genera un error si el email ya existe.
+   */
+  class EmailExistsException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("Este email ya existe.", fileName, lineNumber);
+      this.name = "EmailExistsException";
+    }
+  }
+
+  /**
+   * Clase de excepción que genera un error si se quiere
+   * eliminar un usuario que no existe.
+   */
+  class NotRegisteredUserException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("El usuario que se quiere eliminar no existe en el sistema", fileName, lineNumber);
+      this.name = "NotRegisteredUserException";
+    }
+  }
+
+  /**
+   * Clase de excepción que genera un error si la producción ya existe.
+   */
+  class ProductionExistsException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("La producción ya existe.", fileName, lineNumber);
+      this.name = "ProductionExistsException";
+    }
+  }
+
+  /**
+   * Clase de excepción que genera un error si la producción
+   * no está registrada en el sistema.
+   */
+  class NotRegisteredProductionException extends BaseException {
+    constructor(fileName, lineNumber) {
+      super("La producción que se quiere eliminar no existe en el sistema.", fileName, lineNumber);
+      this.name = "NotRegisteredProductionException";
+    }
+  }
+
   this.throwError = function(error, object = null, value = "") {
     let exception = null;
 
     switch(error) {
+      case "InvalidAccessConstructorException":
+        exception = new InvalidAccessConstructorException();
+        break;
       case "AbstractClassException":
         exception = new AbstractClassException(object);
         break;
@@ -95,6 +184,27 @@ export function ExceptionFactory() {
         break;
       case "NoValidFieldException":
         exception = new NoValidFieldException(value);
+        break;
+      case "CategoryExistsException":
+        exception = new CategoryExistsException();
+        break;
+      case "NotRegisteredCategoryException":
+        exception = new NotRegisteredCategoryException();
+        break;
+      case "UsernameExistsException":
+        exception = new UsernameExistsException();
+        break;
+      case "EmailExistsException":
+        exception = new EmailExistsException();
+        break;
+      case "NotRegisteredUserException":
+        exception = new NotRegisteredUserException();
+        break;
+      case "ProductionExistsException":
+        exception = new ProductionExistsException();
+        break;
+      case "NotRegisteredProductionException":
+        exception = new NotRegisteredProductionException();
         break;
       default: exception = new BaseException("No se especifico ningún error");
     }
