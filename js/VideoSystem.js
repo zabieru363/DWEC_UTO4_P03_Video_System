@@ -166,6 +166,8 @@ export const VideoSystem = (function() {
              */
             addProduction(production) {
                 if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                if(!(production instanceof Entities.Production)) 
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Production, "production");
 
                 const productionExists = this.#productions.some(p => p.title === production.title);
                 if(productionExists) throw exceptionFactory.throwError("ProductionExistsException");
