@@ -79,7 +79,7 @@ export const VideoSystem = (function() {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
                 if(!(category instanceof Entities.Category)) 
                     throw exceptionFactory.throwError("NoValidObjectException", Entities.Category, "category");
-                    
+
                 const pos = this.#categories.findIndex(cat => cat.name === category.name);
                 if(pos === -1) throw exceptionFactory.throwError("NotRegisteredCategoryException");
 
@@ -112,6 +112,8 @@ export const VideoSystem = (function() {
              */
             addUser(user) {
                 if(!user) throw exceptionFactory.throwError("EmptyValueException", null, "user");
+                if(!(user instanceof Entities.User)) 
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.User, "user");
 
                 const usernameExists = this.#users.some(u => u.username === user.username);
                 const emailExists = this.#users.some(u => u.email === user.email);
