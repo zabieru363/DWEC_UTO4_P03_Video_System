@@ -325,7 +325,7 @@ import { VideoSystem } from "./VideoSystem.js";
     // * PROBANDO OBJETO VIDEO-SYSTEM
 
     // ? Probando patrón Singleton:
-    const videosystem = VideoSystem.getInstance("videosystem");
+    const videosystem = VideoSystem.getInstance();
     const videosystem2 = VideoSystem.getInstance();
 
     // Comparando ambos objetos.
@@ -335,6 +335,10 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // * Métodos del objeto VideoSystem.
 
-    // ? Getter / setter name
+    // ? Getter name
+    console.log(videosystem.name);
+    
+    // ? Setter name
+    videosystem.name = "Netflix";
     console.log(videosystem.name);
 })();
