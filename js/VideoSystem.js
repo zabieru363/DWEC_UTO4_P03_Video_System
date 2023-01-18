@@ -209,6 +209,23 @@ export const VideoSystem = (function() {
                     }
                 }
             }
+
+            /**
+             * Método que añade un actor al sistema. El objeto debe de ser
+             * un objeto de tipo Person, si ya está registrado lanzará una excepción.
+             * @param {*} actor Un objeto Person que será el actor a añadir al sistema.
+             * @returns La cantidad de actores que hay en el sistema.
+             */
+            addActor(actor) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+                if(!(actor instanceof Entities.Person))
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Person, "actor");
+
+                const exists = this.#actors.some(a => a.name === actor.name);
+                if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Person);
+
+                return this.#actors.push(actor);
+            }
         }
         return Object.freeze(new VideoSystem("videosystem"));
     }
