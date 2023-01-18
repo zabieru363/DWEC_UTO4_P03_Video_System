@@ -16,6 +16,10 @@ export const VideoSystem = (function() {
             #productions = [];
             #actors = [];
             #directors = [];
+            #productionsByCategory = [];
+
+            // Categoría por defecto para el sistema.
+            #defaultCategory = new Entities.Category("DefaultCategory");
 
             constructor(name) {
                 if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
@@ -299,6 +303,40 @@ export const VideoSystem = (function() {
                 this.#directors.splice(pos, 1);
     
                 return this.#directors.length;
+            }
+
+            /**
+             * Método que asigna una o más producciones a una categoría.
+             * Si la categoría o las producciones no existen en el sistema
+             * estas se añaden al sistema automáticamente.
+             * @param {*} category La categoría a la cuál se quieren asignar producciones.
+             * @param  {...any} production Una o más producciones para asignar a la categoría.
+             * @returns El número de producciones asociadas a esa categoría.
+             */
+            assignCategory(category, ...production) {
+                if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
+                if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+
+                // Si el objeto category no existe se añade al sistema:
+                const categoryExists = this.#categories.some(cat => cat.name === category,nane);
+                if(!categoryExists) this.#categories.push(category);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                // Si el objeto production no existe se añade al sistema:
+                let productionExists = false;
+
+                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productions.some(p => p.title === production[i].title);
+                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
+                }
+
+                // Añadimos un objeto literal con:
+                const object = {
+                    category,   // Su categoría.
+                    productions: [...production]    // Y las producciones asociadas a esa categoria.
+                };
+
+                this.#productionsByCategory.push(object);
+
+                return object.productions.length;
             }
         }
         return Object.freeze(new VideoSystem("videosystem"));
