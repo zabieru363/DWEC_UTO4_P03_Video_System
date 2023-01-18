@@ -1,6 +1,7 @@
 "use strict";
 
 import * as Entities from "./entities.js";
+import { VideoSystem } from "./VideoSystem.js";
 
 (function() {
     // * PROBANDO A CREAR INSTANCIAS DE LAS ENTIDADES DEL SISTEMA.
@@ -320,4 +321,20 @@ import * as Entities from "./entities.js";
     }catch(error) {
         console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido
     }
+
+    // * PROBANDO OBJETO VIDEO-SYSTEM
+
+    // ? Probando patrón Singleton:
+    const videosystem = VideoSystem.getInstance("videosystem");
+    const videosystem2 = VideoSystem.getInstance();
+
+    // Comparando ambos objetos.
+    console.log(videosystem == videosystem2);   // true
+    console.log(videosystem === videosystem2);  // true
+    console.log(Object.is(videosystem, videosystem2));  // true
+
+    // * Métodos del objeto VideoSystem.
+
+    // ? Getter / setter name
+    console.log(videosystem.name);
 })();
