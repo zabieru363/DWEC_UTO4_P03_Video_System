@@ -325,6 +325,8 @@ import { VideoSystem } from "./VideoSystem.js";
     // * PROBANDO OBJETO VIDEO-SYSTEM
 
     // ? Probando patrón Singleton:
+
+    console.log("Probando patrón singleton");
     const videosystem = VideoSystem.getInstance();
     const videosystem2 = VideoSystem.getInstance();
 
@@ -336,9 +338,44 @@ import { VideoSystem } from "./VideoSystem.js";
     // * Métodos del objeto VideoSystem.
 
     // ? Getter name
+
+    console.log("Getter name");
     console.log(videosystem.name);
     
     // ? Setter name
+
+    console.log("Setter name");
     videosystem.name = "Netflix";
     console.log(videosystem.name);
+
+    // ? Método addCategory()
+    
+    console.log("Método addCategory");
+    console.log("Total de categorias en el sistema " + videosystem.addCategory(category));
+    
+    // ! Excepciones de addCategory
+    
+    // La categoría es nula.
+    try {
+        console.log("Total de categorias en el sistema " + videosystem.addCategory(""));
+    }catch(error) {
+        console.error(error);   // El campo category no puede estar vacío.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de categorias en el sistema " + videosystem.addCategory(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido category. Se esperaba un objeto de tipo Category.
+    }
+
+    // La categoría ya existe.
+    try {
+        console.log("Total de categorias en el sistema " + videosystem.addCategory(category));
+    }catch(error) {
+        console.error(error);   // Este objeto de tipo Category ya está registrado en el sistema.
+    }
+
+    console.log("Iterador de categorias");
+    for(const category of videosystem.categories) console.log(category);
 })();
