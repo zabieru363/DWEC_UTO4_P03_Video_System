@@ -262,6 +262,23 @@ export const VideoSystem = (function() {
                     }
                 }
             }
+
+            /**
+             * Método que añade un director al sistema. Este debe de ser
+             * un objeto Person y si existe en el sistema se lanzará una excepción.
+             * @param {*} director Un objeto Person que será el director que se quiere añadir.
+             * @returns El total de directores que hay en el sistema.
+             */
+            addDirector(director) {
+                if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
+                if(!(director instanceof Entities.Person))
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Person, "director");
+
+                const exists = this.#directors.some(d => d.name === director.name);
+                if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Person);
+
+                return this.#directors.push(director);
+            }
         }
         return Object.freeze(new VideoSystem("videosystem"));
     }
