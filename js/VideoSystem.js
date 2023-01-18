@@ -210,6 +210,7 @@ export const VideoSystem = (function() {
                 }
             }
         }
+        return Object.freeze(new VideoSystem("videosystem"));
     }
 
     return {
