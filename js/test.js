@@ -376,6 +376,36 @@ import { VideoSystem } from "./VideoSystem.js";
         console.error(error);   // Este objeto de tipo Category ya está registrado en el sistema.
     }
 
+    // ? Iterador de categorias.
+
     console.log("Iterador de categorias");
     for(const category of videosystem.categories) console.log(category);
+
+    // ? Método removeCategory()
+
+    console.log("Método removeCategory");
+    console.log("Total de categorias en el sistema " + videosystem.removeCategory(category));
+
+    // ! Excepciones de addCategory
+
+    // La categoría es nula.
+    try {
+        console.log("Total de categorias en el sistema " + videosystem.removeCategory(""));
+    }catch(error) {
+        console.error(error);   // El campo category no puede estar vacío.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de categorias en el sistema " + videosystem.removeCategory(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido category. Se esperaba un objeto de tipo Category.
+    }
+
+    // La categoria no está registrada.
+    try {
+        console.log("Total de categorias en el sistema " + videosystem.removeCategory(category));
+    }catch(error) {
+        console.error(error);   // Este objeto de tipo Category no está registrado en el sistema.
+    }
 })();
