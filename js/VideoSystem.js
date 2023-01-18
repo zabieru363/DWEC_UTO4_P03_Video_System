@@ -226,6 +226,26 @@ export const VideoSystem = (function() {
 
                 return this.#actors.push(actor);
             }
+
+            /**
+             * Método que elimina un actor del sistema. Debe de ser
+             * un objeto Person y si no está registrado se lanzará
+             * una excepción.
+             * @param {*} actor Un objeto Person que es el actor a eliminar.
+             * @returns La cantidad de actores que hay en el sistema.
+             */
+            removeActor(actor) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+                if(!(actor instanceof Entities.Person))
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Person, "actor");
+
+                const pos = this.#actors.findIndex(a => a.name === actor.name);
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredObjectException", Entities.Person);
+    
+                this.#actors.splice(pos, 1);
+    
+                return this.#actors.length;
+            }
         }
         return Object.freeze(new VideoSystem("videosystem"));
     }
