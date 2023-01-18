@@ -386,7 +386,7 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Método removeCategory");
     console.log("Total de categorias en el sistema " + videosystem.removeCategory(category));
 
-    // ! Excepciones de addCategory
+    // ! Excepciones de removeCategory
 
     // La categoría es nula.
     try {
@@ -407,5 +407,48 @@ import { VideoSystem } from "./VideoSystem.js";
         console.log("Total de categorias en el sistema " + videosystem.removeCategory(category));
     }catch(error) {
         console.error(error);   // Este objeto de tipo Category no está registrado en el sistema.
+    }
+
+    // ? Método addUser()
+
+    console.log("Método addUser");
+    console.log("Total de usuarios en el sistema " + videosystem.addUser(user));
+
+    // ? Iterador de usuarios
+
+    console.log("Iterador de usuarios");
+
+    for(const user of videosystem.users) console.log(user);
+
+    // ! Excepciones de addUser
+
+    // El usuario es nulo.
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.addUser(""));
+    }catch(error) {
+        console.error(error);   // El campo user no puede estar vacío.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.addUser(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido user. Se esperaba un objeto de tipo User.
+    }
+
+    // El nombre de usuario ya existe.
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.addUser(user));
+    }catch(error) {
+        console.error(error);   // Este nombre de usuario ya existe.
+    }
+
+    // El email ya existe.
+    const user2 = new Entities.User("zabieru262", "zabierujlc@gmail.com");
+
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.addUser(user2));
+    }catch(error) {
+        console.error(error);   // Este email ya existe.
     }
 })();
