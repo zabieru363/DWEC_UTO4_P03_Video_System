@@ -279,6 +279,27 @@ export const VideoSystem = (function() {
 
                 return this.#directors.push(director);
             }
+
+            /**
+             * Método que elimina un director del sistema. Debe de
+             * ser un objeto Person que será el director que se quiere
+             * eliminar, este debe de existir, de lo contrario se lanzará
+             * una excepción.
+             * @param {*} director Un objeto Person que será el director a eliminar. 
+             * @returns El total de directores que hay en el sistema.
+             */
+            removeDirector(director) {
+                if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
+                if(!(director instanceof Entities.Person))
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Person, "director");
+
+                const pos = this.#directors.findIndex(d => d.name === director.name);
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredObjectException", Entities.Person);
+    
+                this.#directors.splice(pos, 1);
+    
+                return this.#directors.length;
+            }
         }
         return Object.freeze(new VideoSystem("videosystem"));
     }
