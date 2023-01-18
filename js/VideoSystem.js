@@ -15,6 +15,7 @@ export const VideoSystem = (function() {
             #users = [];
             #productions = [];
             #actors = [];
+            #directors = [];
 
             constructor(name) {
                 if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
@@ -245,6 +246,21 @@ export const VideoSystem = (function() {
                 this.#actors.splice(pos, 1);
     
                 return this.#actors.length;
+            }
+
+            /**
+             * Getter que devuelve un iterador de objetos Person
+             * que son todos los directores almacenados en el sistema.
+             * @returns Un iterador que permite recorrer todos los directores que hay en el sistema.
+             */
+            get directors() {
+                const directors = this.#directors;
+
+                return {
+                    * [Symbol.iterator]() {
+                        for(let i = 0; i < directors.length; i++) yield directors[i];
+                    }
+                }
             }
         }
         return Object.freeze(new VideoSystem("videosystem"));
