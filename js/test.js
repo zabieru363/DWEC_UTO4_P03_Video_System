@@ -420,7 +420,7 @@ import { VideoSystem } from "./VideoSystem.js";
 
     for(const user of videosystem.users) console.log(user);
 
-    // ! Excepciones de addUser
+    // ! Excepciones de addUser.
 
     // El usuario es nulo.
     try {
@@ -450,5 +450,33 @@ import { VideoSystem } from "./VideoSystem.js";
         console.log("Total de usuarios en el sistema " + videosystem.addUser(user2));
     }catch(error) {
         console.error(error);   // Este email ya existe.
+    }
+
+    // ? Método removeUser()
+
+    console.log("Método removeUser");
+    console.log("Total de usuarios en el sistema " + videosystem.removeUser(user));
+    
+    // ! Excepciones de removeUser.
+    
+    // El usuario es nulo.
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.removeUser(""));
+    }catch(error) {
+        console.error(error);   // El campo user no puede estar vacío.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.removeUser(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido user. Se esperaba un objeto de tipo User.
+    }
+
+    // El usuario no está registrado en el sistema.
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.removeUser(user));
+    }catch(error) {
+        console.error(error);   // Este objeto User no está registrado en el sistema.
     }
 })();
