@@ -496,22 +496,50 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // La producción es nula.
     try {
-        console.log("Total de usuarios en el sistema " + videosystem.addProduction(""));
+        console.log("Total de producciones en el sistema " + videosystem.addProduction(""));
     }catch(error) {
         console.error(error);   // El campo production no puede estar vacío.
     }
 
     // Tipo de objeto no válido.
     try {
-        console.log("Total de usuarios en el sistema " + videosystem.addProduction(resource));
+        console.log("Total de producciones en el sistema " + videosystem.addProduction(resource));
     }catch(error) {
         console.error(error);   // Objeto no válido production. Se esperaba un objeto de tipo Production.
     }
 
     // La producción ya existe.
     try {
-        console.log("Total de usuarios en el sistema " + videosystem.addProduction(movie));
+        console.log("Total de producciones en el sistema " + videosystem.addProduction(movie));
     }catch(error) {
         console.error(error);   // Este objeto de tipo Production ya está registrado en el sistema.
+    }
+
+    // ? Método removeProduction()
+
+    console.log("Método removeProduction");
+    console.log("Total de producciones en el sistema " + videosystem.removeProduction(movie));
+
+    // ! Excepciones de removeProduction.
+
+    // La producción es nula.
+    try {
+        console.log("Total de producciones en el sistema " + videosystem.removeProduction(""));
+    }catch(error) {
+        console.error(error);   // El campo production no puede estar vacío.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de producciones en el sistema " + videosystem.removeProduction(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido production. Se esperaba un objeto de tipo Production.
+    }
+
+    // La producción no existe.
+    try {
+        console.log("Total de producciones en el sistema " + videosystem.removeProduction(movie));
+    }catch(error) {
+        console.error(error);   // Este objeto de tipo Production no existe en el sistema.
     }
 })();
