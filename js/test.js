@@ -479,4 +479,39 @@ import { VideoSystem } from "./VideoSystem.js";
     }catch(error) {
         console.error(error);   // Este objeto User no está registrado en el sistema.
     }
+
+    // ? Método addProduction()
+
+    console.log("Método addProduction");
+    // Probamos a añadir un objeto de las 2 clases hijas de las que hereda Production
+    console.log("Total de producciones en el sistema " + videosystem.addProduction(movie));
+    console.log("Total de producciones en el sistema " + videosystem.addProduction(serie));
+
+    // ? Iterador de producciones.
+    
+    console.log("Iterador de producciones");
+    for(const production of videosystem.productions) console.log(production);
+
+    // ! Excepciones de addProduction
+
+    // La producción es nula.
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.addProduction(""));
+    }catch(error) {
+        console.error(error);   // El campo production no puede estar vacío.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.addProduction(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido production. Se esperaba un objeto de tipo Production.
+    }
+
+    // La producción ya existe.
+    try {
+        console.log("Total de usuarios en el sistema " + videosystem.addProduction(movie));
+    }catch(error) {
+        console.error(error);   // Este objeto de tipo Production ya está registrado en el sistema.
+    }
 })();
