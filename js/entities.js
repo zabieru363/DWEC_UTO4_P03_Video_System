@@ -20,7 +20,6 @@ class Person {
         // Validación de campos:
         if(/\d/g.test(name)) throw factory.throwError("NoValidFieldException", null, "name");
         if(/\d/g.test(lastName1)) throw factory.throwError("NoValidFieldException", null, "lastName1");
-        if(/\d/g.test(lastName2)) throw factory.throwError("NoValidFieldException", null, "lastName2");
         if(!born) throw factory.throwError("EmptyValueException", null, "born");
         if(!(born instanceof Date)) throw factory.throwError("NoValidObjectException", Date, "born");
         if(!(/[A-Z]{1}:\\\w/.test(picture))) throw factory.throwError("NoValidFieldException", null, "picture");
