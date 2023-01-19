@@ -681,4 +681,11 @@ import { VideoSystem } from "./VideoSystem.js";
     
     // Comprobemos que pasa si metemos una producción que ya existe en esa categoría.
     console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie));
+    // No añade a la categoría las producciones repetidas.
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie2));
+    
+    // Asignando producciones a otra categoría.
+    const category2 = new Entities.Category("Favoritos", "Mis peliculas favoritas.");
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, movie));
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, serie));
 })();
