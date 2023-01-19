@@ -674,4 +674,8 @@ import { VideoSystem } from "./VideoSystem.js";
 
     console.log("Método assignCategory");
     console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie));
+    
+    // Probando a añadir varios
+    const movie2 = new Entities.Movie("Reza por el diablo", "estadounidense", new Date(2022, 10, 12), "Una pelicula de terror", 'C:\\Users\\images', resource, []);
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie, serie));
 })();
