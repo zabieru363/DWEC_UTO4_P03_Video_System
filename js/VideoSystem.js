@@ -317,26 +317,32 @@ export const VideoSystem = (function() {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
                 if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
 
+                const elements = [...production];
+
                 // Si el objeto category no existe se añade al sistema:
                 const categoryExists = this.#categories.some(cat => cat.name === category.name);
                 if(!categoryExists) this.#categories.push(category);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
                 // Si el objeto production no existe se añade al sistema:
                 let productionExists = false;
 
-                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
-                    productionExists = this.#productions.some(p => p.title === production[i].title);
-                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
+                for(let i = 0; i < elements.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productions.some(p => p.title === elements[i].title);
+                    if(!productionExists) this.#productions.push(elements[i]);     // Este más de lo mismo.
                 }
 
                 // Añadimos un objeto literal con:
                 const object = {
                     category,   // Su categoría.
-                    productions: [...production]    // Y las producciones asociadas a esa categoria.
+                    productions: [] // Array vacío para añadir las producciones asociadas a esa categoría.
                 };
 
                 this.#productionsByCategory.push(object);
 
-                return object.productions.length;
+                // Tenemos que obtener el array con las producciones asociadas a esa categoría.
+                const c = this.#productionsByCategory.find(elem => elem.category === category.name);
+                c.productions.push(...elements);
+
+                return c.productions.length;
             }
         }
         return Object.freeze(new VideoSystem("videosystem"));
