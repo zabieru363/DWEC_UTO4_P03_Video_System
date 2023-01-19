@@ -15,7 +15,7 @@ import { VideoSystem } from "./VideoSystem.js";
     
     // ! EXCEPCIONES DEL OBJETO PERSON.
 
-    // El constructor se invoca con new.
+    // El constructor debe de invocar con new.
     try {
         const person = Entities.Person("Javier", "López", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
     }catch(error) {
@@ -34,13 +34,6 @@ import { VideoSystem } from "./VideoSystem.js";
         const person = new Entities.Person("Javier", "López2", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
     }catch(error) {
         console.error(error);   // El campo lastName1 no es válido.
-    }
-
-    // El segundo apellido contiene números:
-    try {
-        const person = new Entities.Person("Javier", "López", "Carretero2", new Date(2000, 8, 6), 'C:\\Users\\images');
-    }catch(error) {
-        console.error(error);   // El campo lastName2 no es válido.
     }
     
     // La fecha de nacimiento está sin definir:
@@ -545,8 +538,40 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // ? Método addActor()
 
-    const actor1 = new Entities.Person("Tom", "Cruise",);
+    const actor1 = new Entities.Person("Tom", "Cruise", "", new Date(1962, 6, 3), 'C:\\Users\\images');
+    const actor2 = new Entities.Person("Will", "Smith", "", new Date(1968, 9, 25), 'C:\\Users\\images');
+    const actor3 = new Entities.Person("Dwayne", "Johnson", "", new Date(1972, 5, 2), 'C:\\Users\\images');
 
     console.log("Método addActor");
-    console.log("Total de actores en el sistema " + videosystem.addActor());
+    console.log("Total de actores en el sistema " + videosystem.addActor(actor1));
+    console.log("Total de actores en el sistema " + videosystem.addActor(actor2));
+    console.log("Total de actores en el sistema " + videosystem.addActor(actor3));
+    
+    // ? Iterador de actores.
+    
+    console.log("Iterador de actores");
+    for(const actor of videosystem.actors) console.log(actor);
+    
+    // ! Excepciones de addActor.
+    
+    // El actor es nulo.
+    try {
+        console.log("Total de actores en el sistema " + videosystem.addActor(""));
+    }catch(error) {
+        console.error(error);   // El campo actor no puede estar vacío.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de actores en el sistema " + videosystem.addActor(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido actor. Se esperaba un objeto de tipo Person.
+    }
+
+    // El actor ya existe.
+    try {
+        console.log("Total de actores en el sistema " + videosystem.addActor(actor1));
+    }catch(error) {
+        console.error(error);   // Este objeto de tipo Person ya existe en el sistema.
+    }
 })();
