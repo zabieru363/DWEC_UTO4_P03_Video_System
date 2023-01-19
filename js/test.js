@@ -542,4 +542,11 @@ import { VideoSystem } from "./VideoSystem.js";
     }catch(error) {
         console.error(error);   // Este objeto de tipo Production no existe en el sistema.
     }
+
+    // ? Método addActor()
+
+    const actor1 = new Entities.Person("Tom", "Cruise",);
+
+    console.log("Método addActor");
+    console.log("Total de actores en el sistema " + videosystem.addActor());
 })();
