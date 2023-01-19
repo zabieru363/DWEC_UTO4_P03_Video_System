@@ -567,11 +567,39 @@ import { VideoSystem } from "./VideoSystem.js";
     }catch(error) {
         console.error(error);   // Objeto no válido actor. Se esperaba un objeto de tipo Person.
     }
-
+    
     // El actor ya existe.
     try {
         console.log("Total de actores en el sistema " + videosystem.addActor(actor1));
     }catch(error) {
         console.error(error);   // Este objeto de tipo Person ya existe en el sistema.
+    }
+    
+    // ? Método removeActor()
+    
+    console.log("Método removeActor");
+    console.log("Total de actores en el sistema " + videosystem.removeActor(actor1));
+
+    // ! Excepciones de removeActor
+
+    // El actor es nulo.
+    try {
+        console.log("Total de actores en el sistema " + videosystem.removeActor(""));
+    }catch(error) {
+        console.error(error);   // El actor no puede ser nulo.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de actores en el sistema " + videosystem.removeActor(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido actor. Se esperaba un objeto de tipo Person.
+    }
+
+    // El actor no existe.
+    try {
+        console.log("Total de actores en el sistema " + videosystem.removeActor(actor1));
+    }catch(error) {
+        console.error(error);   // Este objeto de tipo Person no existe en el sistema.
     }
 })();
