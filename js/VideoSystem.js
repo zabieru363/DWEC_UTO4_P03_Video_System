@@ -318,7 +318,7 @@ export const VideoSystem = (function() {
                 if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
 
                 // Si el objeto category no existe se añade al sistema:
-                const categoryExists = this.#categories.some(cat => cat.name === category,nane);
+                const categoryExists = this.#categories.some(cat => cat.name === category.name);
                 if(!categoryExists) this.#categories.push(category);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
                 // Si el objeto production no existe se añade al sistema:
                 let productionExists = false;
