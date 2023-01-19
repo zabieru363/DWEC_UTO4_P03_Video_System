@@ -586,7 +586,7 @@ import { VideoSystem } from "./VideoSystem.js";
     try {
         console.log("Total de actores en el sistema " + videosystem.removeActor(""));
     }catch(error) {
-        console.error(error);   // El actor no puede ser nulo.
+        console.error(error);   // El campo actor no puede estar vacío.
     }
 
     // Tipo de objeto no válido.
@@ -601,5 +601,44 @@ import { VideoSystem } from "./VideoSystem.js";
         console.log("Total de actores en el sistema " + videosystem.removeActor(actor1));
     }catch(error) {
         console.error(error);   // Este objeto de tipo Person no existe en el sistema.
+    }
+
+    // ? Método addDirector()
+
+    const director1 = new Entities.Person("Steven", "Spielberg", "", new Date(1946, 11, 18), 'C:\\Users\\images');
+    const director2 = new Entities.Person("James", "Cameron", "", new Date(1954, 8, 16), 'C:\\Users\\images');
+    const director3 = new Entities.Person("Christopher", "Nolan", "", new Date(1970, 7, 30), 'C:\\Users\\images');
+
+    console.log("Método addDirector");
+    console.log("Total de actores en el sistema " + videosystem.addDirector(director1));
+    console.log("Total de actores en el sistema " + videosystem.addDirector(director2));
+    console.log("Total de actores en el sistema " + videosystem.addDirector(director3));
+
+    // ? Iterador de directores.
+
+    console.log("Iterador de directores");
+    for(const director of videosystem.directors) console.log(director);
+
+    // ! Excepciones de addDirector.
+
+    // El director es nulo.
+    try {
+        console.log("Total de actores en el sistema " + videosystem.addDirector(""));
+    }catch(error) {
+        console.error(error);   // El campo director no puede estar vacío.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de actores en el sistema " + videosystem.addDirector(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido actor. Se esperaba un objeto de tipo Person.
+    }
+
+    // El director ya existe.
+    try {
+        console.log("Total de actores en el sistema " + videosystem.addDirector(director1));
+    }catch(error) {
+        console.error(error);   // Este objeto de tipo Person ya está registrado en el sistema.
     }
 })();
