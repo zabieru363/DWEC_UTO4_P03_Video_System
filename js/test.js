@@ -610,9 +610,9 @@ import { VideoSystem } from "./VideoSystem.js";
     const director3 = new Entities.Person("Christopher", "Nolan", "", new Date(1970, 7, 30), 'C:\\Users\\images');
 
     console.log("Método addDirector");
-    console.log("Total de actores en el sistema " + videosystem.addDirector(director1));
-    console.log("Total de actores en el sistema " + videosystem.addDirector(director2));
-    console.log("Total de actores en el sistema " + videosystem.addDirector(director3));
+    console.log("Total de directores en el sistema " + videosystem.addDirector(director1));
+    console.log("Total de directores en el sistema " + videosystem.addDirector(director2));
+    console.log("Total de directores en el sistema " + videosystem.addDirector(director3));
 
     // ? Iterador de directores.
 
@@ -623,22 +623,50 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // El director es nulo.
     try {
-        console.log("Total de actores en el sistema " + videosystem.addDirector(""));
+        console.log("Total de directores en el sistema " + videosystem.addDirector(""));
     }catch(error) {
         console.error(error);   // El campo director no puede estar vacío.
     }
 
     // Tipo de objeto no válido.
     try {
-        console.log("Total de actores en el sistema " + videosystem.addDirector(resource));
+        console.log("Total de directores en el sistema " + videosystem.addDirector(resource));
     }catch(error) {
         console.error(error);   // Objeto no válido actor. Se esperaba un objeto de tipo Person.
     }
 
     // El director ya existe.
     try {
-        console.log("Total de actores en el sistema " + videosystem.addDirector(director1));
+        console.log("Total de directores en el sistema " + videosystem.addDirector(director1));
     }catch(error) {
         console.error(error);   // Este objeto de tipo Person ya está registrado en el sistema.
+    }
+    
+    // ? Método removeDirector()
+    
+    console.log("Método removeDirector");
+    console.log("Total de directores en el sistema " + videosystem.removeDirector(director1));
+
+    // ! Excepciones de removeDirector.
+
+    // El director es nulo.
+    try {
+        console.log("Total de directores en el sistema " + videosystem.removeDirector(""));
+    }catch(error) {
+        console.error(error);   // El campo director no puede estar vacío.
+    }
+
+    // Tipo de objeto no válido.
+    try {
+        console.log("Total de directores en el sistema " + videosystem.removeDirector(resource));
+    }catch(error) {
+        console.error(error);   // Objeto no válido actor. Se esperaba un objeto de tipo Person.
+    }
+
+    // El director no existe.
+    try {
+        console.log("Total de directores en el sistema " + videosystem.removeDirector(director1));
+    }catch(error) {
+        console.error(error);   // Este objeto de tipo Person no está registrado en el sistema.
     }
 })();
