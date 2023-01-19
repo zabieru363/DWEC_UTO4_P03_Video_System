@@ -669,4 +669,9 @@ import { VideoSystem } from "./VideoSystem.js";
     }catch(error) {
         console.error(error);   // Este objeto de tipo Person no está registrado en el sistema.
     }
+
+    // ? Método assignCategory()
+
+    console.log("Método assignCategory");
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie));
 })();
