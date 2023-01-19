@@ -690,6 +690,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, serie));
     
     // ! Excepciones de assignCategory.
+
+    console.log("aaaa");
     
     // La categoría es nula.
     try {
@@ -699,9 +701,8 @@ import { VideoSystem } from "./VideoSystem.js";
     }
 
     // Al método no se le está pasando ninguna producción.
-
     try {
-        console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, ""));
+        console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, null));
     }catch(error) {
         console.error(error);   // El campo production no puede estar vacío.
     }
