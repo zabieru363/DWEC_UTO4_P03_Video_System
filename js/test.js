@@ -688,4 +688,21 @@ import { VideoSystem } from "./VideoSystem.js";
     const category2 = new Entities.Category("Favoritos", "Mis peliculas favoritas.");
     console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, movie));
     console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, serie));
+    
+    // ! Excepciones de assignCategory.
+    
+    // La categoría es nula.
+    try {
+        console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory("", movie));
+    }catch(error) {
+        console.error(error);   // El campo category no puede estar vacío.
+    }
+
+    // Al método no se le está pasando ninguna producción.
+
+    try {
+        console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, ""));
+    }catch(error) {
+        console.error(error);   // El campo production no puede estar vacío.
+    }
 })();

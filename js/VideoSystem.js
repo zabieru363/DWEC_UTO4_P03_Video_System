@@ -347,6 +347,32 @@ export const VideoSystem = (function() {
 
                 return c.productions.length;
             }
+
+            /**
+             * Método que desasigna una o más producciones de una categoría.
+             * @param {*} category La categoría de la cúal se quiere desasignar una producción
+             * @param  {...any} production Las producciones las cuáles se quieren desasignar.
+             * @returns El número de producciones asociadas a esa categoría.
+             */
+            deassignCategory(category, ...production) {
+                if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
+                if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+
+                const elements = [...production];
+
+                // Obtenemos las producciones de la categoría que estamos buscando.
+                const c = this.#productionsByCategory.find(elem => elem.category.name === category.name);
+
+                // Ahora comprobamos si existe la producción que queremos desasignar.
+                let pos = 0;
+
+                for(let i = 0; i < elements.length; i++) {
+                    pos = c.productions.findIndex(e => e.title === elements[i].title);
+                    if(pos !== -1) c.productions.splice(pos, 1);
+                }
+
+                return c.productions.length;
+            }
         }
         return Object.freeze(new VideoSystem("videosystem"));
     }
