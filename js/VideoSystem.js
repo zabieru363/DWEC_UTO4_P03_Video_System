@@ -15,6 +15,11 @@ export const VideoSystem = (function() {
             #users = [];
             #productions = [];
             #actors = [];
+            #directors = [];
+            #productionsByCategory = [];
+
+            // Categoría por defecto para el sistema.
+            #defaultCategory = new Entities.Category("DefaultCategory");
 
             constructor(name) {
                 if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
@@ -208,6 +213,130 @@ export const VideoSystem = (function() {
                         for(let i = 0; i < actors.length; i++) yield actors[i];
                     }
                 }
+            }
+
+            /**
+             * Método que añade un actor al sistema. El objeto debe de ser
+             * un objeto de tipo Person, si ya está registrado lanzará una excepción.
+             * @param {*} actor Un objeto Person que será el actor a añadir al sistema.
+             * @returns La cantidad de actores que hay en el sistema.
+             */
+            addActor(actor) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+                if(!(actor instanceof Entities.Person))
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Person, "actor");
+
+                const exists = this.#actors.some(a => a.name === actor.name);
+                if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Person);
+
+                return this.#actors.push(actor);
+            }
+
+            /**
+             * Método que elimina un actor del sistema. Debe de ser
+             * un objeto Person y si no está registrado se lanzará
+             * una excepción.
+             * @param {*} actor Un objeto Person que es el actor a eliminar.
+             * @returns La cantidad de actores que hay en el sistema.
+             */
+            removeActor(actor) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+                if(!(actor instanceof Entities.Person))
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Person, "actor");
+
+                const pos = this.#actors.findIndex(a => a.name === actor.name);
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredObjectException", Entities.Person);
+    
+                this.#actors.splice(pos, 1);
+    
+                return this.#actors.length;
+            }
+
+            /**
+             * Getter que devuelve un iterador de objetos Person
+             * que son todos los directores almacenados en el sistema.
+             * @returns Un iterador que permite recorrer todos los directores que hay en el sistema.
+             */
+            get directors() {
+                const directors = this.#directors;
+
+                return {
+                    * [Symbol.iterator]() {
+                        for(let i = 0; i < directors.length; i++) yield directors[i];
+                    }
+                }
+            }
+
+            /**
+             * Método que añade un director al sistema. Este debe de ser
+             * un objeto Person y si existe en el sistema se lanzará una excepción.
+             * @param {*} director Un objeto Person que será el director que se quiere añadir.
+             * @returns El total de directores que hay en el sistema.
+             */
+            addDirector(director) {
+                if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
+                if(!(director instanceof Entities.Person))
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Person, "director");
+
+                const exists = this.#directors.some(d => d.name === director.name);
+                if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Person);
+
+                return this.#directors.push(director);
+            }
+
+            /**
+             * Método que elimina un director del sistema. Debe de
+             * ser un objeto Person que será el director que se quiere
+             * eliminar, este debe de existir, de lo contrario se lanzará
+             * una excepción.
+             * @param {*} director Un objeto Person que será el director a eliminar. 
+             * @returns El total de directores que hay en el sistema.
+             */
+            removeDirector(director) {
+                if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
+                if(!(director instanceof Entities.Person))
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Person, "director");
+
+                const pos = this.#directors.findIndex(d => d.name === director.name);
+                if(pos === -1) throw exceptionFactory.throwError("NotRegisteredObjectException", Entities.Person);
+    
+                this.#directors.splice(pos, 1);
+    
+                return this.#directors.length;
+            }
+
+            /**
+             * Método que asigna una o más producciones a una categoría.
+             * Si la categoría o las producciones no existen en el sistema
+             * estas se añaden al sistema automáticamente.
+             * @param {*} category La categoría a la cuál se quieren asignar producciones.
+             * @param  {...any} production Una o más producciones para asignar a la categoría.
+             * @returns El número de producciones asociadas a esa categoría.
+             */
+            assignCategory(category, ...production) {
+                if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
+                if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+
+                // Si el objeto category no existe se añade al sistema:
+                const categoryExists = this.#categories.some(cat => cat.name === category,nane);
+                if(!categoryExists) this.#categories.push(category);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                // Si el objeto production no existe se añade al sistema:
+                let productionExists = false;
+
+                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productions.some(p => p.title === production[i].title);
+                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
+                }
+
+                // Añadimos un objeto literal con:
+                const object = {
+                    category,   // Su categoría.
+                    productions: [...production]    // Y las producciones asociadas a esa categoria.
+                };
+
+                this.#productionsByCategory.push(object);
+
+                return object.productions.length;
             }
         }
         return Object.freeze(new VideoSystem("videosystem"));
