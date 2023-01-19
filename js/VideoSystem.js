@@ -339,7 +339,7 @@ export const VideoSystem = (function() {
                 this.#productionsByCategory.push(object);
 
                 // Tenemos que obtener el array con las producciones asociadas a esa categoría.
-                const c = this.#productionsByCategory.find(elem => elem.category === category.name);
+                const c = this.#productionsByCategory.find(elem => elem.category.name === category.name);
                 c.productions.push(...elements);
 
                 return c.productions.length;
