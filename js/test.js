@@ -824,4 +824,21 @@ import { VideoSystem } from "./VideoSystem.js";
     }catch(error) {
         console.error(error);   // El campo production no puede estar vacío.
     }
+
+    // ? Iterador getProductionsDirector
+
+    console.log("Iterador getProductionsDirector");
+    console.log("Producciones asociadas a " + director3.name);
+    const getProductionsDirectorIterator = videosystem.getProductionsDirector(director3);
+    for(const production of getProductionsDirectorIterator) console.log(production);
+
+    // ! Excepciones de getProductionsDirector
+
+    // El director es nulo.
+    try {
+        const getProductionsDirectorIterator = videosystem.getProductionsDirector("");
+        for(const production of getProductionsDirectorIterator) console.log(production);
+    }catch(error) {
+        console.error(error);   // El campo director no puede estar vacío,
+    }
 })();
