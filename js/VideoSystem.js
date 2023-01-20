@@ -551,6 +551,19 @@ export const VideoSystem = (function() {
                 const a = this.#productionsByActor.find(e => e.actor.name === actor.name);
                 for(let i = 0; i < a.productions.length; i++) yield a.productions[i];
             }
+
+            /**
+             * Método que devuelve un iterador que nos permite obtener todas
+             * las producciones asociadas a una categoría.
+             * @param {*} category La categoría de la cuál se quieren obtener
+             * todas sus producciones.
+             */
+            * getProductionsCategory(category) {
+                if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
+
+                const c = this.#productionsByCategory.find(e => e.category.name === category.name);
+                for(let i = 0; i < c.productions.length; i++) yield c.productions[i];
+            }
         }
         return Object.freeze(new VideoSystem("videosystem"));
     }
