@@ -715,4 +715,45 @@ import { VideoSystem } from "./VideoSystem.js";
     
     // Comprobando que pasa si se intenta desasignar una producción que no está asignada a esa categoría.
     console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory(category, movie));   // No la elimina. (2)
+
+    // ! Excepciones de deassignCategory.
+
+    // La categoría es nula.
+    try {
+        console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory("", movie));
+    }catch(error) {
+        console.error(error);   // El campo category no puede estar vacío.
+    }
+
+    // Al método no se le está pasando ninguna producción.
+    try {
+        console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory(category, null));
+    }catch(error) {
+        console.error(error);   // El campo production no puede estar vacío.
+    }
+
+    // ? Método assignDirector()
+
+    console.log("Método assignDirector");
+    console.log("Total de producciones asociadas a este director " + videosystem.assignDirector(director3, movie)); // 1
+    console.log("Total de producciones asociadas a este director " + videosystem.assignDirector(director3, movie2, serie)); // Admite varios (3)
+
+    // Comprobemos que pasa si asignamos una producción que ya está asignada a un director.
+    console.log("Total de producciones asociadas a este director " + videosystem.assignDirector(director3, movie)); // No lo añade (3)
+
+    // ! Excepciones de assignDirector.
+
+    // El director es nulo.
+    try {
+        console.log("Total de producciones asociadas a este director " + videosystem.assignDirector("", movie));
+    }catch(error) {
+        console.error(error);   // El campo director no puede estar vacío.
+    }
+
+    // Al método no se le está pasando ninguna producción.
+    try {
+        console.log("Total de producciones asociadas a este director " + videosystem.deassignCategory(director3, null));
+    }catch(error) {
+        console.error(error);   // El campo production no puede estar vacío.
+    }
 })();
