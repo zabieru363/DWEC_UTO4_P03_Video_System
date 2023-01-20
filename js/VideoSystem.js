@@ -315,9 +315,11 @@ export const VideoSystem = (function() {
              */
             assignCategory(category, ...production) {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
-                if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
 
-                const elements = [...production];
+                // Filtramos los elementos falsos.
+                for(let i = 0; i < production.length; i++) {
+                    if(!elements[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                }
 
                 // Si el objeto category no existe se añade al sistema:
                 const categoryExists = this.#categories.some(cat => cat.name === category.name);
@@ -325,9 +327,9 @@ export const VideoSystem = (function() {
                 // Si el objeto production no existe se añade al sistema:
                 let productionExists = false;
 
-                for(let i = 0; i < elements.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
-                    productionExists = this.#productions.some(p => p.title === elements[i].title);
-                    if(!productionExists) this.#productions.push(elements[i]);     // Este más de lo mismo.
+                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productions.some(p => p.title === production[i].title);
+                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
                 }
 
                 // Añadimos un objeto literal con:
@@ -340,9 +342,9 @@ export const VideoSystem = (function() {
 
                 // Tenemos que obtener el array con las producciones asociadas a esa categoría.
                 const c = this.#productionsByCategory.find(elem => elem.category.name === category.name);
-                for(let i = 0; i < elements.length; i++) {
-                    productionExists = c.productions.some(e => e.title === elements[i].title);
-                    if(!productionExists) c.productions.push(...elements);
+                for(let i = 0; i < production.length; i++) {
+                    productionExists = c.productions.some(e => e.title === production[i].title);
+                    if(!productionExists) c.productions.push(...production);
                 }
 
                 return c.productions.length;
