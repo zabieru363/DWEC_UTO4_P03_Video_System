@@ -673,6 +673,7 @@ import { VideoSystem } from "./VideoSystem.js";
     // ? Método assignCategory()
 
     console.log("Método assignCategory");
+    console.log("Categoría videojuegos");
     console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie));
     
     // Probando a añadir varios
@@ -686,12 +687,11 @@ import { VideoSystem } from "./VideoSystem.js";
     
     // Asignando producciones a otra categoría.
     const category2 = new Entities.Category("Favoritos", "Mis peliculas favoritas.");
+    console.log("Categoría favoritos");
     console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, movie));
     console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, serie));
     
     // ! Excepciones de assignCategory.
-
-    console.log("aaaa");
     
     // La categoría es nula.
     try {
@@ -706,4 +706,13 @@ import { VideoSystem } from "./VideoSystem.js";
     }catch(error) {
         console.error(error);   // El campo production no puede estar vacío.
     }
+    
+    // ? Método deassignCategory()
+    
+    console.log("Método deassignCategory");
+    console.log("Categoría videojuegos");
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory(category, movie));
+    
+    // Comprobando que pasa si se intenta desasignar una producción que no está asignada a esa categoría.
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory(category, movie));   // No la elimina.
 })();
