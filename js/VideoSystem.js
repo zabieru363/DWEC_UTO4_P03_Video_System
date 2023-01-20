@@ -316,7 +316,7 @@ export const VideoSystem = (function() {
             assignCategory(category, ...production) {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
 
-                // Filtramos los elementos falsos.
+                // Comprobamos si hay elementos falsos.
                 for(let i = 0; i < production.length; i++) {
                     if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
                 }
@@ -358,9 +358,11 @@ export const VideoSystem = (function() {
              */
             deassignCategory(category, ...production) {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
-                if(!production) throw exceptionFactory.throwError("EmptyValueException", null, "production");
 
-                const elements = [...production];
+                // Comprobamos si hay elementos falsos.
+                for(let i = 0; i < production.length; i++) {
+                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                }
 
                 // Obtenemos las producciones de la categoría que estamos buscando.
                 const c = this.#productionsByCategory.find(elem => elem.category.name === category.name);
@@ -368,8 +370,8 @@ export const VideoSystem = (function() {
                 // Ahora comprobamos si existe la producción que queremos desasignar.
                 let pos = 0;
 
-                for(let i = 0; i < elements.length; i++) {
-                    pos = c.productions.findIndex(e => e.title === elements[i].title);
+                for(let i = 0; i < production.length; i++) {
+                    pos = c.productions.findIndex(e => e.title === production[i].title);
                     if(pos !== -1) c.productions.splice(pos, 1);
                 }
 
