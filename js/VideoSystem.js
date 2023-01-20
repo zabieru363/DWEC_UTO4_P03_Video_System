@@ -513,7 +513,7 @@ export const VideoSystem = (function() {
                 }
 
                 // Obtenemos las producciones del actor que estamos buscando.
-                const a = this.#productionsByDirector.find(elem => elem.actor.name === actor.name);
+                const a = this.#productionsByActor.find(elem => elem.actor.name === actor.name);
 
                 // Ahora comprobamos si existe la producción que queremos desasignar.
                 let pos = 0;
