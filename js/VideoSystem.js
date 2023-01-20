@@ -353,7 +353,7 @@ export const VideoSystem = (function() {
 
             /**
              * Método que desasigna una o más producciones de una categoría.
-             * @param {*} category La categoría de la cúal se quiere desasignar una producción
+             * @param {*} category La categoría de la cuál se quiere desasignar una producción
              * @param  {...any} production Las producciones las cuáles se quieren desasignar.
              * @returns El número de producciones asociadas a esa categoría.
              */
@@ -419,6 +419,34 @@ export const VideoSystem = (function() {
                 for(let i = 0; i < production.length; i++) {
                     productionExists = d.productions.some(e => e.title === production[i].title);
                     if(!productionExists) d.productions.push(...production);
+                }
+
+                return d.productions.length;
+            }
+
+            /**
+             * Método que desasigna una o más producciones de un director.
+             * @param {*} director El director del cuál se quiere desasignar una producción
+             * @param  {...any} production Las producciones las cuáles se quieren desasignar.
+             * @returns El número de producciones asociadas a ese director.
+             */
+            deassignDirector(director, ...production) {
+                if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
+
+                // Comprobamos si hay elementos falsos.
+                for(let i = 0; i < production.length; i++) {
+                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                }
+
+                // Obtenemos las producciones del director que estamos buscando.
+                const d = this.#productionsByDirector.find(elem => elem.director.name === director.name);
+
+                // Ahora comprobamos si existe la producción que queremos desasignar.
+                let pos = 0;
+
+                for(let i = 0; i < production.length; i++) {
+                    pos = d.productions.findIndex(e => e.title === production[i].title);
+                    if(pos !== -1) d.productions.splice(pos, 1);
                 }
 
                 return d.productions.length;
