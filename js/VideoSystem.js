@@ -538,6 +538,19 @@ export const VideoSystem = (function() {
                 const d = this.#productionsByDirector.find(e => e.director.name === director.name);
                 for(let i = 0; i < d.productions.length; i++) yield d.productions[i];
             }
+
+            /**
+             * Método que devuelve un iterador que nos permite obtener todas
+             * las producciones asociadas a un actor.
+             * @param {*} actor El actor del cuál se quieren obtener
+             * todas sus producciones.
+             */
+            * getProductionsActor(actor) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+
+                const a = this.#productionsByActor.find(e => e.actor.name === actor.name);
+                for(let i = 0; i < a.productions.length; i++) yield a.productions[i];
+            }
         }
         return Object.freeze(new VideoSystem("videosystem"));
     }
