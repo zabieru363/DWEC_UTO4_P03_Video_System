@@ -848,15 +848,33 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Producciones en las que aparece el actor " + actor3.name);
 
     const getProductionsActorIterator = videosystem.getProductionsActor(actor3);
-    for(const production of getProductionsActor) console.log(production);
+    for(const production of getProductionsActorIterator) console.log(production);
 
     // ! Excepciones de getProductionsActor
 
     // El director es nulo.
     try {
         const getProductionsActorIterator = videosystem.getProductionsActor("");
-        for(const production of getProductionsActor) console.log(production);
+        for(const production of getProductionsActorIterator) console.log(production);
     }catch(error) {
         console.error(error);   // El campo actor no puede estar vacío,
+    }
+
+    // ? Iterador getProductionsCategory
+
+    console.log("Iterador getProductionsCategory");
+    console.log("Producciones asociadas a la categoría de " + category.name);
+
+    const getProductionsCategoryIterator = videosystem.getProductionsCategory(category);
+    for(const production of getProductionsCategoryIterator) console.log(production);
+
+    // ! Excepciones de getProductionsActor
+
+    // El director es nulo.
+    try {
+        const getProductionsCategoryIterator = videosystem.getProductionsActor("");
+        for(const production of getProductionsCategoryIterator) console.log(production);
+    }catch(error) {
+        console.error(error);   // El campo category no puede estar vacío,
     }
 })();
