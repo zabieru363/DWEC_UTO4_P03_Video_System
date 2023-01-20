@@ -17,6 +17,8 @@ export const VideoSystem = (function() {
             #actors = [];
             #directors = [];
             #productionsByCategory = [];
+            #productionsByDirector = [];
+            #productionsByActor = [];
 
             // Categoría por defecto para el sistema.
             #defaultCategory = new Entities.Category("DefaultCategory");
@@ -352,7 +354,7 @@ export const VideoSystem = (function() {
 
             /**
              * Método que desasigna una o más producciones de una categoría.
-             * @param {*} category La categoría de la cúal se quiere desasignar una producción
+             * @param {*} category La categoría de la cuál se quiere desasignar una producción
              * @param  {...any} production Las producciones las cuáles se quieren desasignar.
              * @returns El número de producciones asociadas a esa categoría.
              */
@@ -376,6 +378,191 @@ export const VideoSystem = (function() {
                 }
 
                 return c.productions.length;
+            }
+
+            /**
+             * Método que asigna una o más producciones a un director.
+             * Si el director o las producciones no existen en el sistema
+             * estos se añaden al sistema automáticamente.
+             * @param {*} director El director al cuál se le quieren asignar producciones. 
+             * @param  {...any} production Las producciones que se quieren asignar.
+             * @returns El total de producciones asignadas a ese director.
+             */
+            assignDirector(director, ...production) {
+                if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
+
+                // Comprobamos si hay elementos falsos.
+                for(let i = 0; i < production.length; i++) {
+                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                }
+
+                // Si el objeto director no existe se añade al sistema:
+                const directorExists = this.#directors.some(d => d.name === director.name);
+                if(!directorExists) this.#directors.push(director);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                // Si el objeto production no existe se añade al sistema:
+                let productionExists = false;
+
+                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productions.some(p => p.title === production[i].title);
+                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
+                }
+
+                // Añadimos un objeto literal con:
+                const object = {
+                    director,   // El director.
+                    productions: [] // Array vacío para añadir las producciones asociadas a ese director.
+                };
+
+                this.#productionsByDirector.push(object);
+
+                // Tenemos que obtener el array con las producciones asociadas a ese director.
+                const d = this.#productionsByDirector.find(elem => elem.director.name === director.name);
+                for(let i = 0; i < production.length; i++) {
+                    productionExists = d.productions.some(e => e.title === production[i].title);
+                    if(!productionExists) d.productions.push(...production);
+                }
+
+                return d.productions.length;
+            }
+
+            /**
+             * Método que desasigna una o más producciones de un director.
+             * @param {*} director El director del cuál se quiere desasignar una producción
+             * @param  {...any} production Las producciones las cuáles se quieren desasignar.
+             * @returns El número de producciones asociadas a ese director.
+             */
+            deassignDirector(director, ...production) {
+                if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
+
+                // Comprobamos si hay elementos falsos.
+                for(let i = 0; i < production.length; i++) {
+                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                }
+
+                // Obtenemos las producciones del director que estamos buscando.
+                const d = this.#productionsByDirector.find(elem => elem.director.name === director.name);
+
+                // Ahora comprobamos si existe la producción que queremos desasignar.
+                let pos = 0;
+
+                for(let i = 0; i < production.length; i++) {
+                    pos = d.productions.findIndex(e => e.title === production[i].title);
+                    if(pos !== -1) d.productions.splice(pos, 1);
+                }
+
+                return d.productions.length;
+            }
+
+            /**
+             * Método que asigna una o más producciones a un actor.
+             * Si el actor o las producciones no existen en el sistema
+             * estos se añaden al sistema automáticamente.
+             * @param {*} actor El actor al cuál se le quieren asignar producciones. 
+             * @param  {...any} production Las producciones que se quieren asignar.
+             * @returns El total de producciones asignadas a ese actor.
+             */
+            assignActor(actor, ...production) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+
+                // Comprobamos si hay elementos falsos.
+                for(let i = 0; i < production.length; i++) {
+                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                }
+
+                // Si el objeto actor no existe se añade al sistema:
+                const actorExists = this.#actors.some(a => a.name === actor.name);
+                if(!actorExists) this.#actors.push(actor);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                // Si el objeto production no existe se añade al sistema:
+                let productionExists = false;
+
+                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productions.some(p => p.title === production[i].title);
+                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
+                }
+
+                // Añadimos un objeto literal con:
+                const object = {
+                    actor,   // El actor.
+                    productions: [] // Array vacío para añadir las producciones asociadas a ese actor.
+                };
+
+                this.#productionsByActor.push(object);
+
+                // Tenemos que obtener el array con las producciones asociadas a ese actor.
+                const a = this.#productionsByActor.find(elem => elem.actor.name === actor.name);
+                for(let i = 0; i < production.length; i++) {
+                    productionExists = a.productions.some(e => e.title === production[i].title);
+                    if(!productionExists) a.productions.push(...production);
+                }
+
+                return a.productions.length;
+            }
+
+            /**
+             * Método que desasigna una o más producciones de un actor.
+             * @param {*} actor El actor del cuál se quiere desasignar una producción
+             * @param  {...any} production Las producciones las cuáles se quieren desasignar.
+             * @returns El número de producciones asociadas a ese actor.
+             */
+            deassignActor(actor, ...production) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+
+                // Comprobamos si hay elementos falsos.
+                for(let i = 0; i < production.length; i++) {
+                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                }
+
+                // Obtenemos las producciones del actor que estamos buscando.
+                const a = this.#productionsByDirector.find(elem => elem.actor.name === actor.name);
+
+                // Ahora comprobamos si existe la producción que queremos desasignar.
+                let pos = 0;
+
+                for(let i = 0; i < production.length; i++) {
+                    pos = a.productions.findIndex(e => e.title === production[i].title);
+                    if(pos !== -1) a.productions.splice(pos, 1);
+                }
+
+                return a.productions.length;
+            }
+
+            /**
+             * Método que devuelve un iterador que nos permite obtener todas
+             * las producciones asociadas a un director.
+             * @param {*} director El director del cuál se quieren obtener
+             * todas sus producciones.
+             */
+            * getProductionsDirector(director) {
+                if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
+
+                const d = this.#productionsByDirector.find(e => e.director.name === director.name);
+                for(let i = 0; i < d.productions.length; i++) yield d.productions[i];
+            }
+
+            /**
+             * Método que devuelve un iterador que nos permite obtener todas
+             * las producciones asociadas a un actor.
+             * @param {*} actor El actor del cuál se quieren obtener
+             * todas sus producciones.
+             */
+            * getProductionsActor(actor) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+
+                const a = this.#productionsByActor.find(e => e.actor.name === actor.name);
+                for(let i = 0; i < a.productions.length; i++) yield a.productions[i];
+            }
+
+            /**
+             * Método que devuelve un iterador que nos permite obtener todas
+             * las producciones asociadas a una categoría.
+             * @param {*} category La categoría de la cuál se quieren obtener
+             * todas sus producciones.
+             */
+            * getProductionsCategory(category) {
+                if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
+
+                const c = this.#productionsByCategory.find(e => e.category.name === category.name);
+                for(let i = 0; i < c.productions.length; i++) yield c.productions[i];
             }
         }
         return Object.freeze(new VideoSystem("videosystem"));
