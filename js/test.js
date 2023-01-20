@@ -778,4 +778,28 @@ import { VideoSystem } from "./VideoSystem.js";
     }catch(error) {
         console.error(error);   // El campo production no puede estar vacío.
     }
+
+    // ? Método assignActor()
+
+    console.log("Método assignActor");
+    console.log("Total de producciones asociadas a este actor " + videosystem.assignActor(actor3, movie));  // 1
+    console.log("Total de producciones asociadas a este actor " + videosystem.assignActor(actor3, movie2, serie));  // Admite varios (3)
+    
+    console.log("Total de producciones asociadas a este actor " + videosystem.assignActor(actor3, movie));  // No lo añade (3)
+
+    // ! Excepciones de assignActor.
+
+    // El acotr es nulo.
+    try {
+        console.log("Total de producciones asociadas a este director " + videosystem.assignActor("", movie));
+    }catch(error) {
+        console.error(error);   // El campo actor no puede estar vacío.
+    }
+
+    // Al método no se le está pasando ninguna producción.
+    try {
+        console.log("Total de producciones asociadas a este director " + videosystem.assignActor(actor3, null));
+    }catch(error) {
+        console.error(error);   // El campo production no puede estar vacío.
+    }
 })();
