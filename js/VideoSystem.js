@@ -525,6 +525,19 @@ export const VideoSystem = (function() {
 
                 return a.productions.length;
             }
+
+            /**
+             * Método que devuelve un iterador que nos permite obtener todas
+             * las producciones asociadas a un director.
+             * @param {*} director El director del cuál se quieren obtener
+             * todas sus producciones.
+             */
+            * getProductionsDirector(director) {
+                if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
+
+                const d = this.#productionsByDirector.find(e => e.director.name === director.name);
+                for(let i = 0; i < d.productions.length; i++) yield d.productions[i];
+            }
         }
         return Object.freeze(new VideoSystem("videosystem"));
     }
