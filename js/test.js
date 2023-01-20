@@ -807,4 +807,21 @@ import { VideoSystem } from "./VideoSystem.js";
     
     console.log("Método deassignActor");
     console.log("Total de producciones asociadas a este actor " + videosystem.deassignActor(actor3, movie, serie)); // Admite varios (1)
+    console.log("Total de producciones asociadas a este actor " + videosystem.deassignActor(actor3, movie)); // No lo elimina (1)
+
+    // ! Excepciones de deassignActor.
+
+    // El acotr es nulo.
+    try {
+        console.log("Total de producciones asociadas a este actor " + videosystem.deassignActor("", movie));
+    }catch(error) {
+        console.error(error);   // El campo actor no puede estar vacío.
+    }
+
+    // Al método no se le está pasando ninguna producción.
+    try {
+        console.log("Total de producciones asociadas a este actor " + videosystem.deassignActor(actor3, null));
+    }catch(error) {
+        console.error(error);   // El campo production no puede estar vacío.
+    }
 })();
