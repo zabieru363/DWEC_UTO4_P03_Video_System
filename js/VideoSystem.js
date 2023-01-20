@@ -497,6 +497,34 @@ export const VideoSystem = (function() {
 
                 return a.productions.length;
             }
+
+            /**
+             * Método que desasigna una o más producciones de un actor.
+             * @param {*} actor El actor del cuál se quiere desasignar una producción
+             * @param  {...any} production Las producciones las cuáles se quieren desasignar.
+             * @returns El número de producciones asociadas a ese actor.
+             */
+            deassignActor(actor, ...production) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+
+                // Comprobamos si hay elementos falsos.
+                for(let i = 0; i < production.length; i++) {
+                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                }
+
+                // Obtenemos las producciones del actor que estamos buscando.
+                const a = this.#productionsByDirector.find(elem => elem.actor.name === actor.name);
+
+                // Ahora comprobamos si existe la producción que queremos desasignar.
+                let pos = 0;
+
+                for(let i = 0; i < production.length; i++) {
+                    pos = a.productions.findIndex(e => e.title === production[i].title);
+                    if(pos !== -1) a.productions.splice(pos, 1);
+                }
+
+                return a.productions.length;
+            }
         }
         return Object.freeze(new VideoSystem("videosystem"));
     }
