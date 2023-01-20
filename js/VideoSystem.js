@@ -18,6 +18,7 @@ export const VideoSystem = (function() {
             #directors = [];
             #productionsByCategory = [];
             #productionsByDirector = [];
+            #productionsByActor = [];
 
             // Categoría por defecto para el sistema.
             #defaultCategory = new Entities.Category("DefaultCategory");
@@ -450,6 +451,51 @@ export const VideoSystem = (function() {
                 }
 
                 return d.productions.length;
+            }
+
+            /**
+             * Método que asigna una o más producciones a un actor.
+             * Si el actor o las producciones no existen en el sistema
+             * estos se añaden al sistema automáticamente.
+             * @param {*} actor El actor al cuál se le quieren asignar producciones. 
+             * @param  {...any} production Las producciones que se quieren asignar.
+             * @returns El total de producciones asignadas a ese actor.
+             */
+            assignActor(actor, ...production) {
+                if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
+
+                // Comprobamos si hay elementos falsos.
+                for(let i = 0; i < production.length; i++) {
+                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                }
+
+                // Si el objeto actor no existe se añade al sistema:
+                const actorExists = this.#actors.some(a => a.name === actor.name);
+                if(!actorExists) this.#actors.push(actor);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                // Si el objeto production no existe se añade al sistema:
+                let productionExists = false;
+
+                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productions.some(p => p.title === production[i].title);
+                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
+                }
+
+                // Añadimos un objeto literal con:
+                const object = {
+                    actor,   // El actor.
+                    productions: [] // Array vacío para añadir las producciones asociadas a ese actor.
+                };
+
+                this.#productionsByActor.push(object);
+
+                // Tenemos que obtener el array con las producciones asociadas a ese actor.
+                const a = this.#productionsByActor.find(elem => elem.actor.name === actor.name);
+                for(let i = 0; i < production.length; i++) {
+                    productionExists = a.productions.some(e => e.title === production[i].title);
+                    if(!productionExists) a.productions.push(...production);
+                }
+
+                return a.productions.length;
             }
         }
         return Object.freeze(new VideoSystem("videosystem"));
