@@ -318,7 +318,7 @@ export const VideoSystem = (function() {
 
                 // Filtramos los elementos falsos.
                 for(let i = 0; i < production.length; i++) {
-                    if(!elements[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
                 }
 
                 // Si el objeto category no existe se añade al sistema:
