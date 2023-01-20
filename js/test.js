@@ -333,18 +333,18 @@ import { VideoSystem } from "./VideoSystem.js";
     // ? Getter name
 
     console.log("Getter name");
-    console.log(videosystem.name);
+    console.log(videosystem.name);  // videosystem
     
     // ? Setter name
 
     console.log("Setter name");
     videosystem.name = "Netflix";
-    console.log(videosystem.name);
+    console.log(videosystem.name);  // Netflix
 
     // ? Método addCategory()
     
     console.log("Método addCategory");
-    console.log("Total de categorias en el sistema " + videosystem.addCategory(category));
+    console.log("Total de categorias en el sistema " + videosystem.addCategory(category));  // 1
     
     // ! Excepciones de addCategory
     
@@ -372,12 +372,12 @@ import { VideoSystem } from "./VideoSystem.js";
     // ? Iterador de categorias.
 
     console.log("Iterador de categorias");
-    for(const category of videosystem.categories) console.log(category);
+    for(const category of videosystem.categories) console.log(category);    // {}
 
     // ? Método removeCategory()
 
     console.log("Método removeCategory");
-    console.log("Total de categorias en el sistema " + videosystem.removeCategory(category));
+    console.log("Total de categorias en el sistema " + videosystem.removeCategory(category));   // 0
 
     // ! Excepciones de removeCategory
 
@@ -405,13 +405,13 @@ import { VideoSystem } from "./VideoSystem.js";
     // ? Método addUser()
 
     console.log("Método addUser");
-    console.log("Total de usuarios en el sistema " + videosystem.addUser(user));
+    console.log("Total de usuarios en el sistema " + videosystem.addUser(user));    // 1
 
     // ? Iterador de usuarios
 
     console.log("Iterador de usuarios");
 
-    for(const user of videosystem.users) console.log(user);
+    for(const user of videosystem.users) console.log(user); // {}
 
     // ! Excepciones de addUser.
 
@@ -448,7 +448,7 @@ import { VideoSystem } from "./VideoSystem.js";
     // ? Método removeUser()
 
     console.log("Método removeUser");
-    console.log("Total de usuarios en el sistema " + videosystem.removeUser(user));
+    console.log("Total de usuarios en el sistema " + videosystem.removeUser(user)); // 0
     
     // ! Excepciones de removeUser.
     
@@ -477,13 +477,13 @@ import { VideoSystem } from "./VideoSystem.js";
 
     console.log("Método addProduction");
     // Probamos a añadir un objeto de las 2 clases hijas de las que hereda Production
-    console.log("Total de producciones en el sistema " + videosystem.addProduction(movie));
-    console.log("Total de producciones en el sistema " + videosystem.addProduction(serie));
+    console.log("Total de producciones en el sistema " + videosystem.addProduction(movie)); // 1
+    console.log("Total de producciones en el sistema " + videosystem.addProduction(serie)); // 2
 
     // ? Iterador de producciones.
     
     console.log("Iterador de producciones");
-    for(const production of videosystem.productions) console.log(production);
+    for(const production of videosystem.productions) console.log(production);   // {}, {}
 
     // ! Excepciones de addProduction
 
@@ -511,7 +511,7 @@ import { VideoSystem } from "./VideoSystem.js";
     // ? Método removeProduction()
 
     console.log("Método removeProduction");
-    console.log("Total de producciones en el sistema " + videosystem.removeProduction(movie));
+    console.log("Total de producciones en el sistema " + videosystem.removeProduction(movie));  // 1
 
     // ! Excepciones de removeProduction.
 
@@ -543,14 +543,14 @@ import { VideoSystem } from "./VideoSystem.js";
     const actor3 = new Entities.Person("Dwayne", "Johnson", "", new Date(1972, 5, 2), 'C:\\Users\\images');
 
     console.log("Método addActor");
-    console.log("Total de actores en el sistema " + videosystem.addActor(actor1));
-    console.log("Total de actores en el sistema " + videosystem.addActor(actor2));
-    console.log("Total de actores en el sistema " + videosystem.addActor(actor3));
+    console.log("Total de actores en el sistema " + videosystem.addActor(actor1));  // 1
+    console.log("Total de actores en el sistema " + videosystem.addActor(actor2));  // 2
+    console.log("Total de actores en el sistema " + videosystem.addActor(actor3));  // 3
     
     // ? Iterador de actores.
     
     console.log("Iterador de actores");
-    for(const actor of videosystem.actors) console.log(actor);
+    for(const actor of videosystem.actors) console.log(actor);  // {}, {}, {}
     
     // ! Excepciones de addActor.
     
@@ -578,7 +578,7 @@ import { VideoSystem } from "./VideoSystem.js";
     // ? Método removeActor()
     
     console.log("Método removeActor");
-    console.log("Total de actores en el sistema " + videosystem.removeActor(actor1));
+    console.log("Total de actores en el sistema " + videosystem.removeActor(actor1));   // 2
 
     // ! Excepciones de removeActor
 
@@ -610,14 +610,14 @@ import { VideoSystem } from "./VideoSystem.js";
     const director3 = new Entities.Person("Christopher", "Nolan", "", new Date(1970, 7, 30), 'C:\\Users\\images');
 
     console.log("Método addDirector");
-    console.log("Total de directores en el sistema " + videosystem.addDirector(director1));
-    console.log("Total de directores en el sistema " + videosystem.addDirector(director2));
-    console.log("Total de directores en el sistema " + videosystem.addDirector(director3));
+    console.log("Total de directores en el sistema " + videosystem.addDirector(director1)); // 1
+    console.log("Total de directores en el sistema " + videosystem.addDirector(director2)); // 2
+    console.log("Total de directores en el sistema " + videosystem.addDirector(director3)); // 3
 
     // ? Iterador de directores.
 
     console.log("Iterador de directores");
-    for(const director of videosystem.directors) console.log(director);
+    for(const director of videosystem.directors) console.log(director); // {}, {}, {}
 
     // ! Excepciones de addDirector.
 
@@ -645,7 +645,7 @@ import { VideoSystem } from "./VideoSystem.js";
     // ? Método removeDirector()
     
     console.log("Método removeDirector");
-    console.log("Total de directores en el sistema " + videosystem.removeDirector(director1));
+    console.log("Total de directores en el sistema " + videosystem.removeDirector(director1));  // 2
 
     // ! Excepciones de removeDirector.
 
@@ -674,22 +674,22 @@ import { VideoSystem } from "./VideoSystem.js";
 
     console.log("Método assignCategory");
     console.log("Categoría videojuegos");
-    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie));
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie)); // 1
     
     // Probando a añadir varios
     const movie2 = new Entities.Movie("Reza por el diablo", "estadounidense", new Date(2022, 10, 12), "Una pelicula de terror", 'C:\\Users\\images', resource, []);
-    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie2, serie));  // Admite varios
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie2, serie));  // Admite varios (3)
     
     // Comprobemos que pasa si metemos una producción que ya existe en esa categoría.
-    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie));
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie)); // 3
     // No añade a la categoría las producciones repetidas.
-    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie2));
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category, movie2));    // 3
     
     // Asignando producciones a otra categoría.
     const category2 = new Entities.Category("Favoritos", "Mis peliculas favoritas.");
     console.log("Categoría favoritos");
-    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, movie));
-    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, serie));
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, movie));    // 1
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, serie));    // 2
     
     // ! Excepciones de assignCategory.
     
@@ -711,8 +711,8 @@ import { VideoSystem } from "./VideoSystem.js";
     
     console.log("Método deassignCategory");
     console.log("Categoría videojuegos");
-    console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory(category, movie));
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory(category, movie));   // 2
     
     // Comprobando que pasa si se intenta desasignar una producción que no está asignada a esa categoría.
-    console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory(category, movie));   // No la elimina.
+    console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory(category, movie));   // No la elimina. (2)
 })();
