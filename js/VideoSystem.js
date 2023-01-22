@@ -20,9 +20,6 @@ export const VideoSystem = (function() {
             #productionsByDirector = [];
             #productionsByActor = [];
 
-            // Categoría por defecto para el sistema.
-            #defaultCategory = new Entities.Category("DefaultCategory");
-
             constructor(name) {
                 if(!name) throw exceptionFactory.throwError("EmptyValueException", null, "name");
                 this.#name = name;
