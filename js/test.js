@@ -392,6 +392,17 @@ import { VideoSystem } from "./VideoSystem.js";
     videosystem.name = "Netflix";
     console.log(videosystem.name);  // Netflix
 
+    // ! Excepciones de setter name.
+
+    console.log("######Excepciones Setter name######");
+
+    // El nombre del sistema no puede estar vacío.
+    try{
+        videosystem.name = "";
+    }catch(error) {
+        console.error(error);
+    }
+
     // ? Método addCategory()
     
     console.log("Método addCategory");
