@@ -15,6 +15,8 @@ import { VideoSystem } from "./VideoSystem.js";
     
     // ! EXCEPCIONES DEL OBJETO PERSON.
 
+    console.log("######Excepciones Objeto Person######");
+
     // El constructor debe de invocar con new.
     try {
         const person = Entities.Person("Javier", "López", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
@@ -66,6 +68,8 @@ import { VideoSystem } from "./VideoSystem.js";
     
     // ! EXCEPCIONES DEL OBJETO CATEGORY.
 
+    console.log("######Excepciones Objeto Category######");
+
     // El constructor se debe de invocar con new.
     try {
         const category = Entities.Category("Videojuegos", "Hablando sobre videojuegos.");
@@ -87,6 +91,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log(resource);  // {}
     
     // ! EXCEPCIONES DEL OBJETO RESOURCE.
+
+    console.log("######Excepciones Objeto Resource######");
 
     // El constructor se debe de invocar con new.
     try {
@@ -113,6 +119,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Objeto Production");
     
     // ! PRODUCTION ES UNA CLASE ABSTRACTA, POR LO QUE NO SE PUEDE INSTANCIAR.
+
+    console.log("######Excepciones Objeto Production######");
     
     // Intentando instanciar Production:
     try {
@@ -135,6 +143,8 @@ import { VideoSystem } from "./VideoSystem.js";
     // Probando a cambiar el título.
     movie.title = "Interestellar";
     console.log(movie.title);   // Interestellar
+
+    console.log("######Excepciones Objeto Movie######");
 
     // El constructor se debe de invocar con new.
     try {
@@ -192,6 +202,8 @@ import { VideoSystem } from "./VideoSystem.js";
     // Probando a cambiar el título.
     serie.title = "Alice in bordeland";
     console.log(serie.title);   // Alice in bordeland
+
+    console.log("######Excepciones Objeto Serie######");
 
     // El constructor se debe de invocar con new.
     try {
@@ -256,6 +268,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log(user.username);
     user.username = "zabieru363";   // zabieru363
 
+    console.log("######Excepciones Objeto User######");
+
     // El constructor se debe de invocar con new.
     try {
         const user = Entities.User("zabieru363", "zabierujlc@gmail.com", "12345678910");
@@ -293,6 +307,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log(coordinate2);   // {}
     
     // ! EXCEPCIONES DEL OBJETO COORDINATE.
+
+    console.log("######Excepciones Objeto Coordinate######");
 
     // El constructor se debe de invocar con new.
     try {
@@ -347,6 +363,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Total de categorias en el sistema " + videosystem.addCategory(category));  // 1
     
     // ! Excepciones de addCategory
+
+    console.log("######Excepciones Método addCategory######");
     
     // La categoría es nula.
     try {
@@ -381,6 +399,8 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // ! Excepciones de removeCategory
 
+    console.log("######Excepciones Método removeCategory######");
+
     // La categoría es nula.
     try {
         console.log("Total de categorias en el sistema " + videosystem.removeCategory(""));
@@ -414,6 +434,8 @@ import { VideoSystem } from "./VideoSystem.js";
     for(const user of videosystem.users) console.log(user); // {}
 
     // ! Excepciones de addUser.
+
+    console.log("######Excepciones Método addUser######");
 
     // El usuario es nulo.
     try {
@@ -451,6 +473,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Total de usuarios en el sistema " + videosystem.removeUser(user)); // 0
     
     // ! Excepciones de removeUser.
+
+    console.log("######Excepciones Método removeUser######");
     
     // El usuario es nulo.
     try {
@@ -487,6 +511,8 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // ! Excepciones de addProduction
 
+    console.log("######Excepciones Método addProduction######");
+
     // La producción es nula.
     try {
         console.log("Total de producciones en el sistema " + videosystem.addProduction(""));
@@ -514,6 +540,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Total de producciones en el sistema " + videosystem.removeProduction(movie));  // 1
 
     // ! Excepciones de removeProduction.
+
+    console.log("######Excepciones Método removeProduction######");
 
     // La producción es nula.
     try {
@@ -553,6 +581,8 @@ import { VideoSystem } from "./VideoSystem.js";
     for(const actor of videosystem.actors) console.log(actor);  // {}, {}, {}
     
     // ! Excepciones de addActor.
+
+    console.log("######Excepciones Método addActor######");
     
     // El actor es nulo.
     try {
@@ -581,6 +611,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Total de actores en el sistema " + videosystem.removeActor(actor1));   // 2
 
     // ! Excepciones de removeActor
+
+    console.log("######Excepciones Método removeActor######");
 
     // El actor es nulo.
     try {
@@ -621,6 +653,8 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // ! Excepciones de addDirector.
 
+    console.log("######Excepciones Método addDirector######");
+
     // El director es nulo.
     try {
         console.log("Total de directores en el sistema " + videosystem.addDirector(""));
@@ -648,6 +682,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Total de directores en el sistema " + videosystem.removeDirector(director1));  // 2
 
     // ! Excepciones de removeDirector.
+
+    console.log("######Excepciones Método removeDirector######");
 
     // El director es nulo.
     try {
@@ -692,6 +728,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Total de producciones asociadas a esta categoría " + videosystem.assignCategory(category2, serie));    // 2
     
     // ! Excepciones de assignCategory.
+
+    console.log("######Excepciones Método assignCategory######");
     
     // La categoría es nula.
     try {
@@ -718,6 +756,8 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // ! Excepciones de deassignCategory.
 
+    console.log("######Excepciones Método deassignCategory######");
+
     // La categoría es nula.
     try {
         console.log("Total de producciones asociadas a esta categoría " + videosystem.deassignCategory("", movie));
@@ -743,6 +783,8 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // ! Excepciones de assignDirector.
 
+    console.log("######Excepciones Método assignDirector######");
+
     // El director es nulo.
     try {
         console.log("Total de producciones asociadas a este director " + videosystem.assignDirector("", movie));
@@ -764,6 +806,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Total de producciones asociadas a este director " + videosystem.deassignDirector(director3, movie)); // No lo elimina (1)
 
     // ! Excepciones de deassignDirector.
+
+    console.log("######Excepciones Método deassignDirector######");
 
     // El director es nulo.
     try {
@@ -789,6 +833,8 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // ! Excepciones de assignActor.
 
+    console.log("######Excepciones Método assignActor######");
+
     // El acotr es nulo.
     try {
         console.log("Total de producciones asociadas a este actor " + videosystem.assignActor("", movie));
@@ -810,6 +856,8 @@ import { VideoSystem } from "./VideoSystem.js";
     console.log("Total de producciones asociadas a este actor " + videosystem.deassignActor(actor3, movie)); // No lo elimina (1)
 
     // ! Excepciones de deassignActor.
+
+    console.log("######Excepciones Método deassignActor######");
 
     // El acotr es nulo.
     try {
@@ -834,6 +882,8 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // ! Excepciones de getProductionsDirector
 
+    console.log("######Excepciones iterador getProductionsDirector######");
+
     // El director es nulo.
     try {
         const getProductionsDirectorIterator = videosystem.getProductionsDirector("");
@@ -852,6 +902,8 @@ import { VideoSystem } from "./VideoSystem.js";
 
     // ! Excepciones de getProductionsActor
 
+    console.log("######Excepciones iterador getProductionsActor######");
+
     // El director es nulo.
     try {
         const getProductionsActorIterator = videosystem.getProductionsActor("");
@@ -868,7 +920,9 @@ import { VideoSystem } from "./VideoSystem.js";
     const getProductionsCategoryIterator = videosystem.getProductionsCategory(category);
     for(const production of getProductionsCategoryIterator) console.log(production);
 
-    // ! Excepciones de getProductionsActor
+    // ! Excepciones de getProductionsCategory
+
+    console.log("######Excepciones iterador getProductionsCategory######");
 
     // El director es nulo.
     try {
