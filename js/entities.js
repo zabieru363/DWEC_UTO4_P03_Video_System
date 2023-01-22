@@ -18,7 +18,9 @@ class Person {
     constructor(name, lastName1, lastName2, born, picture) {
         if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         // Validación de campos:
+        if(!name) throw factory.throwError("EmptyValueException", null, "name");
         if(/\d/g.test(name)) throw factory.throwError("NoValidFieldException", null, "name");
+        if(!lastName1) throw factory.throwError("EmptyValueException", null, "lastname1");
         if(/\d/g.test(lastName1)) throw factory.throwError("NoValidFieldException", null, "lastName1");
         if(!born) throw factory.throwError("EmptyValueException", null, "born");
         if(!(born instanceof Date)) throw factory.throwError("NoValidObjectException", Date, "born");
@@ -80,6 +82,7 @@ class Resource {
         if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         // Validación de campos:
         if(typeof duration !== "number") throw factory.throwError("InvalidTypeException", null, "duration");
+        if(!duration) throw factory.throwError("EmptyValueException", null, "duration");
         if(!(/videosystem.com\\\w/.test(link))) throw factory.throwError("NoValidFieldException", null, "link");
 
         this.#duration = duration;
@@ -234,7 +237,9 @@ class Coordinate {
         if(!new.target) throw factory.throwError("InvalidAccessConstructorException");
         // Validación de campos:
         if(typeof latitude !== "number") throw factory.throwError("InvalidTypeException",null, "latitude");
+        if(!latitude) throw factory.throwError("EmptyValueException", null, "latitude");
         if(typeof longitude !== "number") throw factory.throwError("InvalidTypeException",null, "longitude");
+        if(!longitude) throw factory.throwError("EmptyValueException", null, "longitude");
 
         this.#latitude = latitude;
         this.#longitude = longitude;
