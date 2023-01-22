@@ -23,12 +23,26 @@ import { VideoSystem } from "./VideoSystem.js";
     }catch(error) {
         console.error(error);   // El constructor se debe de invocar con new.
     }
+
+    // El nombre está vacío:
+    try {
+        const person = new Entities.Person("", "López", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
+    }catch(error) {
+        console.error(error);   // El campo name no puede estar vacío.
+    }
     
     // El nombre contiene números:
     try {
         const person = new Entities.Person("Javier2", "López", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
     }catch(error) {
         console.error(error);   // El campo name no es válido.
+    }
+
+    // El primer apellido está vacío:
+    try {
+        const person = new Entities.Person("Javier", "", "Carretero", new Date(2000, 8, 6), 'C:\\Users\\images');
+    }catch(error) {
+        console.error(error);   // El campo primer apellido no puede estar vacío.
     }
     
     // El primer apellido contiene números:
@@ -99,6 +113,13 @@ import { VideoSystem } from "./VideoSystem.js";
         const resource = Entities.Resource(120, "videosystem.com\\recurso1");
     }catch(error) {
         console.error(error);   // El constructor se debe de invocar con new.
+    }
+
+    // La duración en minutos no está definida.
+    try {
+        const resource = new Entities.Resource("", "videosystem.com\\recurso1");
+    }catch(error) {
+        console.error(error);   // El campo duration no puede estar vacío.
     }
 
     // La duración en minutos no es un number:
@@ -317,6 +338,13 @@ import { VideoSystem } from "./VideoSystem.js";
         console.error(error);   // El constructor se debe de invocar con new.
     }
 
+    // La latitud no está definida.
+    try {
+        const coordinate = new Entities.Coordinate("", 50);
+    }catch(error) {
+        console.error(error);   // El campo latitude no puede estar vacío.
+    }
+
     // La latitud no es un Number.
     try {
         const coordinate = new Entities.Coordinate("aaaa", 50);
@@ -324,7 +352,14 @@ import { VideoSystem } from "./VideoSystem.js";
         console.error(error);   // El tipo del argumento que se le está pasando a este constructor no es válido
     }
 
-    // La latitud no es un Number.
+    // La longitud no está definida.
+    try {
+        const coordinate = new Entities.Coordinate(49, "");
+    }catch(error) {
+        console.error(error);   // El campo longitude no puede estar vacío.
+    }
+
+    // La longitud no es un Number.
     try {
         const coordinate = new Entities.Coordinate(49, "aaaa");
     }catch(error) {
