@@ -582,7 +582,7 @@ export const VideoSystem = (function() {
                 }
 
                 // Obtenemos las producciones del director que estamos buscando.
-                const d = this.getProductionsDirector(director);
+                const d = this.#getProductionsDirector(director);
 
                 // Ahora comprobamos si existe la producción que queremos desasignar.
                 let pos = 0;
