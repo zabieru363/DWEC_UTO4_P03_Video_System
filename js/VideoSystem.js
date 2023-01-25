@@ -116,7 +116,7 @@ export const VideoSystem = (function() {
              * @returns True si existe, false si no es así.
              */
             #directorExists(director) {
-                return this.#director.some(d => d.name === director.name);
+                return this.#directors.some(d => d.name === director.name);
             }
 
             /**
