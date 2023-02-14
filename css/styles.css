@@ -1,0 +1,68 @@
+html {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    background: #343434;
+}
+
+/* Navbar styles */
+nav {
+    background: #2a83cc;
+}
+
+.car {
+    background: #1C6097;
+}
+
+/* Central zone styles */
+main {
+    background: #343434;
+}
+
+.cat-card {
+    background: #14456D;
+    font-family: 'Gill Sans MT', Calibri;
+}
+
+.production-card {
+    background: #1d1d1d;
+    font-family: 'Gill Sans MT', Calibri;
+}
+
+.person-card {
+    background: #5a5a5a;
+    font-family: 'Gill Sans MT', Calibri;
+}
+
+/* Panels */
+.productions-panel,
+#show-productions-category,
+.actors-panel,
+.directors-panel {
+    display: none;
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.circle > * {
+    color: black;
+    font-size: 50px;
+}
+
+/* Footer styles */
+footer {
+    background: #2a83cc;
+    margin-top: auto;
+}

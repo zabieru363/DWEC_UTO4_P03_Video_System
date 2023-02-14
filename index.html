@@ -4,10 +4,224 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DWEC - UT04 Práctica Video en Streaming.</title>
+        <title>Video Manager 1.0</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" 
+        crossorigin="anonymous">
+
+        <!-- Estilos locales -->
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
     <body>
-        <h1>DWEC - UT04 Práctica Video en Streaming.</h1>
-        <script type="module" src="js/test.js"></script>
+
+        <!-- NAVBAR -->
+        <nav class="shadow p-3 mb-5 navbar navbar-expand-sm navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Video Manager</a>
+                
+                <button class="navbar-toggler" 
+                        type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#navbarSupportedContent" 
+                        aria-controls="navbarSupportedContent" 
+                        aria-expanded="false" 
+                        aria-label="Toggle navigation">
+                    <span><i class="fa-solid fa-bars"></i></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="home nav-link" href="#">Home</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="cat nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                href="#">
+                                Categories
+                            </a>
+                
+                            <ul class="all-categories dropdown-menu">
+                                <li><a class="cat dropdown-item" href="#"></a></li>
+                                <li><a class="cat dropdown-item" href="#"></a></li>
+                                <li><a class="cat dropdown-item" href="#"></a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="productions nav-link" href="#productions-panel">Productions</a></li>
+                        <li class="nav-item"><a class="directors nav-link" href="#">Directors</a></li>
+                        <li class="nav-item"><a class="actors nav-link" href="#">Actors</a></li>
+                    </ul>
+                </div>
+
+                <div class="d-inline-flex align-items-center justify-content-lg-end">
+                    <div class="user-panel text-white">
+                        <span class="username">User </span>
+                        <span><i class="bg-danger p-2 rounded-circle px-2 fa-solid fa-solid fa-user"></i></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- PRODUCTIONS CAROUSEL -->
+        <div id="carouselControls" class="car p-5 text-white text-center carousel slide" data-bs-ride="carousel">
+            <h1 class="display-5">Some Productions</h1>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <h2 class="production d-block w-100">Production #1</h2>
+                </div>
+                <div class="carousel-item">
+                    <h2 class="production d-block w-100">Production #2</h2>
+                </div>
+                <div class="carousel-item">
+                    <h2 class="production d-block w-100">Production #3</h2>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- CENTRAL ZONE -->
+        <main class="container-fluid text-white text-center">
+            <!-- CATEGORIES ZONE -->
+            <section class="mt-3 categories-zone container-fluid text-white text-center">
+                <h1 class="display-5 mb-3">Categories</h1>
+                <div class="d-flex justify-content-center cat-list">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h3 class="card-title"></h3>
+                                    <p class="card-text"></p>
+                                    <a href="#" class="show-productions-btn btn btn-primary">Show productions <i class="fa-solid fa-arrow-down"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h3 class="card-title"></h3>
+                                    <p class="card-text"></p>
+                                    <a href="#" class="show-productions-btn btn btn-primary">Show productions <i class="fa-solid fa-arrow-down"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h3 class="card-title"></h3>
+                                    <p class="card-text"></p>
+                                    <a href="#" class="show-productions-btn btn btn-primary">Show productions <i class="fa-solid fa-arrow-down"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTENEDOR PARA MOSTRAR LAS PRODUCCIONES DE UNA CATEGORÍA -->
+            <section id="show-productions-category">
+                <h1 class="display-5 mb-3"></h1>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="production-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                            <div class="card-body">
+                                <h4 class="p-title"> <span class="type"></span></h4>
+                                <p class="p-date"></p>
+                                <p class="p-nationality"></p>
+                                <p class="p-synopsis"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRODUCTIONS PANEL -->
+            <section class="productions-panel" id="productions-panel">
+                <h1 class="display-5 mb-3">All productions</h1>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                            <div class="card-body">
+                                <h4 class="p-title"> <span class="type"></span></h4>
+                                <p class="p-date"></p>
+                                <p class="p-nationality"></p>
+                                <p class="p-synopsis"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ACTORS PANEL -->
+            <section class="actors-panel" id="actors-panel">
+                <h1 class="display-5 mb-3">All actors</h1>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="person-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                    <div class="circle bg-white"><i class="fa-solid fa-graduation-cap"></i></div>
+                                </div>
+                                <h4 class="a-fullname mt-3 text-uppercase"></h4>
+                                <p class="a-born"></p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#a-productions-collapse" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Productions
+                                </a>
+                                <div class="collapse" id="a-productions-collapse">
+                                    <div class="a-productions"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIRECTORS PANEL -->
+            <section class="directors-panel" id="directors-panel">
+                <h1 class="display-5 mb-3">All directors</h1>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="person-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                    <div class="circle bg-white"><i class="fa-solid fa-user-tie"></i></div>
+                                </div>
+                                <h4 class="d-fullname mt-3 text-uppercase"></h4>
+                                <p class="d-born"></p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#d-productions-collapse" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Productions
+                                </a>
+                                <div class="collapse" id="d-productions-collapse">
+                                    <div class="d-productions"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="shadow p-3 container-fluid text-white text-center">
+            <h1 class="">Video Manager 1.0</h1>
+            <h5>© Copyright <strong>Video Manager</strong>. Todos los derechos reservados.</h5>
+            <p class="mt-2">Powered by <strong>Javier López</strong></p>
+        </footer>
+
+        <!-- Bootstrap Javascript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" 
+        crossorigin="anonymous"></script>
+
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/e701483643.js" crossorigin="anonymous"></script>
+
+        <!-- All JavaScript files -->
+        <script src="js/test.js" type="module"></script>
     </body>
 </html>
