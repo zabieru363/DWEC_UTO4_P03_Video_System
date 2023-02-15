@@ -1,4 +1,4 @@
-import {ExceptionFactory} from "./exceptions.js";
+import {ExceptionFactory} from "../exceptions.js";
 
 // ? Creando una factoría de excepciones.
 const factory = new ExceptionFactory();

@@ -1,7 +1,7 @@
 "use strict";
 
-import { ExceptionFactory } from "./exceptions.js";
-import * as Entities from "./entities.js";
+import { ExceptionFactory } from "../exceptions.js";
+import * as Entities from "../entities/entities.js";
 
 const exceptionFactory = new ExceptionFactory();
 
