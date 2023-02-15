@@ -12,6 +12,11 @@ export default class VideoSystemController {
     #model;
     #view;
 
+    /**
+     * Método privado que crea 3 categorías por defecto
+     * y las añade al videosystem. Estas categorias se
+     * muestran la navbar y en la zona central.
+     */
     #createDefaultCategories() {
         const c1 = new Entities.Category("Aventura", "Peliculas de aventura");
         const c2 = new Entities.Category("Terror", "Peliculas de terror");
@@ -29,13 +34,22 @@ export default class VideoSystemController {
 
         this.onLoad();
         this.onshowNavbarDropdownCategories();
+        this.onshowCategoriesInCentralZone();
     }
 
+    /**
+     * Método que crea todos los recursos que utiliza
+     * la página por defecto.
+     */
     onLoad = () => {
         this.#createDefaultCategories();
     };
 
     onshowNavbarDropdownCategories() {
         this.#view.showNavbarDropdownCategories(this.#model.categories);
+    }
+
+    onshowCategoriesInCentralZone() {
+        this.#view.showCategoriesInCentralZone(this.#model.categories);
     }
 }

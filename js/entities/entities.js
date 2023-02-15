@@ -67,6 +67,13 @@ class Category {
     get name() {
         return this.#name;
     }
+
+    /**
+     * Getter que devuelve la descripción de la categoría.
+     */
+    get description() {
+        return this.#description;
+    }
 }
 
 /**
