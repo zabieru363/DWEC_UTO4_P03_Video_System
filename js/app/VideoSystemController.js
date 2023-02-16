@@ -33,9 +33,15 @@ export default class VideoSystemController {
         this.#view = view;
 
         this.onLoad();
-        this.onshowNavbarDropdownCategories();
-        this.onshowCategoriesInCentralZone();
+        this.onInit();
+        
+        this.#view.bindInit(this.handleInit);
     }
+
+    onInit = () => {
+        this.#view.init(this.#model.categories);
+        this.onShowNavbarDropdownCategories(this.#model.categories);
+    };
 
     /**
      * Método que crea todos los recursos que utiliza
@@ -45,11 +51,11 @@ export default class VideoSystemController {
         this.#createDefaultCategories();
     };
 
-    onshowNavbarDropdownCategories() {
-        this.#view.showNavbarDropdownCategories(this.#model.categories);
-    }
+    handleInit = () => {
+        this.onInit();
+    };
 
-    onshowCategoriesInCentralZone() {
-        this.#view.showCategoriesInCentralZone(this.#model.categories);
+    onShowNavbarDropdownCategories(categories) {
+        this.#view.showNavbarDropdownCategories(categories);
     }
 }
