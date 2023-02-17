@@ -58,6 +58,18 @@ export default class VideoSystemController {
             [new Entities.Coordinate(180, 293)]
         );
 
+        const movie3 = new Entities.Movie(
+            "Joker",
+            "🇺🇸",
+            new Date(2019, 9, 4),
+            "Arthur Fleck (Phoenix) vive en Gotham con su madre, y su única motivación en la vida es hacer " + 
+            "reír a la gente. Actúa haciendo de payaso en pequeños trabajos, pero tiene problemas mentales " + 
+            "que hacen que la gente le vea como un bicho raro.",
+            "C:\\Users\\images",
+            new Entities.Resource(169, `videosystem.com\\joker`),
+            [new Entities.Coordinate(180, 293)]
+        );
+
         const serie1 = new Entities.Serie(
             "The Walking Dead",
             "🇺🇸",
@@ -82,11 +94,39 @@ export default class VideoSystemController {
             2
         );
 
+        const serie3 = new Entities.Serie(
+            "Fullmetal Alchemist",
+            "🇯🇵",
+            new Date(2001, 4, 12),
+            "Un chico alquimista llamado Edward vive en un pueblo con su hermano Alphonse. Su " +
+            "madre sufre un trágico accidente y ellos tratan de revivirla por medio de la alquimia. " +
+            "Debido a esto el espiritu de Alphonse queda atrapado en una armadura, Edward tendrá que " +
+            "recorrer un largo camino para devolverle a su estado original.",
+            "C:\\Users\\images",
+            [],
+            [],
+            2
+        );
+
+        const serie4 = new Entities.Serie(
+            "Chainsaw Man",
+            "🇯🇵",
+            new Date(2022, 9, 11),
+            "Un adulto con su vida arruinada se convierte en un hombre con cabeza de motosierra",
+            "C:\\Users\\images",
+            [],
+            [],
+            1
+        );
+
         // * Añadimos las producciones al sistema.
         this.#model.addProduction(movie1);
         this.#model.addProduction(movie2);
+        this.#model.addProduction(movie3);
         this.#model.addProduction(serie1);
         this.#model.addProduction(serie2);
+        this.#model.addProduction(serie3);
+        this.#model.addProduction(serie4);
     }
 
     constructor(model, view) {
