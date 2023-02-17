@@ -7,12 +7,20 @@
  */
 export default class VideoSystemView {
     constructor() {
+        this.username = $(".user-panel > span.username");
         this.main = $("main");
         this.categories = $(".all-categories");
+        this.categoriesCentralZone = $(".categories-zone");
     }
 
+    /**
+     * Método que inicia la página con los componentes
+     * principales de la pagina.
+     * @param {*} categories El iterador de categorias del modelo.
+     */
     init(categories) {
         this.categories.empty();
+        this.username.empty();
         this.main.empty();
 
         this.main.append(
@@ -41,12 +49,35 @@ export default class VideoSystemView {
         }
     }
 
+    /**
+     * Método que aplica un evento clic a los enlaces del
+     * logo y del home para que la página se restaure.
+     * @param {*} handler El manejador (sería el método onInit del controlador)
+     */
     bindInit(handler) {
         $(".navbar-nav > nav-item .home").on("click", handler);
         $(".navbar-brand").on("click", handler);
     }
 
+    /**
+     * Método que muestra todas las categorias en el menú
+     * categories de la navbar.
+     * @param {*} categories El iterador de categorias del modelo.
+     */
     showNavbarDropdownCategories(categories) {
         for(const category of categories) this.categories.append(`<li><a class="cat dropdown-item" href="#">${category.name}</a></li>`);
+    }
+
+    /**
+     * Método que muestra el nombre de usuario correspondiente
+     * a la derecha de la navbar.
+     * @param {*} users El iterador de usuarios del modelo.
+     */
+    showUser(users) {
+        let close = 1;
+        for(const user of users) {
+            this.username.append(user.username);
+            if(close === 1) break;  // * Para que solo coja el primer usuario.
+        }
     }
 }

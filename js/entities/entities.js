@@ -139,6 +139,30 @@ class Production {
     set title(value) {
         this.#title = value;
     }
+
+    /**
+     * Getter que devuelve la fecha de publicación
+     * de la producción.
+     */
+    get publication() {
+        return this.#publication;
+    }
+
+    /**
+     * Getter que devuelve la nacionalidad de la
+     * producción.
+     */
+    get nationality() {
+        return this.#nationality;
+    }
+
+    /**
+     * Getter que devuelve la descripción de la
+     * producción.
+     */
+    get synopsis() {
+        return this.#synopsis;
+    }
 }
 
 /**
