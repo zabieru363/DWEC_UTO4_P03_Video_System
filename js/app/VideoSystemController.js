@@ -107,6 +107,7 @@ export default class VideoSystemController {
         this.#view.init(this.#model.categories);
         this.onShowNavbarDropdownCategories(this.#model.categories);
         this.onShowUser(this.#model.users);
+        this.onShowProductionsInCarousel(this.#model.productions);
     };
 
     /**
@@ -141,5 +142,14 @@ export default class VideoSystemController {
      */
     onShowUser(users) {
         this.#view.showUser(users);
+    }
+
+    /**
+     * Método que ejecuta el método showProductionsInCarousel
+     * de la vista.
+     * @param {*} productions El iterador de producciones del modelo.
+     */
+    onShowProductionsInCarousel(productions) {
+        this.#view.showProductionsInCarousel(productions);
     }
 }

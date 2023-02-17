@@ -8,6 +8,7 @@
 export default class VideoSystemView {
     constructor() {
         this.username = $(".user-panel > span.username");
+        this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
         this.categories = $(".all-categories");
         this.categoriesCentralZone = $(".categories-zone");
@@ -21,6 +22,7 @@ export default class VideoSystemView {
     init(categories) {
         this.categories.empty();
         this.username.empty();
+        this.carousel.empty();
         this.main.empty();
 
         this.main.append(
@@ -76,8 +78,25 @@ export default class VideoSystemView {
     showUser(users) {
         let close = 1;
         for(const user of users) {
-            this.username.append(user.username);
+            this.username.append("User " + user.username);
             if(close === 1) break;  // * Para que solo coja el primer usuario.
+        }
+    }
+
+    /**
+     * Método que muestra en el carrusel 3 producciones al azar.
+     * @param {*} productions El iterador de producciones del modelo.
+     */
+    showProductionsInCarousel(productions) {
+        const all = [...productions];
+
+        for(let i = 0; i <= 2; i++) {
+            let randomIndex = Math.floor(Math.random() * (all.length - 0) + 0);
+            this.carousel.append(
+                `<div class="carousel-item active">
+                    <h2 class="production d-block w-100">${all[randomIndex].title}</h2>
+                </div>`
+            );
         }
     }
 }
