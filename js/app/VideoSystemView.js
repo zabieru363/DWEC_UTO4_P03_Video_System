@@ -1,5 +1,7 @@
 "use strict";
 
+import * as Entities from "../entities/entities.js";
+
 /**
  * Clase vista para el Videosystem
  * @author Zabieru
@@ -7,10 +9,11 @@
  */
 export default class VideoSystemView {
     constructor() {
+        this.categoriesAnchor = $(".all-categories");
+        this.productionsAnchor = $(".productions");
         this.username = $(".user-panel > span.username");
         this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
-        this.categories = $(".all-categories");
         this.categoriesCentralZone = $(".categories-zone");
     }
 
@@ -20,7 +23,7 @@ export default class VideoSystemView {
      * @param {*} categories El iterador de categorias del modelo.
      */
     init(categories) {
-        this.categories.empty();
+        this.categoriesAnchor.empty();
         this.username.empty();
         this.carousel.empty();
         this.main.empty();
@@ -67,7 +70,7 @@ export default class VideoSystemView {
      * @param {*} categories El iterador de categorias del modelo.
      */
     showNavbarDropdownCategories(categories) {
-        for(const category of categories) this.categories.append(`<li><a class="cat dropdown-item" href="#">${category.name}</a></li>`);
+        for(const category of categories) this.categoriesAnchor.append(`<li><a class="cat dropdown-item" href="#">${category.name}</a></li>`);
     }
 
     /**
@@ -98,5 +101,48 @@ export default class VideoSystemView {
                 </div>`
             );
         }
+    }
+
+    showAllProductions(productions) {
+        this.main.append(
+            `<section id="productions-panel">
+                <h1 class="display-5 mb-4">All productions</h1>
+                <div class="productions-container row"></div>
+            </section>`
+        );
+
+        let type = null;
+
+        const productionsContainer = $(".productions-container");
+
+        for(const production of productions) {
+            if(production instanceof Entities.Movie) {
+                type = "Pelicula";
+            }
+
+            if(production instanceof Entities.Serie) {
+                type = "Serie";
+            }
+
+            productionsContainer.append(
+                `<div class="col-md-3">
+                    <div class="production-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                        <div class="card-body">
+                            <h4 class="p-title">${production.title}</h4>
+                            <h6 class="p-type">${type}</h6>
+                            <p class="p-date">${production.publication.toLocaleDateString()}</p>
+                            <p class="p-nationality">${production.nationality}</p>
+                            <p class="p-synopsis">${production.synopsis}</p>
+                        </div>
+                    </div>
+                </div>`
+            );
+
+            // type.append(icon);
+        }
+    }
+
+    bindProductions(handler) {
+        this.productionsAnchor.on("click", handler);
     }
 }

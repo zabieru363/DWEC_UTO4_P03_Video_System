@@ -35,7 +35,6 @@ export default class VideoSystemController {
         this.#model.addCategory(c3);
 
         // * Producciones por defecto.
-
         const movie1 = new Entities.Movie(
             "Avatar 2: El sentido del agua",
             "🇺🇸",
@@ -67,6 +66,40 @@ export default class VideoSystemController {
             "que hacen que la gente le vea como un bicho raro.",
             "C:\\Users\\images",
             new Entities.Resource(169, `videosystem.com\\joker`),
+            [new Entities.Coordinate(180, 293)]
+        );
+
+        const movie4 = new Entities.Movie(
+            "Multiple",
+            "🇺🇸",
+            new Date(2017, 0, 21),
+            "Tres chicas, Claire, Marcia y Casey, son secuestradas por «Dennis», una de las " +
+            "veintitrés personalidades presentes en la mente de Kevin Wendell Crumb, víctima de " +
+            "abuso a quien se le diagnosticó trastorno de identidad disociativo.",
+            "C:\\Users\\images",
+            new Entities.Resource(157, `videosystem.com\\split`),
+            [new Entities.Coordinate(180, 293)]
+        );
+
+        const movie5 = new Entities.Movie(
+            "It",
+            "🇺🇸",
+            new Date(2017, 8, 8),
+            "Un payaso aesino se dedica a atrapar a niños pequeños por las lluviosas calles de la pequeña ciudad de Derry.",
+            "C:\\Users\\images",
+            new Entities.Resource(135, `videosystem.com\\it`),
+            [new Entities.Coordinate(180, 293)]
+        );
+
+        const movie6 = new Entities.Movie(
+            "Deadpool",
+            "🇺🇸",
+            new Date(2016, 8, 8),
+            "Wade Wilson, tras ser sometido a un cruel experimento científico, adquiere poderes especiales que " +
+            "le convierten en Deadpool. Armado con sus nuevas habilidades y un retorcido sentido del humor tratará " +
+            "de dar caza al hombre que casi destruye su vida.",
+            "C:\\Users\\images",
+            new Entities.Resource(109, `videosystem.com\\deadpool`),
             [new Entities.Coordinate(180, 293)]
         );
 
@@ -119,14 +152,71 @@ export default class VideoSystemController {
             1
         );
 
+        const serie5 = new Entities.Serie(
+            "RELife",
+            "🇯🇵",
+            new Date(2016, 6, 2),
+            "Un hombre adulto con una vida miserable ingiere una pastilla que le permite volver a ser " + 
+            "un estudiante de preparatoria y rehacer su vida. En el instituto conoce a la chica que será " +
+            "el amor de su vida.",
+            "C:\\Users\\images",
+            [],
+            [],
+            1
+        );
+
+        const serie6 = new Entities.Serie(
+            "Arcane",
+            "🇺🇸",
+            new Date(2021, 10, 6),
+            "Una serie del videojuego League of Legends en la que se cuenta la trama de Piltover y Zaun",
+            "C:\\Users\\images",
+            [],
+            [],
+            1
+        );
+
         // * Añadimos las producciones al sistema.
         this.#model.addProduction(movie1);
         this.#model.addProduction(movie2);
         this.#model.addProduction(movie3);
+        this.#model.addProduction(movie4);
+        this.#model.addProduction(movie5);
+        this.#model.addProduction(movie6);
         this.#model.addProduction(serie1);
         this.#model.addProduction(serie2);
         this.#model.addProduction(serie3);
         this.#model.addProduction(serie4);
+        this.#model.addProduction(serie5);
+        this.#model.addProduction(serie6);
+
+        // * Directores por defecto.
+        const d1 = new Entities.Person("James", "Cameron", "", new Date(1954, 7, 16), 'C:\\Users\\images');
+        const d2 = new Entities.Person("Christopher", "Nolan", "", new Date(1970, 6, 30), 'C:\\Users\\images');
+        const d3 = new Entities.Person("Todd", "Phillips", "", new Date(1970, 11, 20), 'C:\\Users\\images');
+        const d4 = new Entities.Person("Manoj", "Manoj", "Shyamalan", new Date(1970, 7, 6), 'C:\\Users\\images');
+        const d5 = new Entities.Person("Andrés", "Muschietti", "", new Date(1973, 7, 26), 'C:\\Users\\images');
+
+        // * Añadimos los directores al sistema.
+        this.#model.addDirector(d1);
+        this.#model.addDirector(d2);
+        this.#model.addDirector(d3);
+        this.#model.addDirector(d4);
+        this.#model.addDirector(d5);
+        
+        // * Actores por defecto.
+        const a1 = new Entities.Person("Sam", "Worthington", "", new Date(1976, 7, 2), 'C:\\Users\\images');
+        const a2 = new Entities.Person("Matthew", "McConaughey", "", new Date(1969, 10, 4), 'C:\\Users\\images');
+        const a3 = new Entities.Person("Joaquin", "Phoenix", "", new Date(1974, 9, 28), 'C:\\Users\\images');
+        const a4 = new Entities.Person("James", "McAvoy", "", new Date(1979, 3, 21), 'C:\\Users\\images');
+        const a5 = new Entities.Person("Bill", "Skarsgård", "", new Date(1990, 7, 9), 'C:\\Users\\images');
+
+        // * Añadimos los actores al sistema.
+        this.#model.addActor(a1);
+        this.#model.addActor(a2);
+        this.#model.addActor(a3);
+        this.#model.addActor(a4);
+        this.#model.addActor(a5);
     }
 
     constructor(model, view) {
@@ -137,6 +227,7 @@ export default class VideoSystemController {
         this.onInit();
         
         this.#view.bindInit(this.handleInit);
+        this.#view.bindProductions(this.handleProductions);
     }
 
     /**
@@ -191,5 +282,13 @@ export default class VideoSystemController {
      */
     onShowProductionsInCarousel(productions) {
         this.#view.showProductionsInCarousel(productions);
+    }
+
+    handleProductions = () => {
+        this.onShowAllProductions(this.#model.productions);
+    };
+
+    onShowAllProductions(productions) {
+        this.#view.showAllProductions(productions);
     }
 }
