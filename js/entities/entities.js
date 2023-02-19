@@ -40,6 +40,21 @@ class Person {
     get name() {
         return this.#name;
     }
+
+    /**
+     * Getter que devuelve el nombre completo de la persona.
+     */
+    get fullName() {
+        if(this.#lastName2 === "") {
+            return this.#name + " " + this.#lastName1;
+        }
+
+        return this.#name + " " + this.#lastName1 + " " + this.#lastName2;
+    }
+
+    get born() {
+        return this.#born;
+    }
 }
 
 /**

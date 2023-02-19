@@ -194,7 +194,7 @@ export default class VideoSystemController {
         const d1 = new Entities.Person("James", "Cameron", "", new Date(1954, 7, 16), 'C:\\Users\\images');
         const d2 = new Entities.Person("Christopher", "Nolan", "", new Date(1970, 6, 30), 'C:\\Users\\images');
         const d3 = new Entities.Person("Todd", "Phillips", "", new Date(1970, 11, 20), 'C:\\Users\\images');
-        const d4 = new Entities.Person("Manoj", "Manoj", "Shyamalan", new Date(1970, 7, 6), 'C:\\Users\\images');
+        const d4 = new Entities.Person("Manoj", "Night", "Shyamalan", new Date(1970, 7, 6), 'C:\\Users\\images');
         const d5 = new Entities.Person("Andrés", "Muschietti", "", new Date(1973, 7, 26), 'C:\\Users\\images');
 
         // * Añadimos los directores al sistema.
@@ -228,6 +228,7 @@ export default class VideoSystemController {
         
         this.#view.bindInit(this.handleInit);
         this.#view.bindProductions(this.handleProductions);
+        this.#view.bindDirectors(this.handleDirectors);
     }
 
     /**
@@ -284,11 +285,37 @@ export default class VideoSystemController {
         this.#view.showProductionsInCarousel(productions);
     }
 
+    /**
+     * Manejador de eventos que permite a la vista
+     * mostrar todas las producciones.
+     */
     handleProductions = () => {
         this.onShowAllProductions(this.#model.productions);
     };
 
+    /**
+     * Método que ejecuta el método que muestra todas las
+     * producciones de la vista.
+     * @param {*} productions El iterador de producciones del modelo.
+     */
     onShowAllProductions(productions) {
         this.#view.showAllProductions(productions);
+    }
+
+    /**
+     * Manejador de eventos que permite a la vista
+     * mostrar todos los directores.
+     */
+    handleDirectors = () => {
+        this.onShowAllDirectors(this.#model.directors);
+    };
+
+    /**
+     * Método que ejecuta el método que muestra todos los
+     * directores de la vista.
+     * @param {*} directors El iterador de directores del modelo.
+     */
+    onShowAllDirectors(directors) {
+        this.#view.showAllDirectors(directors);
     }
 }

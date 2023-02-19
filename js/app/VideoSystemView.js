@@ -11,6 +11,7 @@ export default class VideoSystemView {
     constructor() {
         this.categoriesAnchor = $(".all-categories");
         this.productionsAnchor = $(".productions");
+        this.directorsAnchor = $(".directors");
         this.username = $(".user-panel > span.username");
         this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
@@ -103,6 +104,10 @@ export default class VideoSystemView {
         }
     }
 
+    /**
+     * Método que muestra todas las producciones en la zona central.
+     * @param {*} productions El iterador de producciones del modelo.
+     */
     showAllProductions(productions) {
         this.main.append(
             `<section id="productions-panel">
@@ -137,12 +142,62 @@ export default class VideoSystemView {
                     </div>
                 </div>`
             );
-
-            // type.append(icon);
         }
     }
 
+    /**
+     * Manejador de eventos que muestra todas las producciones
+     * al hacer clic en el menú productions.
+     * @param {*} handler El manejador (sería el método onshowAllProductions del controlador)
+     */
     bindProductions(handler) {
         this.productionsAnchor.on("click", handler);
+    }
+
+    /**
+     * Método que muestra en la zona central todos los directores.
+     * @param {*} directors El iterador de directores del modelo.
+     */
+    showAllDirectors(directors) {
+        this.main.append(
+            `<section id="directors-panel">
+                <h1 class="display-5 mb-3">All directors</h1>
+                <div class="directors-container row"></div>
+            </section>`
+        );
+
+        const directorsContainer = this.main.find(".directors-container");
+
+        for(const director of directors) {
+            directorsContainer.append(
+                `<div class="col-md-3">
+                    <div class="person-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center">
+                                <div class="circle bg-white"><i class="fa-solid fa-user-tie"></i></div>
+                            </div>
+                            <h4 class="d-fullname mt-3 text-uppercase">${director.fullName}</h4>
+                            <p class="d-born">${director.born.toLocaleDateString()}</p>
+                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#d-productions-collapse" role="button"
+                                aria-expanded="false" aria-controls="collapseExample">
+                                Productions
+                            </a>
+                            <div class="collapse" id="d-productions-collapse">
+                                <div class="d-productions"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+            );
+        }
+    }
+
+    /**
+     * Manejador de eventos que muestra todos los directores
+     * al hacer clic en el menú directors.
+     * @param {*} handler El manejador (sería el método onshowAllDirectors del controlador)
+     */
+    bindDirectors(handler) {
+        this.directorsAnchor.on("click", handler);
     }
 }
