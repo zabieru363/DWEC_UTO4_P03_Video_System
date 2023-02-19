@@ -12,6 +12,7 @@ export default class VideoSystemView {
         this.categoriesAnchor = $(".all-categories");
         this.productionsAnchor = $(".productions");
         this.directorsAnchor = $(".directors");
+        this.actorsAnchor = $(".actors");
         this.username = $(".user-panel > span.username");
         this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
@@ -199,5 +200,52 @@ export default class VideoSystemView {
      */
     bindDirectors(handler) {
         this.directorsAnchor.on("click", handler);
+    }
+
+    /**
+     * Método que muestra en la zona central todos los actores.
+     * @param {*} actors El iterador de actores del modelo.
+     */
+    showAllActors(actors) {
+        this.main.append(
+            `<section id="actors-panel">
+                <h1 class="display-5 mb-3">All actors</h1>
+                <div class="actors-container row"></div>
+            </section>`
+        );
+
+        const actorsContainer = this.main.find(".actors-container");
+
+        for(const actor of actors) {
+            actorsContainer.append(
+                `<div class="col-md-3">
+                    <div class="person-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center">
+                                <div class="circle bg-white"><i class="fa-solid fa-graduation-cap"></i></div>
+                            </div>
+                            <h4 class="a-fullname mt-3 text-uppercase">${actor.fullName}</h4>
+                            <p class="a-born">${actor.born.toLocaleDateString()}</p>
+                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#a-productions-collapse" role="button"
+                                aria-expanded="false" aria-controls="collapseExample">
+                                Productions
+                            </a>
+                            <div class="collapse" id="a-productions-collapse">
+                                <div class="a-productions"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+            );
+        }
+    }
+
+    /**
+     * Manejador de eventos que muestra todos los actores
+     * al hacer clic en el menú actors.
+     * @param {*} handler El manejador (sería el método onshowAllActors del controlador)
+     */
+    bindActors(handler) {
+        this.actorsAnchor.on("click", handler);
     }
 }

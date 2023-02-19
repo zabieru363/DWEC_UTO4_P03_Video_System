@@ -229,6 +229,7 @@ export default class VideoSystemController {
         this.#view.bindInit(this.handleInit);
         this.#view.bindProductions(this.handleProductions);
         this.#view.bindDirectors(this.handleDirectors);
+        this.#view.bindActors(this.handleActors);
     }
 
     /**
@@ -317,5 +318,22 @@ export default class VideoSystemController {
      */
     onShowAllDirectors(directors) {
         this.#view.showAllDirectors(directors);
+    }
+
+    /**
+     * Manejador de eventos que permite a la vista
+     * mostrar todos los actores.
+     */
+    handleActors = () => {
+        this.onShowAllActors(this.#model.actors);
+    };
+
+    /**
+     * Método que ejecuta el método que muestra todos los
+     * actores de la vista.
+     * @param {*} actors El iterador de actores del modelo.
+     */
+    onShowAllActors(actors) {
+        this.#view.showAllActors(actors);
     }
 }
