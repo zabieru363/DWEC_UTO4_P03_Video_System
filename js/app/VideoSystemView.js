@@ -9,7 +9,7 @@ import * as Entities from "../entities/entities.js";
  */
 export default class VideoSystemView {
     constructor() {
-        this.categoriesAnchor = $(".all-categories");
+        this.categoriesAnchor = $(".categories");
         this.productionsAnchor = $(".productions");
         this.directorsAnchor = $(".directors");
         this.actorsAnchor = $(".actors");
@@ -24,8 +24,7 @@ export default class VideoSystemView {
      * principales de la pagina.
      * @param {*} categories El iterador de categorias del modelo.
      */
-    init(categories) {
-        this.categoriesAnchor.empty();
+    init() {
         this.username.empty();
         this.carousel.empty();
         this.main.empty();
@@ -33,27 +32,11 @@ export default class VideoSystemView {
         this.main.append(
             `<section class="mt-3 categories-zone container-fluid text-white text-center">
                 <h1 class="display-5 mb-3">Categories</h1>
-                <div class="d-flex justify-content-evenly cat-list"></div>
+                <div class="d-flex justify-content-center">
+                    <div class="cat-list row"></div>
+                </div>
             </section>`
         );
-
-        const catList = this.main.find(".categories-zone > div.cat-list");
-        
-        for(const category of categories) {
-            catList.append(
-                `<div class="row">
-                    <div class="col-md-4">
-                        <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h3 class="card-title">${category.name}</h3>
-                                <p class="card-text">${category.description}</p>
-                                <a href="#" class="show-productions-btn btn btn-primary">Show productions <i class="fa-solid fa-arrow-down"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>`
-            );
-        }
     }
 
     /**
@@ -67,12 +50,42 @@ export default class VideoSystemView {
     }
 
     /**
-     * Método que muestra todas las categorias en el menú
-     * categories de la navbar.
-     * @param {*} categories El iterador de categorias del modelo.
+     * Método que muestra las categorias en la zona central de la página.
+     * @param {*} category La categoria que le llega del iterador de categorias del modelo.
+     * @param {*} productions Generador con las producciones de esa categoria.
      */
-    showNavbarDropdownCategories(categories) {
-        for(const category of categories) this.categoriesAnchor.append(`<li><a class="cat dropdown-item" href="#">${category.name}</a></li>`);
+    showCategoriesInCentralZone(category, productions) {
+        $(".cat-list").append(
+            `<div class="col-md-4">
+                <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h3 class="cat-name card-title">${category.name}</h3>
+                        <p class="card-text">${category.description}</p>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#${category.name}-productions" aria-controls="offcanvasWithBothOptions">
+                            Show productions
+                        </button>
+
+                        <div class="bg-dark offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="${category.name}-productions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Productions of ${category.name}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="${category.name}-productions offcanvas-body"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        );
+
+        for(const production of productions) {
+            $(`.${category.name}-productions`).append(
+                `<div class="production">
+                    <h5>${production.title} ${production.nationality}</h5>
+                    <p>Release date: ${production.publication.toLocaleDateString()}</p>
+                    <p>${production.synopsis}</p>
+                </div>`
+            );
+        }
     }
 
     /**

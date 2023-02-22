@@ -217,6 +217,18 @@ export default class VideoSystemController {
         this.#model.addActor(a3);
         this.#model.addActor(a4);
         this.#model.addActor(a5);
+
+        // * Asignamos las producciones a las categorias.
+        this.#model.assignCategory(c1, movie1);
+        this.#model.assignCategory(c1, movie2);
+        this.#model.assignCategory(c1, serie3);
+        
+        this.#model.assignCategory(c2, movie4);
+        this.#model.assignCategory(c2, movie5);
+        this.#model.assignCategory(c2, serie1);
+
+        this.#model.assignCategory(c3, movie6);
+        this.#model.assignCategory(c3, serie4);
     }
 
     constructor(model, view) {
@@ -237,8 +249,8 @@ export default class VideoSystemController {
      * de la página en la vista.
      */
     onInit = () => {
-        this.#view.init(this.#model.categories);
-        this.onShowNavbarDropdownCategories(this.#model.categories);
+        this.#view.init();
+        this.onShowCategoriesInCentralZone();
         this.onShowUser(this.#model.users);
         this.onShowProductionsInCarousel(this.#model.productions);
     };
@@ -258,15 +270,6 @@ export default class VideoSystemController {
     handleInit = () => {
         this.onInit();
     };
-
-    /**
-     * Método que ejecuta el método de la vista que muestra
-     * las categorias en el menú dropdown de categorias.
-     * @param {*} categories Las categorias del modelo.
-     */
-    onShowNavbarDropdownCategories(categories) {
-        this.#view.showNavbarDropdownCategories(categories);
-    }
     
     /**
      * Método que invoca al método showUser en la vista.
@@ -284,6 +287,19 @@ export default class VideoSystemController {
      */
     onShowProductionsInCarousel(productions) {
         this.#view.showProductionsInCarousel(productions);
+    }
+
+    /**
+     * Método que invoca al método que muestra las categorias
+     * en la zona central en la vista. Accede al iterador de
+     * categorias del modelo y por cada categoria que tengamos
+     * invoca a showCategoriesInCentralZone con el objeto category
+     * correspondiente y sus producciones.
+     */
+    onShowCategoriesInCentralZone() {
+        for(const category of this.#model.categories) {
+            this.#view.showCategoriesInCentralZone(category, this.#model.getProductionsCategory(category));
+        }
     }
 
     /**
@@ -325,7 +341,7 @@ export default class VideoSystemController {
      * mostrar todos los actores.
      */
     handleActors = () => {
-        this.onShowAllActors(this.#model.actors);
+        this.onShowAllActors(this.#model.actors, this.#model.getProductionsActor);
     };
 
     /**
@@ -333,7 +349,7 @@ export default class VideoSystemController {
      * actores de la vista.
      * @param {*} actors El iterador de actores del modelo.
      */
-    onShowAllActors(actors) {
-        this.#view.showAllActors(actors);
+    onShowAllActors(actors, callback) {
+        this.#view.showAllActors(actors, callback);
     }
 }
