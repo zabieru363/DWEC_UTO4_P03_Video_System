@@ -9,7 +9,6 @@ import * as Entities from "../entities/entities.js";
  */
 export default class VideoSystemView {
     constructor() {
-        this.categoriesAnchor = $(".categories");
         this.productionsAnchor = $(".productions");
         this.directorsAnchor = $(".directors");
         this.actorsAnchor = $(".actors");
@@ -59,6 +58,9 @@ export default class VideoSystemView {
             `<div class="col-md-4">
                 <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
                     <div class="card-body">
+                        <div class="d-flex justify-content-center">
+                            <div class="circle bg-white"><i class="fa-solid fa-folder"></i></div>
+                        </div>
                         <h3 class="cat-name card-title">${category.name}</h3>
                         <p class="card-text">${category.description}</p>
                         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#${category.name}-productions" aria-controls="offcanvasWithBothOptions">

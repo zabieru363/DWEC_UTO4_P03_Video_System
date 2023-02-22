@@ -39,13 +39,6 @@ main {
     font-family: 'Gill Sans MT', Calibri;
 }
 
-/* Panels */
-#show-productions-category,
-.actors-panel,
-.directors-panel {
-    display: none;
-}
-
 .circle {
     display: flex;
     justify-content: center;
@@ -58,6 +51,12 @@ main {
 .circle > * {
     color: black;
     font-size: 50px;
+}
+
+.fa-solid.fa-folder,
+.fa-solid.fa-user-tie,
+.fa-solid.fa-graduation-cap {
+    color: #14456D;
 }
 
 /* Footer styles */
