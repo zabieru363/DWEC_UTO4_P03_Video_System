@@ -25,6 +25,7 @@ main {
 }
 
 .cat-card {
+    height: 20rem;
     background: #14456D;
     font-family: 'Gill Sans MT', Calibri;
 }

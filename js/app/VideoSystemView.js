@@ -31,7 +31,7 @@ export default class VideoSystemView {
         this.main.append(
             `<section class="mt-3 categories-zone container-fluid text-white text-center">
                 <h1 class="display-5 mb-3">Categories</h1>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-around">
                     <div class="cat-list row"></div>
                 </div>
             </section>`
@@ -44,7 +44,7 @@ export default class VideoSystemView {
      * @param {*} handler El manejador (sería el método onInit del controlador)
      */
     bindInit(handler) {
-        $(".navbar-nav > nav-item .home").on("click", handler);
+        $(".navbar-nav > .nav-item .home").on("click", handler);
         $(".navbar-brand").on("click", handler);
     }
 
@@ -59,7 +59,7 @@ export default class VideoSystemView {
                 <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
                     <div class="card-body">
                         <div class="d-flex justify-content-center">
-                            <div class="circle bg-white"><i class="fa-solid fa-folder"></i></div>
+                            <div class="mb-3 circle bg-white"><i class="fa-solid fa-folder"></i></div>
                         </div>
                         <h3 class="cat-name card-title">${category.name}</h3>
                         <p class="card-text">${category.description}</p>
@@ -70,7 +70,7 @@ export default class VideoSystemView {
                         <div class="bg-dark offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="${category.name}-productions" aria-labelledby="offcanvasWithBothOptionsLabel">
                             <div class="offcanvas-header">
                                 <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Productions of ${category.name}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                <button type="button" class="bg-white btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="${category.name}-productions offcanvas-body"></div>
                         </div>
@@ -79,12 +79,21 @@ export default class VideoSystemView {
             </div>`
         );
 
-        for(const production of productions) {
+        // Envolvemos esto en un try-catch ya que el iterador de producciones puede estar vacío.
+        try {
+            for(const production of productions) {
+                $(`.${category.name}-productions`).append(
+                    `<div class="production">
+                        <h5>${production.title} ${production.nationality}</h5>
+                        <p>Release date: ${production.publication.toLocaleDateString()}</p>
+                        <p>${production.synopsis}</p>
+                    </div>`
+                );
+            }
+        } catch(error) {
             $(`.${category.name}-productions`).append(
                 `<div class="production">
-                    <h5>${production.title} ${production.nationality}</h5>
-                    <p>Release date: ${production.publication.toLocaleDateString()}</p>
-                    <p>${production.synopsis}</p>
+                    <p>No productions in this category yet!</p>
                 </div>`
             );
         }
@@ -96,7 +105,7 @@ export default class VideoSystemView {
      * @param {*} users El iterador de usuarios del modelo.
      */
     showUser(users) {
-        let [user] = users;
+        const [user] = users;
         this.username.append("User " + user.username);
     }
 
