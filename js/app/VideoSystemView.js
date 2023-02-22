@@ -171,39 +171,41 @@ export default class VideoSystemView {
     }
 
     /**
-     * Método que muestra en la zona central todos los directores.
-     * @param {*} directors El iterador de directores del modelo.
+     * Método que crea el panel que muestra todos los directores
      */
-    showAllDirectors(directors) {
+    showDirectorsPanel() {
         this.main.append(
             `<section id="directors-panel">
                 <h1 class="display-5 mb-3">All directors</h1>
                 <div class="directors-container row"></div>
             </section>`
         );
+    }
 
-        const directorsContainer = this.main.find(".directors-container");
-
-        for(const director of directors) {
-            directorsContainer.append(
-                `<div class="col-md-3">
-                    <div class="person-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-center">
-                                <div class="circle bg-white"><i class="fa-solid fa-user-tie"></i></div>
-                            </div>
-                            <h4 class="d-fullname mt-3 text-uppercase">${director.fullName}</h4>
-                            <p class="d-born">${director.born.toLocaleDateString()}</p>
-                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#d-productions-collapse" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                                Productions
-                            </a>
-                            <div class="collapse" id="d-productions-collapse">
-                                <div class="d-productions"></div>
-                            </div>
+    showAllDirectors(director, productions) {
+        $(".directors-container").append(
+            `<div class="col-md-3">
+                <div class="person-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center">
+                            <div class="circle bg-white"><i class="fa-solid fa-user-tie"></i></div>
+                        </div>
+                        <h4 class="d-fullname mt-3 text-uppercase">${director.fullName}</h4>
+                        <p class="d-born">${director.born.toLocaleDateString()}</p>
+                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#${director.name}-productions-collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Productions
+                        </a>
+                        <div class="collapse" id="${director.name}-productions-collapse">
+                            <div class="${director.name}-productions bg-dark mt-3 card card-body"></div>
                         </div>
                     </div>
-                </div>`
+                </div>
+            </div>`
+        );
+
+        for(const production of productions) {
+            $(`.${director.name}-productions`).append(
+                `<p>${production.title}</p>`
             );
         }
     }

@@ -230,6 +230,13 @@ export default class VideoSystemController {
         this.#model.assignCategory(c3, movie6);
         this.#model.assignCategory(c3, serie4);
 
+        // * Asignamos producciones a los directores.
+        this.#model.assignDirector(d1, movie1);
+        this.#model.assignDirector(d2, movie2);
+        this.#model.assignDirector(d3, movie3);
+        this.#model.assignDirector(d4, movie4);
+        this.#model.assignDirector(d5, movie5);
+
         // * Asignamos producciones a los actores.
         this.#model.assignActor(a1, movie1);
         this.#model.assignActor(a2, movie2);
@@ -331,16 +338,17 @@ export default class VideoSystemController {
      * mostrar todos los directores.
      */
     handleDirectors = () => {
-        this.onShowAllDirectors(this.#model.directors);
+        this.#view.showDirectorsPanel();
+        this.onShowAllDirectors();
     };
 
     /**
-     * Método que ejecuta el método que muestra todos los
-     * directores de la vista.
-     * @param {*} directors El iterador de directores del modelo.
+     * 
      */
-    onShowAllDirectors(directors) {
-        this.#view.showAllDirectors(directors);
+    onShowAllDirectors() {
+        for(const director of this.#model.directors) {
+            this.#view.showAllDirectors(director, this.#model.getProductionsDirector(director));
+        }
     }
 
     /**
