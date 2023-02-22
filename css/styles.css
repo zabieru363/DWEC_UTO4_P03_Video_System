@@ -53,9 +53,9 @@ main {
     font-size: 50px;
 }
 
-.fa-solid.fa-folder,
-.fa-solid.fa-user-tie,
-.fa-solid.fa-graduation-cap {
+div.circle > i.fa-solid.fa-folder,
+div.circle > i.fa-solid.fa-user-tie,
+div.circle > i.fa-solid.fa-graduation-cap {
     color: #14456D;
 }
 

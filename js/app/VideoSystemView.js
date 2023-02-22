@@ -96,11 +96,8 @@ export default class VideoSystemView {
      * @param {*} users El iterador de usuarios del modelo.
      */
     showUser(users) {
-        let close = 1;
-        for(const user of users) {
-            this.username.append("User " + user.username);
-            if(close === 1) break;  // * Para que solo coja el primer usuario.
-        }
+        let [user] = users;
+        this.username.append("User " + user.username);
     }
 
     /**
@@ -182,6 +179,12 @@ export default class VideoSystemView {
         );
     }
 
+    /**
+     * Método que muestra todos los directores con todas las producciones
+     * en las que han participado en la zona central.
+     * @param {*} director El director que le llega del controlador del iterador de directores del modelo.
+     * @param {*} productions Objeto iterable con las producciones de ese director.
+     */
     showAllDirectors(director, productions) {
         $(".directors-container").append(
             `<div class="col-md-3">
@@ -235,7 +238,7 @@ export default class VideoSystemView {
      * Método que muestra todos los actores con las producciones
      * en las que han participado en la zona central.
      * @param {*} actor El actor que le llega del controlador del modelo de categorias.
-     * @param {*} productions Las producciones de ese actor.
+     * @param {*} productions Objeto iterable con las producciones de ese actor.
      */
     showAllActors(actor, productions) {
         $(".actors-container").append(
