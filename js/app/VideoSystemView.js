@@ -218,39 +218,47 @@ export default class VideoSystemView {
     }
 
     /**
-     * Método que muestra en la zona central todos los actores.
-     * @param {*} actors El iterador de actores del modelo.
+     * Método que crea el panel que muestra todos los actores
      */
-    showAllActors(actors) {
+    showActorsPanel() {
         this.main.append(
             `<section id="actors-panel">
                 <h1 class="display-5 mb-3">All actors</h1>
                 <div class="actors-container row"></div>
             </section>`
         );
+    }
 
-        const actorsContainer = this.main.find(".actors-container");
-
-        for(const actor of actors) {
-            actorsContainer.append(
-                `<div class="col-md-3">
-                    <div class="person-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
-                        <div class="card-body">
+    /**
+     * Método que muestra todos los actores con las producciones
+     * en las que han participado en la zona central.
+     * @param {*} actor El actor que le llega del controlador del modelo de categorias.
+     * @param {*} productions Las producciones de ese actor.
+     */
+    showAllActors(actor, productions) {
+        $(".actors-container").append(
+            `<div class="col-md-3">
+                <div class="person-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                    <div class="card-body">
                             <div class="d-flex justify-content-center">
                                 <div class="circle bg-white"><i class="fa-solid fa-graduation-cap"></i></div>
                             </div>
                             <h4 class="a-fullname mt-3 text-uppercase">${actor.fullName}</h4>
                             <p class="a-born">${actor.born.toLocaleDateString()}</p>
-                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#a-productions-collapse" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#${actor.name}-productions-collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
                                 Productions
                             </a>
-                            <div class="collapse" id="a-productions-collapse">
-                                <div class="a-productions"></div>
+                            <div class="collapse" id="${actor.name}-productions-collapse">
+                                <div class="${actor.name}-productions bg-dark mt-3 card card-body"></div>
                             </div>
                         </div>
                     </div>
                 </div>`
+        );
+
+        for(const production of productions) {
+            $(`.${actor.name}-productions`).append(
+                `<p>${production.title}</p>`
             );
         }
     }

@@ -229,6 +229,13 @@ export default class VideoSystemController {
 
         this.#model.assignCategory(c3, movie6);
         this.#model.assignCategory(c3, serie4);
+
+        // * Asignamos producciones a los actores.
+        this.#model.assignActor(a1, movie1);
+        this.#model.assignActor(a2, movie2);
+        this.#model.assignActor(a3, movie3);
+        this.#model.assignActor(a4, movie4);
+        this.#model.assignActor(a5, movie5);
     }
 
     constructor(model, view) {
@@ -341,15 +348,18 @@ export default class VideoSystemController {
      * mostrar todos los actores.
      */
     handleActors = () => {
-        this.onShowAllActors(this.#model.actors, this.#model.getProductionsActor);
+        this.#view.showActorsPanel();
+        this.onShowAllActors();
     };
 
     /**
-     * Método que ejecuta el método que muestra todos los
-     * actores de la vista.
-     * @param {*} actors El iterador de actores del modelo.
+     * Método que invoca al método que muestra todos los actores con
+     * sus producciones en la vista. Utiliza el iterador de categorias
+     * del modelo y el iterador de producciones de un actor del modelo.
      */
-    onShowAllActors(actors, callback) {
-        this.#view.showAllActors(actors, callback);
+    onShowAllActors() {
+        for(const actor of this.#model.actors) {
+            this.#view.showAllActors(actor, this.#model.getProductionsActor(actor));
+        }
     }
 }
