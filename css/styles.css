@@ -32,11 +32,15 @@ main {
 
 .production-card {
     background: #1d1d1d;
+    box-sizing: content-box;
+    height: 24rem;
     font-family: 'Gill Sans MT', Calibri;
 }
 
 .person-card {
     background: #5a5a5a;
+    box-sizing: content-box;
+    height: 18rem;
     font-family: 'Gill Sans MT', Calibri;
 }
 

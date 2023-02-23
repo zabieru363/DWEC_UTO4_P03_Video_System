@@ -204,20 +204,37 @@ export default class VideoSystemView {
                         </div>
                         <h4 class="d-fullname mt-3 text-uppercase">${director.fullName}</h4>
                         <p class="d-born">${director.born.toLocaleDateString()}</p>
-                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#${director.name}-productions-collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#${director.name}-productions" aria-controls="offcanvasWithBothOptions">
                             Productions
-                        </a>
-                        <div class="collapse" id="${director.name}-productions-collapse">
-                            <div class="${director.name}-productions bg-dark mt-3 card card-body"></div>
+                        </button>
+
+                        <div class="bg-dark offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="${director.name}-productions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Productions of ${director.fullName}</h5>
+                                <button type="button" class="bg-white btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="${director.name}-productions offcanvas-body"></div>
                         </div>
                     </div>
                 </div>
             </div>`
         );
 
-        for(const production of productions) {
+        try {
+            for(const production of productions) {
+                $(`.${director.name}-productions`).append(
+                    `<div class="production">
+                        <h5>${production.title} ${production.nationality}</h5>
+                        <p>Release date: ${production.publication.toLocaleDateString()}</p>
+                        <p>${production.synopsis}</p>
+                    </div>`
+                );
+            }
+        } catch(error) {
             $(`.${director.name}-productions`).append(
-                `<p>${production.title}</p>`
+                `<div class="production">
+                    <p>No productions in this category yet!</p>
+                </div>`
             );
         }
     }
@@ -259,20 +276,37 @@ export default class VideoSystemView {
                             </div>
                             <h4 class="a-fullname mt-3 text-uppercase">${actor.fullName}</h4>
                             <p class="a-born">${actor.born.toLocaleDateString()}</p>
-                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#${actor.name}-productions-collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#${actor.name}-productions" aria-controls="offcanvasWithBothOptions">
                                 Productions
-                            </a>
-                            <div class="collapse" id="${actor.name}-productions-collapse">
-                                <div class="${actor.name}-productions bg-dark mt-3 card card-body"></div>
-                            </div>
+                            </button>
+
+                            <div class="bg-dark offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="${actor.name}-productions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Productions of ${actor.fullName}</h5>
+                                    <button type="button" class="bg-white btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                            <div class="${actor.name}-productions offcanvas-body"></div>
+                        </div>
                         </div>
                     </div>
                 </div>`
         );
 
-        for(const production of productions) {
+        try {
+            for(const production of productions) {
+                $(`.${actor.name}-productions`).append(
+                    `<div class="production">
+                        <h5>${production.title} ${production.nationality}</h5>
+                        <p>Release date: ${production.publication.toLocaleDateString()}</p>
+                        <p>${production.synopsis}</p>
+                    </div>`
+                );
+            }
+        } catch(error) {
             $(`.${actor.name}-productions`).append(
-                `<p>${production.title}</p>`
+                `<div class="production">
+                    <p>No productions in this category yet!</p>
+                </div>`
             );
         }
     }
