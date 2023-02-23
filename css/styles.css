@@ -33,7 +33,7 @@ main {
 .production-card {
     background: #1d1d1d;
     box-sizing: content-box;
-    height: 24rem;
+    height: 25rem;
     font-family: 'Gill Sans MT', Calibri;
 }
 

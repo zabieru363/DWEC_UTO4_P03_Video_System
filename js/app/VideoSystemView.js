@@ -85,6 +85,7 @@ export default class VideoSystemView {
                         <h5>${production.title} ${production.nationality}</h5>
                         <p>Release date: ${production.publication.toLocaleDateString()}</p>
                         <p>${production.synopsis}</p>
+                        <hr>
                     </div>`
                 );
             }
@@ -155,32 +156,42 @@ export default class VideoSystemView {
             </section>`
         );
 
-        let type = null;
-
         const productionsContainer = $(".productions-container");
 
         for(const production of productions) {
             if(production instanceof Entities.Movie) {
-                type = "Pelicula";
+                productionsContainer.append(
+                    `<div class="col-md-3">
+                        <div class="production-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                            <div class="card-body">
+                                <h4 class="p-title">${production.title}</h4>
+                                <h6 class="p-type">Pelicula</h6>
+                                <p class="p-duration">Duración ${production.resource.duration} minutos</p>
+                                <p class="p-date">${production.publication.toLocaleDateString()}</p>
+                                <p class="p-nationality">${production.nationality}</p>
+                                <p class="p-synopsis">${production.synopsis}</p>
+                            </div>
+                        </div>
+                    </div>`
+                );
             }
 
             if(production instanceof Entities.Serie) {
-                type = "Serie";
-            }
-
-            productionsContainer.append(
-                `<div class="col-md-3">
-                    <div class="production-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
-                        <div class="card-body">
-                            <h4 class="p-title">${production.title}</h4>
-                            <h6 class="p-type">${type}</h6>
-                            <p class="p-date">${production.publication.toLocaleDateString()}</p>
-                            <p class="p-nationality">${production.nationality}</p>
-                            <p class="p-synopsis">${production.synopsis}</p>
+                productionsContainer.append(
+                    `<div class="col-md-3">
+                        <div class="production-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
+                            <div class="card-body">
+                                <h4 class="p-title">${production.title}</h4>
+                                <h6 class="p-type">Serie</h6>
+                                <p class="p-date">${production.publication.toLocaleDateString()}</p>
+                                <p class="p-seasons">Temporadas ${production.seasons}</p>
+                                <p class="p-nationality">${production.nationality}</p>
+                                <p class="p-synopsis">${production.synopsis}</p>
+                            </div>
                         </div>
-                    </div>
-                </div>`
-            );
+                    </div>`
+                );
+            }
         }
     }
 
@@ -244,13 +255,14 @@ export default class VideoSystemView {
                         <h5>${production.title} ${production.nationality}</h5>
                         <p>Release date: ${production.publication.toLocaleDateString()}</p>
                         <p>${production.synopsis}</p>
+                        <hr>
                     </div>`
                 );
             }
         } catch(error) {
             $(`.${director.name}-productions`).append(
                 `<div class="production">
-                    <p>No productions in this category yet!</p>
+                    <p>This director hasn't got productions yet!</p>
                 </div>`
             );
         }
@@ -316,13 +328,14 @@ export default class VideoSystemView {
                         <h5>${production.title} ${production.nationality}</h5>
                         <p>Release date: ${production.publication.toLocaleDateString()}</p>
                         <p>${production.synopsis}</p>
+                        <hr>
                     </div>`
                 );
             }
         } catch(error) {
             $(`.${actor.name}-productions`).append(
                 `<div class="production">
-                    <p>No productions in this category yet!</p>
+                    <p>This actor hasn't got productions yet!</p>
                 </div>`
             );
         }

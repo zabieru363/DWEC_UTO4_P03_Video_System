@@ -110,6 +110,10 @@ class Resource {
         this.#duration = duration;
         this.#link = link;
     }
+
+    get duration() {
+        return this.#duration;
+    }
 }
 
 /**
@@ -201,6 +205,10 @@ class Movie extends Production {
         this.#resource = resource;
         this.#locations = locations;
     }
+
+    get resource() {
+        return this.#resource;
+    }
 }
 
 /**
@@ -226,6 +234,10 @@ class Serie extends Production {
         this.#resources = resources;
         this.#locations = locations;
         this.#seasons = seasons;
+    }
+
+    get seasons() {
+        return this.#seasons;
     }
 }
 
