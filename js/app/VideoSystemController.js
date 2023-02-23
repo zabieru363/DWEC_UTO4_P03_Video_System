@@ -301,7 +301,12 @@ export default class VideoSystemController {
         this.#model.assignDirector(d3, movie3);
         this.#model.assignDirector(d4, movie4);
         this.#model.assignDirector(d5, movie5);
+        this.#model.assignDirector(d5, movie7);
+        this.#model.assignDirector(d4, movie8);
         this.#model.assignDirector(d6, serie3);
+        this.#model.assignDirector(d6, serie4);
+        this.#model.assignDirector(d6, serie5);
+        this.#model.assignDirector(d6, serie7);
 
         // * Asignamos producciones a los actores.
         this.#model.assignActor(a1, movie1);
