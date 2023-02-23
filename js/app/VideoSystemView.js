@@ -115,14 +115,33 @@ export default class VideoSystemView {
      */
     showProductionsInCarousel(productions) {
         const all = [...productions];
+        const indexes = [];
 
         for(let i = 0; i <= 2; i++) {
             let randomIndex = Math.floor(Math.random() * (all.length - 0) + 0);
-            this.carousel.append(
-                `<div class="carousel-item active">
-                    <h2 class="production d-block w-100">${all[randomIndex].title}</h2>
-                </div>`
-            );
+            indexes.push(randomIndex);
+
+            // ! Generamos números aleatorios que no se repiten.
+            while(indexes.includes(randomIndex)) {
+                randomIndex = Math.floor(Math.random() * (all.length - 0) + 0);
+            }
+
+            indexes.push(randomIndex);
+
+            if(i === 0) {
+                this.carousel.append(
+                    // Al primer elemento le tenemos que poner la clase active porque si no se superponen.
+                    `<div class="carousel-item active">
+                        <h2 class="production">${all[randomIndex].title}</h2>
+                    </div>`
+                );
+            }else{
+                this.carousel.append(
+                    `<div class="carousel-item">
+                        <h2 class="production">${all[randomIndex].title}</h2>
+                    </div>`
+                );
+            }
         }
     }
 
