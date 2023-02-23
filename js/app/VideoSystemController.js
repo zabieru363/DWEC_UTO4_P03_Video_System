@@ -309,10 +309,27 @@ export default class VideoSystemController {
         this.#model.assignActor(a2, movie2);
         this.#model.assignActor(a7, movie2);
         this.#model.assignActor(a3, movie3);
+        this.#model.assignActor(a4, movie3);
         this.#model.assignActor(a4, movie4);
+        this.#model.assignActor(a5, movie4);
         this.#model.assignActor(a5, movie5);
+        this.#model.assignActor(a6, movie5);
         this.#model.assignActor(a8, movie7);
         this.#model.assignActor(a9, movie7);
+        this.#model.assignActor(a9, movie8);
+        this.#model.assignActor(a9, movie8);
+
+        this.#model.assignActor(a1, serie3);
+        this.#model.assignActor(a2, serie3);
+
+        this.#model.assignActor(a1, serie4);
+        this.#model.assignActor(a2, serie4);
+
+        this.#model.assignActor(a1, serie5);
+        this.#model.assignActor(a2, serie5);
+
+        this.#model.assignActor(a1, serie7);
+        this.#model.assignActor(a2, serie7);
     }
 
     constructor(model, view) {
