@@ -31,9 +31,7 @@ export default class VideoSystemView {
         this.main.append(
             `<section class="mt-3 categories-zone container-fluid text-white text-center">
                 <h1 class="display-5 mb-3">Categories</h1>
-                <div class="d-flex justify-content-around">
-                    <div class="cat-list row"></div>
-                </div>
+                <div class="row cat-list"></div>
             </section>`
         );
     }
@@ -55,7 +53,7 @@ export default class VideoSystemView {
      */
     showCategoriesInCentralZone(category, productions) {
         $(".cat-list").append(
-            `<div class="col-md-4">
+            `<div class="d-flex align-items-center justify-content-around col-md-4">
                 <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
                     <div class="card-body">
                         <div class="d-flex justify-content-center">
