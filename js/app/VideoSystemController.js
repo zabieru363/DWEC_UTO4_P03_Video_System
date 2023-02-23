@@ -334,9 +334,10 @@ export default class VideoSystemController {
      */
     onInit = () => {
         this.#view.init();
-        this.onShowCategoriesInCentralZone();
+        this.onShowCategoriesMenu();
         this.onShowUser(this.#model.users);
         this.onShowProductionsInCarousel(this.#model.productions);
+        this.onShowCategoriesInCentralZone();
     };
 
     /**
@@ -354,6 +355,15 @@ export default class VideoSystemController {
     handleInit = () => {
         this.onInit();
     };
+
+    /**
+     * Método que invoca al método que muestra las categorias
+     * en la navbar en la vista. Utiliza el iterador de categorias
+     * del modelo.
+     */
+    onShowCategoriesMenu() {
+        for(const category of this.#model.categories) this.#view.showCategoriesMenu(category);
+    }
     
     /**
      * Método que invoca al método showUser en la vista.

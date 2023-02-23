@@ -9,6 +9,7 @@ import * as Entities from "../entities/entities.js";
  */
 export default class VideoSystemView {
     constructor() {
+        this.categoriesMenu = $(".navbar-categories-menu");
         this.productionsAnchor = $(".productions");
         this.directorsAnchor = $(".directors");
         this.actorsAnchor = $(".actors");
@@ -24,6 +25,7 @@ export default class VideoSystemView {
      * @param {*} categories El iterador de categorias del modelo.
      */
     init() {
+        this.categoriesMenu.empty();
         this.username.empty();
         this.carousel.empty();
         this.main.empty();
@@ -44,6 +46,21 @@ export default class VideoSystemView {
     bindInit(handler) {
         $(".navbar-nav > .nav-item .home").on("click", handler);
         $(".navbar-brand").on("click", handler);
+    }
+
+    /**
+     * Método que muestra las categorias que hay en el sistema en la navbar.
+     * @param {*} category El objeto category que le llega del iterador 
+     * de categorias del modelo.
+     */
+    showCategoriesMenu(category) {
+        this.categoriesMenu.append(
+            `<li>
+                <a class="dropdown-item">
+                    ${category.name}
+                </a>
+            </li>`
+        );
     }
 
     /**
