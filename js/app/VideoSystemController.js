@@ -384,7 +384,7 @@ export default class VideoSystemController {
      * del modelo.
      */
     onShowCategoriesMenu() {
-        for(const category of this.#model.categories) this.#view.showCategoriesMenu(category);
+        for(const elem of this.#model.categories) this.#view.showCategoriesMenu(elem.category);
     }
     
     /**
@@ -413,8 +413,8 @@ export default class VideoSystemController {
      * correspondiente y sus producciones.
      */
     onShowCategoriesInCentralZone() {
-        for(const category of this.#model.categories) {
-            this.#view.showCategoriesInCentralZone(category, this.#model.getProductionsCategory(category));
+        for(const elem of this.#model.categories) {
+            this.#view.showCategoriesInCentralZone(elem.category, this.#model.getProductionsCategory(elem.category));
         }
     }
 
@@ -445,11 +445,13 @@ export default class VideoSystemController {
     };
 
     /**
-     * 
+     * Método que invoca al método que muestra todos los directores con
+     * sus producciones en la vista. Utiliza el iterador de directores
+     * del modelo y el iterador de producciones de un director del modelo.
      */
     onShowAllDirectors() {
-        for(const director of this.#model.directors) {
-            this.#view.showAllDirectors(director, this.#model.getProductionsDirector(director));
+        for(const elem of this.#model.directors) {
+            this.#view.showAllDirectors(elem.director, this.#model.getProductionsDirector(elem.director));
         }
     }
 
@@ -464,12 +466,12 @@ export default class VideoSystemController {
 
     /**
      * Método que invoca al método que muestra todos los actores con
-     * sus producciones en la vista. Utiliza el iterador de categorias
+     * sus producciones en la vista. Utiliza el iterador de actores
      * del modelo y el iterador de producciones de un actor del modelo.
      */
     onShowAllActors() {
-        for(const actor of this.#model.actors) {
-            this.#view.showAllActors(actor, this.#model.getProductionsActor(actor));
+        for(const elem of this.#model.actors) {
+            this.#view.showAllActors(elem.actor, this.#model.getProductionsActor(elem.actor));
         }
     }
 }

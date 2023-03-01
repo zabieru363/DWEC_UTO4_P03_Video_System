@@ -148,13 +148,13 @@ export default class VideoSystemView {
                 this.carousel.append(
                     // Al primer elemento le tenemos que poner la clase active porque si no se superponen.
                     `<div class="carousel-item active">
-                        <h2 class="production">${all[randomIndex].title}</h2>
+                        <h2 class="production">${all[randomIndex].production.title}</h2>
                     </div>`
                 );
             }else{
                 this.carousel.append(
                     `<div class="carousel-item">
-                        <h2 class="production">${all[randomIndex].title}</h2>
+                        <h2 class="production">${all[randomIndex].production.title}</h2>
                     </div>`
                 );
             }
@@ -175,35 +175,35 @@ export default class VideoSystemView {
 
         const productionsContainer = $(".productions-container");
 
-        for(const production of productions) {
-            if(production instanceof Entities.Movie) {
+        for(const elem of productions) {
+            if(elem.production instanceof Entities.Movie) {
                 productionsContainer.append(
                     `<div class="col-md-3">
                         <div class="production-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
                             <div class="card-body">
-                                <h4 class="p-title">${production.title}</h4>
+                                <h4 class="p-title">${elem.production.title}</h4>
                                 <h6 class="p-type">Pelicula</h6>
-                                <p class="p-duration">Duración ${production.resource.duration} minutos</p>
-                                <p class="p-date">${production.publication.toLocaleDateString()}</p>
-                                <p class="p-nationality">${production.nationality}</p>
-                                <p class="p-synopsis">${production.synopsis}</p>
+                                <p class="p-duration">Duración ${elem.production.resource.duration} minutos</p>
+                                <p class="p-date">${elem.production.publication.toLocaleDateString()}</p>
+                                <p class="p-nationality">${elem.production.nationality}</p>
+                                <p class="p-synopsis">${elem.production.synopsis}</p>
                             </div>
                         </div>
                     </div>`
                 );
             }
 
-            if(production instanceof Entities.Serie) {
+            if(elem.production instanceof Entities.Serie) {
                 productionsContainer.append(
                     `<div class="col-md-3">
                         <div class="production-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
                             <div class="card-body">
-                                <h4 class="p-title">${production.title}</h4>
+                                <h4 class="p-title">${elem.production.title}</h4>
                                 <h6 class="p-type">Serie</h6>
-                                <p class="p-date">${production.publication.toLocaleDateString()}</p>
-                                <p class="p-seasons">Temporadas ${production.seasons}</p>
-                                <p class="p-nationality">${production.nationality}</p>
-                                <p class="p-synopsis">${production.synopsis}</p>
+                                <p class="p-date">${elem.production.publication.toLocaleDateString()}</p>
+                                <p class="p-seasons">Temporadas ${elem.production.seasons}</p>
+                                <p class="p-nationality">${elem.production.nationality}</p>
+                                <p class="p-synopsis">${elem.production.synopsis}</p>
                             </div>
                         </div>
                     </div>`

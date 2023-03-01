@@ -16,9 +16,6 @@ export const VideoSystem = (function() {
             #productions = [];
             #actors = [];
             #directors = [];
-            #productionsByCategory = [];
-            #productionsByDirector = [];
-            #productionsByActor = [];
 
             // * MÉTODOS PRIVADOS
 
@@ -27,8 +24,8 @@ export const VideoSystem = (function() {
              * @param {*} category La categoría a buscar.
              * @returns True si existe, false si no es así.
              */
-            #categoryExists(category) {
-                return this.#categories.some(cat => cat.name === category.name);
+            #categoryExists(object) {
+                return this.#categories.some(cat => cat.category.name === object.name);
             }
 
             /**
@@ -37,8 +34,8 @@ export const VideoSystem = (function() {
              * @param {*} category La categoría de la que se quiere obtener su posición.
              * @returns La posición de la categoría.
              */
-            #getCategoryPosition(category) {
-                return this.#categories.findIndex(cat => cat.name === category.name);
+            #getCategoryPosition(object) {
+                return this.#categories.findIndex(cat => cat.category.name === object.name);
             }
 
             /**
@@ -47,8 +44,8 @@ export const VideoSystem = (function() {
              * @param {*} user El usuario a buscar.
              * @returns Si existe el nombre de usuario o no.
              */
-            #userNameExists(user) {
-                return this.#users.some(u => u.username === user.username);
+            #userNameExists(object) {
+                return this.#users.some(u => u.username === object.username);
             }
 
             /**
@@ -57,8 +54,8 @@ export const VideoSystem = (function() {
              * @param {*} user El usuario a buscar.
              * @returns Si existe el email o no.
              */
-            #emailExists(user) {
-                return this.#users.some(u => u.email === user.email);
+            #emailExists(object) {
+                return this.#users.some(u => u.email === object.email);
             }
 
             /**
@@ -67,8 +64,8 @@ export const VideoSystem = (function() {
              * @param {*} user El usuario del que se quiere obtener su posición.
              * @returns La posición del user.
              */
-            #getUserPosition(user) {
-                return this.#users.findIndex(u => u.username === user.username);
+            #getUserPosition(object) {
+                return this.#users.findIndex(u => u.username === object.username);
             }
 
             /**
@@ -77,8 +74,8 @@ export const VideoSystem = (function() {
              * @param {*} production La producción a buscar.
              * @returns True si existe, false si no es así.
              */
-            #productionExists(production) {
-                return this.#productions.some(p => p.title === production.title);
+            #productionExists(object) {
+                return this.#productions.some(p => p.production.title === object.title);
             }
 
             /**
@@ -87,8 +84,8 @@ export const VideoSystem = (function() {
              * @param {*} user La producción de la que se quiere obtener su posición.
              * @returns La posición de la producción.
              */
-            #getProductionPosition(production) {
-                return this.#productions.findIndex(p => p.title === production.title);
+            #getProductionPosition(object) {
+                return this.#productions.findIndex(p => p.production.title === object.title);
             }
 
             /**
@@ -96,8 +93,8 @@ export const VideoSystem = (function() {
              * @param {*} actor El actor a buscar.
              * @returns True si existe, false si no es así.
              */
-            #actorExists(actor) {
-                return this.#actors.some(a => a.name === actor.name);
+            #actorExists(object) {
+                return this.#actors.some(a => a.actor.name === object.name);
             }
 
             /**
@@ -106,8 +103,8 @@ export const VideoSystem = (function() {
              * @param {*} actor El actor del que se quiere obtener su posición.
              * @returns La posición del actor.
              */
-            #getActorPosition(actor) {
-                return this.#actors.findIndex(a => a.name === actor.name);
+            #getActorPosition(object) {
+                return this.#actors.findIndex(a => a.actor.name === object.name);
             }
 
             /**
@@ -115,8 +112,8 @@ export const VideoSystem = (function() {
              * @param {*} director El director a buscar.
              * @returns True si existe, false si no es así.
              */
-            #directorExists(director) {
-                return this.#directors.some(d => d.name === director.name);
+            #directorExists(object) {
+                return this.#directors.some(d => d.director.name === object.name);
             }
 
             /**
@@ -125,20 +122,20 @@ export const VideoSystem = (function() {
              * @param {*} director El director del que se quiere obtener su posición.
              * @returns La posición del director.
              */
-            #getDirectorPosition(director) {
-                return this.#directors.findIndex(d => d.name === director.name);
+            #getDirectorPosition(object) {
+                return this.#directors.findIndex(d => d.director.name === object.name);
             }
 
             /**
-             * Método privado que obtiene las producciones asignadas a
-             * una categoría.
+             * Método privado que obtiene las producciones asignadas
+             * a una categoría.
              * @param {*} category La categoría de la cuál se quieren obtener
              * sus producciones.
-             * @returns Un objeto literal con las producciones asignadas a
-             * esa categoría.
+             * @returns Un objeto literal con el objeto category buscado y
+             * un array con sus producciones.
              */
-            #getProductionsCategory(category) {
-                return this.#productionsByCategory.find(elem => elem.category.name === category.name);
+            #getProductionsCategory(object) {
+                return this.#categories.find(elem => elem.category.name === object.name);
             }
 
             /**
@@ -146,11 +143,11 @@ export const VideoSystem = (function() {
              * a un director.
              * @param {*} director El director del cuál se quieren obtener
              * sus producciones.
-             * @returns Un objeto literal con las producciones asignadas
-             * a ese director.
+             * @returns Un objeto literal con el director buscado y
+             * un array con sus producciones.
              */
-            #getProductionsDirector(director) {
-                return this.#productionsByDirector.find(elem => elem.director.name === director.name);
+            #getProductionsDirector(object) {
+                return this.#directors.find(elem => elem.director.name === object.name);
             }
 
             /**
@@ -161,8 +158,8 @@ export const VideoSystem = (function() {
              * @returns Un objeto literal con las producciones asignadas
              * a ese actor.
              */
-            #getProductionsActor(actor) {
-                return this.#productionsByActor.find(elem => elem.actor.name === actor.name);
+            #getProductionsActor(object) {
+                return this.#actors.find(elem => elem.actor.name === object.name);
             }
 
             constructor(name) {
@@ -215,7 +212,7 @@ export const VideoSystem = (function() {
                 const exists = this.#categoryExists(category);
                 if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Category);
 
-                return this.#categories.push(category);
+                return this.#categories.push({category, productions: []});
             }
 
             /**
@@ -321,7 +318,7 @@ export const VideoSystem = (function() {
                 const productionExists = this.#productionExists(production);
                 if(productionExists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Production);
 
-                return this.#productions.push(production);
+                return this.#productions.push({production, cast: []});
             }
 
             /**
@@ -373,7 +370,7 @@ export const VideoSystem = (function() {
                 const exists = this.#actorExists(actor);
                 if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Person);
 
-                return this.#actors.push(actor);
+                return this.#actors.push({actor, productions: []});
             }
 
             /**
@@ -425,7 +422,7 @@ export const VideoSystem = (function() {
                 const exists = this.#directorExists(director);
                 if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Person);
 
-                return this.#directors.push(director);
+                return this.#directors.push({director, productions: []});
             }
 
             /**
@@ -454,41 +451,34 @@ export const VideoSystem = (function() {
              * Si la categoría o las producciones no existen en el sistema
              * estas se añaden al sistema automáticamente.
              * @param {*} category La categoría a la cuál se quieren asignar producciones.
-             * @param  {...any} production Una o más producciones para asignar a la categoría.
+             * @param  {...any} productions Una o más producciones para asignar a la categoría.
              * @returns El número de producciones asociadas a esa categoría.
              */
-            assignCategory(category, ...production) {
+            assignCategory(category, ...productions) {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
 
                 // Comprobamos si hay elementos falsos.
-                for(let i = 0; i < production.length; i++) {
-                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                for(let i = 0; i < productions.length; i++) {
+                    if(!productions[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
                 }
 
                 // Si el objeto category no existe se añade al sistema:
                 const categoryExists = this.#categoryExists(category);
-                if(!categoryExists) this.#categories.push(category);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                if(!categoryExists) this.#categories.push({category, productions: []});    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                
                 // Si el objeto production no existe se añade al sistema:
                 let productionExists = false;
 
-                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
-                    productionExists = this.#productionExists(production[i]);
-                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
+                for(let i = 0; i < productions.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productionExists(productions[i]);
+                    if(!productionExists) this.#productions.push({production: productions[i], cast: []});     // Este más de lo mismo.
                 }
-
-                // Añadimos un objeto literal con:
-                const object = {
-                    category,   // Su categoría.
-                    productions: [] // Array vacío para añadir las producciones asociadas a esa categoría.
-                };
-
-                this.#productionsByCategory.push(object);
 
                 // Tenemos que obtener el array con las producciones asociadas a esa categoría.
                 const c = this.#getProductionsCategory(category);
-                for(let i = 0; i < production.length; i++) {
-                    productionExists = c.productions.some(e => e.title === production[i].title);
-                    if(!productionExists) c.productions.push(...production);
+                for(let i = 0; i < productions.length; i++) {
+                    productionExists = c.productions.some(e => e.title === productions[i].title);
+                    if(!productionExists) c.productions.push(...productions);
                 }
 
                 return c.productions.length;
@@ -497,15 +487,15 @@ export const VideoSystem = (function() {
             /**
              * Método que desasigna una o más producciones de una categoría.
              * @param {*} category La categoría de la cuál se quiere desasignar una producción
-             * @param  {...any} production Las producciones las cuáles se quieren desasignar.
+             * @param  {...any} productions Las producciones las cuáles se quieren desasignar.
              * @returns El número de producciones asociadas a esa categoría.
              */
-            deassignCategory(category, ...production) {
+            deassignCategory(category, ...productions) {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
 
                 // Comprobamos si hay elementos falsos.
-                for(let i = 0; i < production.length; i++) {
-                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                for(let i = 0; i < productions.length; i++) {
+                    if(!productions[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
                 }
 
                 // Obtenemos las producciones de la categoría que estamos buscando.
@@ -514,8 +504,8 @@ export const VideoSystem = (function() {
                 // Ahora comprobamos si existe la producción que queremos desasignar.
                 let pos = 0;
 
-                for(let i = 0; i < production.length; i++) {
-                    pos = c.productions.findIndex(e => e.title === production[i].title);
+                for(let i = 0; i < productions.length; i++) {
+                    pos = c.productions.findIndex(e => e.title === productions[i].title);
                     if(pos !== -1) c.productions.splice(pos, 1);
                 }
 
@@ -527,41 +517,34 @@ export const VideoSystem = (function() {
              * Si el director o las producciones no existen en el sistema
              * estos se añaden al sistema automáticamente.
              * @param {*} director El director al cuál se le quieren asignar producciones. 
-             * @param  {...any} production Las producciones que se quieren asignar.
+             * @param  {...any} productions Las producciones que se quieren asignar.
              * @returns El total de producciones asignadas a ese director.
              */
-            assignDirector(director, ...production) {
+            assignDirector(director, ...productions) {
                 if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
 
                 // Comprobamos si hay elementos falsos.
-                for(let i = 0; i < production.length; i++) {
-                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                for(let i = 0; i < productions.length; i++) {
+                    if(!productions[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
                 }
 
                 // Si el objeto director no existe se añade al sistema:
                 const directorExists = this.#directorExists(director);
-                if(!directorExists) this.#directors.push(director);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                if(!directorExists) this.#directors.push({director, productions: []});    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                
                 // Si el objeto production no existe se añade al sistema:
                 let productionExists = false;
 
-                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
-                    productionExists = this.#productionExists(production[i]);
-                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
+                for(let i = 0; i < productions.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productionExists(productions[i]);
+                    if(!productionExists) this.#productions.push({production: productions[i], cast: []});     // Este más de lo mismo.
                 }
 
-                // Añadimos un objeto literal con:
-                const object = {
-                    director,   // El director.
-                    productions: [] // Array vacío para añadir las producciones asociadas a ese director.
-                };
-
-                this.#productionsByDirector.push(object);
-
-                // Tenemos que obtener el array con las producciones asociadas a ese director.
                 const d = this.#getProductionsDirector(director);
-                for(let i = 0; i < production.length; i++) {
-                    productionExists = d.productions.some(e => e.title === production[i].title);
-                    if(!productionExists) d.productions.push(...production);
+
+                for(let i = 0; i < productions.length; i++) {
+                    productionExists = d.productions.some(e => e.title === productions[i].title);
+                    if(!productionExists) d.productions.push(...productions);
                 }
 
                 return d.productions.length;
@@ -570,15 +553,15 @@ export const VideoSystem = (function() {
             /**
              * Método que desasigna una o más producciones de un director.
              * @param {*} director El director del cuál se quiere desasignar una producción
-             * @param  {...any} production Las producciones las cuáles se quieren desasignar.
+             * @param  {...any} productions Las producciones las cuáles se quieren desasignar.
              * @returns El número de producciones asociadas a ese director.
              */
-            deassignDirector(director, ...production) {
+            deassignDirector(director, ...productions) {
                 if(!director) throw exceptionFactory.throwError("EmptyValueException", null, "director");
 
                 // Comprobamos si hay elementos falsos.
-                for(let i = 0; i < production.length; i++) {
-                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                for(let i = 0; i < productions.length; i++) {
+                    if(!productions[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
                 }
 
                 // Obtenemos las producciones del director que estamos buscando.
@@ -587,8 +570,8 @@ export const VideoSystem = (function() {
                 // Ahora comprobamos si existe la producción que queremos desasignar.
                 let pos = 0;
 
-                for(let i = 0; i < production.length; i++) {
-                    pos = d.productions.findIndex(e => e.title === production[i].title);
+                for(let i = 0; i < productions.length; i++) {
+                    pos = d.productions.findIndex(e => e.title === productions[i].title);
                     if(pos !== -1) d.productions.splice(pos, 1);
                 }
 
@@ -600,41 +583,34 @@ export const VideoSystem = (function() {
              * Si el actor o las producciones no existen en el sistema
              * estos se añaden al sistema automáticamente.
              * @param {*} actor El actor al cuál se le quieren asignar producciones. 
-             * @param  {...any} production Las producciones que se quieren asignar.
+             * @param  {...any} productions Las producciones que se quieren asignar.
              * @returns El total de producciones asignadas a ese actor.
              */
-            assignActor(actor, ...production) {
+            assignActor(actor, ...productions) {
                 if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
 
                 // Comprobamos si hay elementos falsos.
-                for(let i = 0; i < production.length; i++) {
-                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                for(let i = 0; i < productions.length; i++) {
+                    if(!productions[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
                 }
 
                 // Si el objeto actor no existe se añade al sistema:
                 const actorExists = this.#actorExists(actor);
-                if(!actorExists) this.#actors.push(actor);    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+                if(!actorExists) this.#actors.push({actor, productions: []});    // Lo añado sin utilizar el método porque es más eficiente y además ya sabriamos que no existe.
+
                 // Si el objeto production no existe se añade al sistema:
                 let productionExists = false;
 
-                for(let i = 0; i < production.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
-                    productionExists = this.#productionExists(production[i]);
-                    if(!productionExists) this.#productions.push(production[i]);     // Este más de lo mismo.
+                for(let i = 0; i < productions.length; i++) {    // Hay que tener en cuenta que pueden ser varios.
+                    productionExists = this.#productionExists(productions[i]);
+                    if(!productionExists) this.#productions.push({production: productions[i], cast: []});     // Este más de lo mismo.
                 }
-
-                // Añadimos un objeto literal con:
-                const object = {
-                    actor,   // El actor.
-                    productions: [] // Array vacío para añadir las producciones asociadas a ese actor.
-                };
-
-                this.#productionsByActor.push(object);
 
                 // Tenemos que obtener el array con las producciones asociadas a ese actor.
                 const a = this.#getProductionsActor(actor);
-                for(let i = 0; i < production.length; i++) {
-                    productionExists = a.productions.some(e => e.title === production[i].title);
-                    if(!productionExists) a.productions.push(...production);
+                for(let i = 0; i < productions.length; i++) {
+                    productionExists = a.productions.some(e => e.title === productions[i].title);
+                    if(!productionExists) a.productions.push(...productions);
                 }
 
                 return a.productions.length;
@@ -643,15 +619,15 @@ export const VideoSystem = (function() {
             /**
              * Método que desasigna una o más producciones de un actor.
              * @param {*} actor El actor del cuál se quiere desasignar una producción
-             * @param  {...any} production Las producciones las cuáles se quieren desasignar.
+             * @param  {...any} productions Las producciones las cuáles se quieren desasignar.
              * @returns El número de producciones asociadas a ese actor.
              */
-            deassignActor(actor, ...production) {
+            deassignActor(actor, ...productions) {
                 if(!actor) throw exceptionFactory.throwError("EmptyValueException", null, "actor");
 
                 // Comprobamos si hay elementos falsos.
-                for(let i = 0; i < production.length; i++) {
-                    if(!production[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
+                for(let i = 0; i < productions.length; i++) {
+                    if(!productions[i]) throw exceptionFactory.throwError("EmptyValueException", null, "production");
                 }
 
                 // Obtenemos las producciones del actor que estamos buscando.
@@ -659,12 +635,16 @@ export const VideoSystem = (function() {
                 // Ahora comprobamos si existe la producción que queremos desasignar.
                 let pos = 0;
 
-                for(let i = 0; i < production.length; i++) {
-                    pos = a.productions.findIndex(e => e.title === production[i].title);
+                for(let i = 0; i < productions.length; i++) {
+                    pos = a.productions.findIndex(e => e.title === productions[i].title);
                     if(pos !== -1) a.productions.splice(pos, 1);
                 }
 
                 return a.productions.length;
+            }
+
+            * getCast(production) {
+
             }
 
             /**
