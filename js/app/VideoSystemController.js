@@ -337,6 +337,18 @@ export default class VideoSystemController {
         this.#model.assignActor(a2, serie7);
     }
 
+    #createCategory(title, desc) {
+        const category = new Entities.Category(title, desc);
+        this.#model.addCategory(category);
+
+        for(const elem of this.#model.categories) {
+            if(elem.category.name === title) {
+                this.#view.updateCategories(elem.category, this.#model.getProductionsCategory(elem.category));
+                break;
+            }
+        }
+    }
+
     constructor(model, view) {
         this.#model = model;
         this.#view = view;
@@ -358,6 +370,7 @@ export default class VideoSystemController {
         this.#view.init();
         this.onShowCategoriesMenu();
         this.onShowUser(this.#model.users);
+        this.validateCreateCategoryForm();
         this.onShowProductionsInCarousel(this.#model.productions);
         this.onShowCategoriesInCentralZone();
     };
@@ -403,6 +416,61 @@ export default class VideoSystemController {
      */
     onShowProductionsInCarousel(productions) {
         this.#view.showProductionsInCarousel(productions);
+    }
+
+    validateCreateCategoryForm() {
+        const form = document.forms[0];
+        const title = document.getElementById("catTitle");
+        const desc = document.getElementById("catDescription");
+        let valid = false;
+
+        const fields = {
+            title: false
+        };
+
+        title.addEventListener("change", function(e) {
+            if(this.value === "") {
+                if(this.classList.contains("is-valid")) {
+                    this.classList.remove("is-valid");
+                }
+                this.classList.add("is-invalid");
+                fields.title = false;
+            }else{
+                if(this.classList.contains("is-invalid")) {
+                    this.classList.remove("is-invalid");
+                }
+                this.classList.add("is-valid");
+                fields.title = true;
+            }
+        });
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const submitInfo = document.getElementsByClassName("submit-info")[0]
+
+            if(!fields.title) {
+                if(submitInfo.classList.contains("text-success")) {
+                    submitInfo.classList.remove("text-success");
+                }
+                submitInfo.classList.add("text-danger");
+                submitInfo.textContent = "Hay fallos en el formulario.";
+            }else{
+                if(submitInfo.classList.contains("text-danger")) {
+                    submitInfo.classList.remove("text-danger");
+                }
+                submitInfo.classList.add("text-success");
+                submitInfo.textContent = "Categoría creada";
+                valid = true;
+
+                title.classList.remove("is-valid");
+
+                title.value = "";
+                desc.value = "";
+            }
+        });
+
+        if(valid) this.#createCategory(title.value, desc.value);
     }
 
     /**

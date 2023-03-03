@@ -31,6 +31,9 @@ export default class VideoSystemView {
         this.carousel.empty();
         this.main.empty();
 
+        this.showOperationButtons();
+        this.showCreateCategoryForm();
+
         this.main.append(
             `<section class="mt-3 categories-zone container-fluid text-white text-center">
                 <h1 class="display-5 mb-3">Categories</h1>
@@ -65,11 +68,122 @@ export default class VideoSystemView {
     }
 
     /**
+     * Método que crea 2 botones que muestran un modal
+     * para crear y eliminar categorias.
+     */
+    showOperationButtons() {
+        this.main.append(
+            `<div class="mt-4 container-fluid">
+                <button class="add-category-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <i class="fa-solid fa-plus"></i> Add category
+                </button>
+                <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="bg-dark modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="addCategoryLabel">Create category</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="create-category-form-container modal-body"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="delete-category-btn btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
+                    <i class="fa-solid fa-trash"></i> Delete category
+                </button>
+                <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="bg-dark modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="deleteCategoryLabel">Delete category</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        );
+    }
+
+    /**
+     * Método que añade al modal de crear categorias el formulario
+     * para crear una categoría.
+     */
+    showCreateCategoryForm() {
+        const modal = $(".create-category-form-container");
+
+        modal.append(
+            `<form name="add-category-form" method="POST" action="#" novalidate role="form">
+                <div class="needs-validation mb-3">
+                    <label for="category-title" class="form-label">Category title</label>
+                    <input type="text" placeholder="Ex: Action films" class="form-control bg-dark text-white" name="category-title" id="catTitle">
+                    <div class="invalid-feedback">El título no puede estar vacío.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="category-description" class="form-label">Description</label>
+                    <textarea class="form-control bg-dark text-white" name="category-description" id="catDescription"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create category</button>
+                <div class="submit-info"></div>
+            </form>`
+        );
+    }
+
+    /**
      * Método que muestra las categorias en la zona central de la página.
      * @param {*} category La categoria que le llega del iterador de categorias del modelo.
      * @param {*} productions Generador con las producciones de esa categoria.
      */
     showCategoriesInCentralZone(category, productions) {
+        $(".cat-list").append(
+            `<div class="d-flex align-items-center justify-content-around col-md-4">
+                <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center">
+                            <div class="mb-3 circle bg-white"><i class="fa-solid fa-folder"></i></div>
+                        </div>
+                        <h3 class="cat-name card-title">${category.name}</h3>
+                        <p class="card-text">${category.description}</p>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#${category.name}-productions" aria-controls="offcanvasWithBothOptions">
+                            Show productions
+                        </button>
+
+                        <div class="bg-dark offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="${category.name}-productions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Productions of ${category.name}</h5>
+                                <button type="button" class="bg-white btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="${category.name}-productions offcanvas-body"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        );
+
+        // Envolvemos esto en un try-catch ya que el iterador de producciones puede estar vacío.
+        try {
+            for(const production of productions) {
+                $(`.${category.name}-productions`).append(
+                    `<div class="production">
+                        <h5>${production.title} ${production.nationality}</h5>
+                        <p>Release date: ${production.publication.toLocaleDateString()}</p>
+                        <p>${production.synopsis}</p>
+                        <hr>
+                    </div>`
+                );
+            }
+        } catch(error) {
+            $(`.${category.name}-productions`).append(
+                `<div class="production">
+                    <p>No productions in this category yet!</p>
+                </div>`
+            );
+        }
+    }
+
+    updateCategories(category, productions) {
         $(".cat-list").append(
             `<div class="d-flex align-items-center justify-content-around col-md-4">
                 <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
