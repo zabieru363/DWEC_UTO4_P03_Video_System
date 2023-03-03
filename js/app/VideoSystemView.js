@@ -17,6 +17,7 @@ export default class VideoSystemView {
         this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
         this.categoriesCentralZone = $(".categories-zone");
+        this.newTab = null;
     }
 
     /**
@@ -187,12 +188,14 @@ export default class VideoSystemView {
                                 <p class="p-date">${elem.production.publication.toLocaleDateString()}</p>
                                 <p class="p-nationality">${elem.production.nationality}</p>
                                 <p class="p-synopsis">${elem.production.synopsis}</p>
+
+                                <button class="open-window-btn btn btn-primary">Open in new tab</button>
                             </div>
                         </div>
                     </div>`
                 );
             }
-
+                            
             if(elem.production instanceof Entities.Serie) {
                 productionsContainer.append(
                     `<div class="col-md-3">
@@ -204,6 +207,8 @@ export default class VideoSystemView {
                                 <p class="p-seasons">Temporadas ${elem.production.seasons}</p>
                                 <p class="p-nationality">${elem.production.nationality}</p>
                                 <p class="p-synopsis">${elem.production.synopsis}</p>
+
+                                <button class="open-window-btn btn btn-primary">Open in new tab</button>
                             </div>
                         </div>
                     </div>`
@@ -279,7 +284,7 @@ export default class VideoSystemView {
         } catch(error) {
             $(`.${director.name}-productions`).append(
                 `<div class="production">
-                    <p>This director hasn't got productions yet!</p>
+                    <p>This director has no productions yet!</p>
                 </div>`
             );
         }
@@ -352,7 +357,7 @@ export default class VideoSystemView {
         } catch(error) {
             $(`.${actor.name}-productions`).append(
                 `<div class="production">
-                    <p>This actor hasn't got productions yet!</p>
+                    <p>This actor has no productions yet!</p>
                 </div>`
             );
         }
