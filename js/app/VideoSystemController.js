@@ -347,6 +347,18 @@ export default class VideoSystemController {
         this.#view.updateCategories(c.category, this.#model.getProductionsCategory(c.category));
     }
 
+    #deleteCategory(value) {
+        for(const elem of this.#model.categories) {
+            if(elem.category.name === value) this.#model.removeCategory(elem.category);
+        }
+        
+        this.#view.emptyCategoriesContainer();
+        
+        for(const elem of this.#model.categories) {
+            this.#view.showCategoriesInCentralZone(elem.category, this.#model.getProductionsCategory(elem.category));
+        }
+    }
+
     constructor(model, view) {
         this.#model = model;
         this.#view = view;
@@ -484,8 +496,7 @@ export default class VideoSystemController {
         this.#view.fillSelectCategories(categories);
     }
 
-    onSelectCategory() {
-        let valid = false;
+    onSelectCategory = () => {
         const submitInfo = document.querySelector(".delete-category-form > div.submit-info");
         const select = document.getElementsByClassName("select-categories")[0];
 
@@ -502,8 +513,11 @@ export default class VideoSystemController {
             submitInfo.classList.add("text-success");
             submitInfo.textContent = "Categoría eliminada.";
 
+            this.#deleteCategory(select.value);
+            this.#view.emptySelectCategories();
+            this.onfillSelectCategories(this.#model.categories);
+
             select.value = "";
-            valid = true;
         }
     }
 

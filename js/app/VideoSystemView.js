@@ -16,7 +16,6 @@ export default class VideoSystemView {
         this.username = $(".user-panel > span.username");
         this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
-        this.categoriesCentralZone = $(".categories-zone");
         this.newTab = null;
     }
 
@@ -138,23 +137,45 @@ export default class VideoSystemView {
         modal.append(
             `<form name="delete-category-form" class="delete-category-form" method="POST" action="#" novalidate role="form">
                 <label class="form-label" for="category">Select a category</label>
-                <select class="select-categories form-select mb-3" aria-label="Default select example">
-                    <option value="">---Selecciona una categoría---</option>
-                </select>
+                <select class="select-categories form-select mb-3" aria-label="Default select example"></select>
                 <button type="submit" class="btn btn-danger">Delete category</button>
                 <div class="submit-info"></div>
             </form>`
         );
     }
 
+    /**
+     * Método que rellena el select del formulario de eliminar categorías
+     * con las categorías que tneemos en el modelo.
+     * @param {*} categories El iterador de categorías del modelo.
+     */
     fillSelectCategories(categories) {
+        const select = $(".select-categories");
+        select.append(
+            `<option value="">---Selecciona una categoría---</option>`
+        );
+
         for(const elem of categories) {
-            $(".select-categories").append(
+            select.append(
                 `<option value="${elem.category.name}">${elem.category.name}</option>`
-            )
+            );
         }
     }
 
+    /**
+     * Método que vacía el select del formulario eliminar
+     * categorías.
+     */
+    emptySelectCategories() {
+        $(".select-categories").empty();
+    }
+
+    /**
+     * Método que captura el evento submit del formulario de
+     * eliminar categorías.
+     * @param {*} handler La función manejadora que valída
+     * el formulario
+     */
     bindDeleteCategory(handler) {
         document.forms[1].addEventListener("submit", function(e) {
             e.preventDefault();
@@ -214,51 +235,15 @@ export default class VideoSystemView {
         }
     }
 
-    updateCategories(category, productions) {
-        $(".cat-list").append(
-            `<div class="d-flex align-items-center justify-content-around col-md-4">
-                <div class="cat-card shadow p-3 mb-5 rounded card" style="width: 18rem;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-center">
-                            <div class="mb-3 circle bg-white"><i class="fa-solid fa-folder"></i></div>
-                        </div>
-                        <h3 class="cat-name card-title">${category.name}</h3>
-                        <p class="card-text">${category.description}</p>
-                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#${category.name}-productions" aria-controls="offcanvasWithBothOptions">
-                            Show productions
-                        </button>
+    /**
+     * Método que vacía el contenedor de categorías.
+     * (No las elimina del modelo, las elimina de la vista)
+     */
+    emptyCategoriesContainer() {
+        const categoriesZone = $(".categories-zone");
+        const catList = categoriesZone.find(".cat-list");
 
-                        <div class="bg-dark offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="${category.name}-productions" aria-labelledby="offcanvasWithBothOptionsLabel">
-                            <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Productions of ${category.name}</h5>
-                                <button type="button" class="bg-white btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                            </div>
-                            <div class="${category.name}-productions offcanvas-body"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>`
-        );
-
-        // Envolvemos esto en un try-catch ya que el iterador de producciones puede estar vacío.
-        try {
-            for(const production of productions) {
-                $(`.${category.name}-productions`).append(
-                    `<div class="production">
-                        <h5>${production.title} ${production.nationality}</h5>
-                        <p>Release date: ${production.publication.toLocaleDateString()}</p>
-                        <p>${production.synopsis}</p>
-                        <hr>
-                    </div>`
-                );
-            }
-        } catch(error) {
-            $(`.${category.name}-productions`).append(
-                `<div class="production">
-                    <p>No productions in this category yet!</p>
-                </div>`
-            );
-        }
+        catList.empty();
     }
 
     /**
