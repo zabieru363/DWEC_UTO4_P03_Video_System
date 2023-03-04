@@ -114,7 +114,7 @@ export default class VideoSystemView {
         const modal = $(".create-category-form-container");
 
         modal.append(
-            `<form name="add-category-form" method="POST" action="#" novalidate role="form">
+            `<form name="add-category-form" class="add-category-form" method="POST" action="#" novalidate role="form">
                 <div class="needs-validation mb-3">
                     <label for="category-title" class="form-label">Category title</label>
                     <input type="text" placeholder="Ex: Action films" class="form-control bg-dark text-white" name="category-title" id="catTitle">
@@ -131,6 +131,24 @@ export default class VideoSystemView {
         );
     }
 
+    bindCreateCategory(changeHandler, submitHandler) {
+        const title = document.getElementById("catTitle");
+        const desc = document.getElementById("catDescription");
+
+        title.addEventListener("change", function() {
+            changeHandler(title);
+        });
+
+        document.forms[0].addEventListener("submit", function(e) {
+            e.preventDefault();
+            submitHandler(title, desc);
+        });
+    }
+
+    /**
+     * Método que muestra el formulario para eliminar
+     * categorías dentro del modal de delete category.
+     */
     showDeleteCategoryForm() {
         const modal = $(".delete-category-form-container");
 

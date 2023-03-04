@@ -337,16 +337,32 @@ export default class VideoSystemController {
         this.#model.assignActor(a2, serie7);
     }
 
+    /**
+     * Método privado que crea una categoría y la añade al modelo.
+     * Operación para formularios.
+     * @param {*} title El nombre de la categoría.
+     * @param {*} desc La descripción de la categoría.
+     */
     #createCategory(title, desc) {
         const category = new Entities.Category(title, desc);
         this.#model.addCategory(category);
 
-        const all = [...this.#model.categories];
-
-        const c = all.find(elem => elem.category.name === title);
-        this.#view.updateCategories(c.category, this.#model.getProductionsCategory(c.category));
+        // Comunicamos el cambio a la vista.
+        this.#view.emptyCategoriesContainer();
+        
+        for(const elem of this.#model.categories)
+            this.#view.showCategoriesInCentralZone(elem.category, this.#model.getProductionsCategory(elem.category));
+        
+        // Tenemos que actualizar también el select para que coja la categoría nueva.
+        this.#view.emptySelectCategories();
+        this.onfillSelectCategories(this.#model.categories);
     }
 
+    /**
+     * Método privado que elimina la categoría que se recoje
+     * del select. Una vez eliminada, actualiza la vista.
+     * @param {*} value 
+     */
     #deleteCategory(value) {
         for(const elem of this.#model.categories) {
             if(elem.category.name === value) this.#model.removeCategory(elem.category);
@@ -354,9 +370,8 @@ export default class VideoSystemController {
         
         this.#view.emptyCategoriesContainer();
         
-        for(const elem of this.#model.categories) {
+        for(const elem of this.#model.categories)
             this.#view.showCategoriesInCentralZone(elem.category, this.#model.getProductionsCategory(elem.category));
-        }
     }
 
     constructor(model, view) {
@@ -371,7 +386,8 @@ export default class VideoSystemController {
         this.#view.bindDirectors(this.handleDirectors);
         this.#view.bindActors(this.handleActors);
 
-        this.#view.bindDeleteCategory(this.onSelectCategory);
+        this.#view.bindCreateCategory(this.validateFormCreateCategoryHandler, this.submitCreateCategoryFormHandler);
+        this.#view.bindDeleteCategory(this.handleSelectCategory);
     }
 
     /**
@@ -383,7 +399,6 @@ export default class VideoSystemController {
         this.onShowCategoriesMenu();
         this.onShowUser(this.#model.users);
         this.onShowProductionsInCarousel(this.#model.productions);
-        this.validateCreateCategoryForm();
         this.onfillSelectCategories(this.#model.categories);
         this.onShowCategoriesInCentralZone();
     };
@@ -431,61 +446,6 @@ export default class VideoSystemController {
         this.#view.showProductionsInCarousel(productions);
     }
 
-    validateCreateCategoryForm() {
-        const form = document.forms[0];
-        const title = document.getElementById("catTitle");
-        const desc = document.getElementById("catDescription");
-        let valid = false;
-
-        const fields = {
-            title: false
-        };
-
-        title.addEventListener("change", function(e) {
-            if(this.value === "") {
-                if(this.classList.contains("is-valid")) {
-                    this.classList.remove("is-valid");
-                }
-                this.classList.add("is-invalid");
-                fields.title = false;
-            }else{
-                if(this.classList.contains("is-invalid")) {
-                    this.classList.remove("is-invalid");
-                }
-                this.classList.add("is-valid");
-                fields.title = true;
-            }
-        });
-
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const submitInfo = document.getElementsByClassName("submit-info")[0]
-
-            if(!fields.title) {
-                if(submitInfo.classList.contains("text-success")) {
-                    submitInfo.classList.remove("text-success");
-                }
-                submitInfo.classList.add("text-danger");
-                submitInfo.textContent = "Hay fallos en el formulario.";
-            }else{
-                if(submitInfo.classList.contains("text-danger")) {
-                    submitInfo.classList.remove("text-danger");
-                }
-                submitInfo.classList.add("text-success");
-                submitInfo.textContent = "Categoría creada";
-                valid = true;
-
-                title.classList.remove("is-valid");
-
-                title.value = "";
-                desc.value = "";
-            }
-        });
-
-        if(valid) this.#createCategory(title.value, desc.value);
-    }
-
     /**
      * Método que invoca al método de la vista que rellena
      * el select de categorías con las categorías que hay en
@@ -496,7 +456,58 @@ export default class VideoSystemController {
         this.#view.fillSelectCategories(categories);
     }
 
-    onSelectCategory = () => {
+    /**
+     * Handler que valida el formulario de crear categorías.
+     * @param {*} title El titulo de la categoría.
+     */
+    validateFormCreateCategoryHandler = (title) => {
+        if(title.value === "") {
+            if(title.classList.contains("is-valid")) {
+                title.classList.remove("is-valid");
+            }
+            title.classList.add("is-invalid");
+        }else{
+            if(title.classList.contains("is-invalid")) {
+                title.classList.remove("is-invalid");
+            }
+            title.classList.add("is-valid");
+        }
+    };
+
+    /**
+     * Handler que controla el evento submit del formulario
+     * de crear categorías.
+     * @param {*} title El título de la categoría.
+     * @param {*} desc La descripción de la categoría.
+     */
+    submitCreateCategoryFormHandler = (title, desc) => {
+        const submitInfo = document.querySelector(".add-category-form > div.submit-info");
+
+        if(!title.value) {
+            if(submitInfo.classList.contains("text-success")) {
+                submitInfo.classList.remove("text-success");
+            }
+            submitInfo.classList.add("text-danger");
+            submitInfo.textContent = "Hay fallos en el formulario.";
+        }else{
+            if(submitInfo.classList.contains("text-danger")) {
+                submitInfo.classList.remove("text-danger");
+            }
+            submitInfo.classList.add("text-success");
+            submitInfo.textContent = "Categoría creada";
+
+            this.#createCategory(title.value, desc.value);
+
+            title.value = "";
+            desc.value = "";
+        }
+    };
+
+    /**
+     * Handler que valida el formulario de eliminar
+     * categorías. Si todo está correcto elimina la categoría.
+     */
+    handleSelectCategory = () => {
         const submitInfo = document.querySelector(".delete-category-form > div.submit-info");
         const select = document.getElementsByClassName("select-categories")[0];
 
@@ -513,7 +524,9 @@ export default class VideoSystemController {
             submitInfo.classList.add("text-success");
             submitInfo.textContent = "Categoría eliminada.";
 
+            // Eliminamos la categoría del modelo.
             this.#deleteCategory(select.value);
+            // Actulizamos el select.
             this.#view.emptySelectCategories();
             this.onfillSelectCategories(this.#model.categories);
 
