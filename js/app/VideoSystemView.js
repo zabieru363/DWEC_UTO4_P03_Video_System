@@ -33,6 +33,7 @@ export default class VideoSystemView {
 
         this.showOperationButtons();
         this.showCreateCategoryForm();
+        this.showDeleteCategoryForm();
 
         this.main.append(
             `<section class="mt-3 categories-zone container-fluid text-white text-center">
@@ -98,7 +99,7 @@ export default class VideoSystemView {
                                 <h1 class="modal-title fs-5" id="deleteCategoryLabel">Delete category</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body"></div>
+                            <div class="delete-category-form-container modal-body"></div>
                         </div>
                     </div>
                 </div>
@@ -129,6 +130,36 @@ export default class VideoSystemView {
                 <div class="submit-info"></div>
             </form>`
         );
+    }
+
+    showDeleteCategoryForm() {
+        const modal = $(".delete-category-form-container");
+
+        modal.append(
+            `<form name="delete-category-form" class="delete-category-form" method="POST" action="#" novalidate role="form">
+                <label class="form-label" for="category">Select a category</label>
+                <select class="select-categories form-select mb-3" aria-label="Default select example">
+                    <option value="">---Selecciona una categoría---</option>
+                </select>
+                <button type="submit" class="btn btn-danger">Delete category</button>
+                <div class="submit-info"></div>
+            </form>`
+        );
+    }
+
+    fillSelectCategories(categories) {
+        for(const elem of categories) {
+            $(".select-categories").append(
+                `<option value="${elem.category.name}">${elem.category.name}</option>`
+            )
+        }
+    }
+
+    bindDeleteCategory(handler) {
+        document.forms[1].addEventListener("submit", function(e) {
+            e.preventDefault();
+            handler();
+        });
     }
 
     /**

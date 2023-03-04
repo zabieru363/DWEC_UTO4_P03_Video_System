@@ -341,12 +341,10 @@ export default class VideoSystemController {
         const category = new Entities.Category(title, desc);
         this.#model.addCategory(category);
 
-        for(const elem of this.#model.categories) {
-            if(elem.category.name === title) {
-                this.#view.updateCategories(elem.category, this.#model.getProductionsCategory(elem.category));
-                break;
-            }
-        }
+        const all = [...this.#model.categories];
+
+        const c = all.find(elem => elem.category.name === title);
+        this.#view.updateCategories(c.category, this.#model.getProductionsCategory(c.category));
     }
 
     constructor(model, view) {
@@ -360,6 +358,8 @@ export default class VideoSystemController {
         this.#view.bindProductions(this.handleProductions);
         this.#view.bindDirectors(this.handleDirectors);
         this.#view.bindActors(this.handleActors);
+
+        this.#view.bindDeleteCategory(this.onSelectCategory);
     }
 
     /**
@@ -370,8 +370,9 @@ export default class VideoSystemController {
         this.#view.init();
         this.onShowCategoriesMenu();
         this.onShowUser(this.#model.users);
-        this.validateCreateCategoryForm();
         this.onShowProductionsInCarousel(this.#model.productions);
+        this.validateCreateCategoryForm();
+        this.onfillSelectCategories(this.#model.categories);
         this.onShowCategoriesInCentralZone();
     };
 
@@ -471,6 +472,39 @@ export default class VideoSystemController {
         });
 
         if(valid) this.#createCategory(title.value, desc.value);
+    }
+
+    /**
+     * Método que invoca al método de la vista que rellena
+     * el select de categorías con las categorías que hay en
+     * el modelo.
+     * @param {*} categories El iterador de categorías del modelo. 
+     */
+    onfillSelectCategories(categories) {
+        this.#view.fillSelectCategories(categories);
+    }
+
+    onSelectCategory() {
+        let valid = false;
+        const submitInfo = document.querySelector(".delete-category-form > div.submit-info");
+        const select = document.getElementsByClassName("select-categories")[0];
+
+        if(!select.value) {
+            if(submitInfo.classList.contains("text-success")) {
+                submitInfo.classList.remove("text-success");
+            }
+            submitInfo.classList.add("text-danger");
+            submitInfo.textContent = "No se ha seleccionado ninguna categoría.";
+        }else{
+            if(submitInfo.classList.contains("text-danger")) {
+                submitInfo.classList.remove("text-danger");
+            }
+            submitInfo.classList.add("text-success");
+            submitInfo.textContent = "Categoría eliminada.";
+
+            select.value = "";
+            valid = true;
+        }
     }
 
     /**
