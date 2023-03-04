@@ -386,7 +386,8 @@ export default class VideoSystemController {
         this.#view.bindDirectors(this.handleDirectors);
         this.#view.bindActors(this.handleActors);
 
-        this.#view.bindCreateCategory(this.validateFormCreateCategoryHandler, this.submitCreateCategoryFormHandler);
+        // Le pasamos un objeto literal con los handlers que necesitamos.
+        this.#view.bindCreateCategory({h1: this.validateFormCreateCategoryHandler, h2: this.submitCreateCategoryFormHandler});
         this.#view.bindDeleteCategory(this.handleSelectCategory);
     }
 
@@ -481,6 +482,7 @@ export default class VideoSystemController {
      * @param {*} desc La descripción de la categoría.
      */
     submitCreateCategoryFormHandler = (title, desc) => {
+        let exists = false;
         const submitInfo = document.querySelector(".add-category-form > div.submit-info");
 
         if(!title.value) {
@@ -490,16 +492,32 @@ export default class VideoSystemController {
             submitInfo.classList.add("text-danger");
             submitInfo.textContent = "Hay fallos en el formulario.";
         }else{
-            if(submitInfo.classList.contains("text-danger")) {
-                submitInfo.classList.remove("text-danger");
+            for(const elem of this.#model.categories) {
+                if(elem.category.name === title.value) {
+                    exists = true;
+                    break;
+                }
             }
-            submitInfo.classList.add("text-success");
-            submitInfo.textContent = "Categoría creada";
 
-            this.#createCategory(title.value, desc.value);
+            if(exists) {
+                if(!(submitInfo.classList.contains("text-danger"))) {
+                    submitInfo.classList.add("text-danger");
+                }
+                submitInfo.textContent = "La categoría ya existe!";
+            }else{
+                if(submitInfo.classList.contains("text-danger")) {
+                    submitInfo.classList.remove("text-danger");
+                }
 
-            title.value = "";
-            desc.value = "";
+                submitInfo.classList.add("text-success");
+                submitInfo.textContent = "Categoría creada";
+    
+                this.#createCategory(title.value, desc.value);
+
+                title.classList.remove("is-valid");
+                title.value = "";
+                desc.value = "";
+            }
         }
     };
 

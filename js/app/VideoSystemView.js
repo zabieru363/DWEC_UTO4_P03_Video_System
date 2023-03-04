@@ -102,6 +102,9 @@ export default class VideoSystemView {
                         </div>
                     </div>
                 </div>
+                <button class="add-production-btn btn btn-primary">
+                    <i class="fa-solid fa-film"></i> Add production
+                </button>
             </div>`
         );
     }
@@ -131,17 +134,23 @@ export default class VideoSystemView {
         );
     }
 
-    bindCreateCategory(changeHandler, submitHandler) {
+    /**
+     * Método que gestiona los eventos que ocurren en el
+     * formulario de crear categorías.
+     * @param {*} handlers Un objeto literal con los manejadores
+     * para validar el formulario y controlar el evento submit.
+     */
+    bindCreateCategory(handlers) {
         const title = document.getElementById("catTitle");
         const desc = document.getElementById("catDescription");
 
         title.addEventListener("change", function() {
-            changeHandler(title);
+            handlers.h1(title);
         });
 
         document.forms[0].addEventListener("submit", function(e) {
             e.preventDefault();
-            submitHandler(title, desc);
+            handlers.h2(title, desc);
         });
     }
 
