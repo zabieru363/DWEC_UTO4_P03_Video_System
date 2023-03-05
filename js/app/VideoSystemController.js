@@ -402,6 +402,7 @@ export default class VideoSystemController {
         this.#view.bindCreateCategory(this.validateFormCreateCategoryHandler);
         this.#view.bindDeleteCategory(this.handleSelectCategory);
         this.#view.bindCreateProductionForm(this.handleCreateProductionsForm);
+        this.#view.bindCreateProduction(this.validateFormCreateProductionHandler);
     }
 
     /**
@@ -577,6 +578,10 @@ export default class VideoSystemController {
     onShowCreateProductionsForm() {
         this.#view.showCreateProductionForm();
     }
+
+    validateFormCreateProductionHandler = (fields) => {
+        console.log("Funciona");
+    };
 
     /**
      * Manejador de eventos que permite a la vista

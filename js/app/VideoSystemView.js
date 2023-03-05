@@ -16,6 +16,7 @@ export default class VideoSystemView {
         this.username = $(".user-panel > span.username");
         this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
+        this.createFormContainer = $(".create-production-form-container");
         this.newTab = null;
     }
 
@@ -29,6 +30,75 @@ export default class VideoSystemView {
         this.username.empty();
         this.carousel.empty();
         this.main.empty();
+
+        this.main.append(
+            `<div class="container mt-3 mb-3 w-50 create-production-form-container d-none">
+                <h1>Create new production</h1>
+                <form name="add-production-form" class="add-production-form" method="POST" action="#">
+                    <p>La producción es una...</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Pelicula
+                                </label>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-movie">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Serie
+                                </label>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-serie">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="needs-validation mb-3">
+                        <label for="production-title" class="form-label">Production title</label>
+                        <input type="text" placeholder="Ex: Breaking Bad" class="form-control bg-dark text-white" name="production-title" id="pTitle">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="needs-validation mb-3">
+                        <label for="production-nationality" class="form-label">Production nationality</label>
+                        <input type="text" placeholder="Ex: 🇺🇸" class="form-control bg-dark text-white" name="production-nationality" id="pNationality">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="needs-validation mb-3">
+                        <label for="production-date" class="form-label">Production date</label>
+                        <input type="date" class="form-control bg-dark text-white" name="production-date" id="pDate">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="needs-validation mb-3">
+                        <label for="production-synopsis" class="form-label">Synopsis</label>
+                        <textarea class="form-control bg-dark text-white" name="production-synopsis" id="pSynopsis"></textarea>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="needs-validation mb-3">
+                        <label for="production-duration" class="form-label">Duration</label>
+                        <input type="number" class="form-control bg-dark text-white" name="production-duration" id="pDuration">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="needs-validation mb-3">
+                        <label for="production-seasons" class="form-label">Seasons</label>
+                        <input type="number" class="form-control bg-dark text-white" name="production-seasons" id="pSeasons">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="submit-info"></div>
+                    <hr>
+                </form>
+            </div>`
+        );
 
         this.showOperationButtons();
         this.showCreateCategoryForm();
@@ -154,7 +224,7 @@ export default class VideoSystemView {
         const title = document.getElementById("catTitle");
         const desc = document.getElementById("catDescription");
 
-        document.forms[0].addEventListener("submit", function(e) {
+        document.getElementsByClassName("add-category-form")[0].addEventListener("submit", function(e) {
             e.preventDefault();
             handler(title, desc);
         });
@@ -210,7 +280,7 @@ export default class VideoSystemView {
      * el formulario
      */
     bindDeleteCategory(handler) {
-        document.forms[1].addEventListener("submit", function(e) {
+        document.getElementsByClassName("delete-category-form")[0].addEventListener("submit", function(e) {
             e.preventDefault();
             handler();
         });
@@ -326,76 +396,30 @@ export default class VideoSystemView {
     }
 
     showCreateProductionForm() {
-        this.main.empty();
-
-        this.main.append(
-            `<div class="container mt-3 w-50 create-production-form-container">
-                <h1>Create new production</h1>
-                <form name="add-production-form" class="add-production-form" method="POST" action="#">
-                    <p>La producción es una...</p>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    Pelicula
-                                </label>
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-movie">
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    Serie
-                                </label>
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-serie">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="needs-validation mb-3">
-                        <label for="production-title" class="form-label">Production title</label>
-                        <input type="text" placeholder="Ex: Breaking Bad" class="form-control bg-dark text-white" name="production-title" id="pTitle">
-                        <div class="invalid-feedback"></div>
-                    </div>
-
-                    <div class="needs-validation mb-3">
-                        <label for="production-nationality" class="form-label">Production nationality</label>
-                        <input type="text" placeholder="Ex: 🇺🇸" class="form-control bg-dark text-white" name="production-nationality" id="pNationality">
-                        <div class="invalid-feedback"></div>
-                    </div>
-
-                    <div class="needs-validation mb-3">
-                        <label for="production-date" class="form-label">Production date</label>
-                        <input type="date" class="form-control bg-dark text-white" name="production-date" id="pDate">
-                        <div class="invalid-feedback"></div>
-                    </div>
-
-                    <div class="needs-validation mb-3">
-                        <label for="production-synopsis" class="form-label">Synopsis</label>
-                        <textarea class="form-control bg-dark text-white" name="production-synopsis" id="pSynopsis"></textarea>
-                        <div class="invalid-feedback"></div>
-                    </div>
-
-                    <div class="needs-validation mb-3">
-                        <label for="production-duration" class="form-label">Duration</label>
-                        <input type="number" class="form-control bg-dark text-white" name="production-duration" id="pDuration">
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    
-                    <div class="needs-validation mb-3">
-                        <label for="production-seasons" class="form-label">Seasons</label>
-                        <input type="number" class="form-control bg-dark text-white" name="production-seasons" id="pSeasons">
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </form>
-            </div>`
-        )
+        $(".create-production-form-container").removeClass("d-none");
     }
 
     bindCreateProductionForm(handler) {
         $(".add-production-btn").on("click", handler);
+    }
+
+    bindCreateProduction(handler) {
+        // Recogemos todos los campos del formulario.
+        const fields = {
+            rBtn1: document.getElementById("radio-movie"),
+            rBtn2: document.getElementById("radio-serie"),
+            pTitle: document.getElementById("pTitle"),
+            pNationality: document.getElementById("pNationality"),
+            pDate: document.getElementById("pDate"),
+            pSynopsis: document.getElementById("pSynopsis"),
+            pDuration: document.getElementById("pDuration"),
+            pSeasons: document.getElementById("pSeasons")
+        };
+
+        document.getElementsByClassName("add-production-form")[0].addEventListener("submit", function(e) {
+            e.preventDefault();
+            handler(fields);
+        });
     }
 
     /**
