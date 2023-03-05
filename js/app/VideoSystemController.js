@@ -399,9 +399,9 @@ export default class VideoSystemController {
         this.#view.bindDirectors(this.handleDirectors);
         this.#view.bindActors(this.handleActors);
 
-        // Le pasamos un objeto literal con los handlers que necesitamos.
         this.#view.bindCreateCategory(this.validateFormCreateCategoryHandler);
         this.#view.bindDeleteCategory(this.handleSelectCategory);
+        this.#view.bindCreateProductionForm(this.handleCreateProductionsForm);
     }
 
     /**
@@ -471,11 +471,13 @@ export default class VideoSystemController {
     }
 
     /**
-     * Handler que valida el formulario de crear categorías.
+     * Handler que valida el formulario de crear categorías
+     * al enviar el formulario. Crea la categoría si está todo correcto.
      * @param {*} title El titulo de la categoría.
+     * @param {*} desc La descripción de la categoría.
      */
     validateFormCreateCategoryHandler = (title, desc) => {
-        const feedback = document.querySelector(".add-category-form > div.mb-3 > div.error-message");
+        const feedback = document.querySelector(".add-category-form > div.mb-3 > div.invalid-feedback");
         const submitInfo = document.querySelector(".add-category-form > div.submit-info");
         const exists = this.#categoryExists(title.value);
 
@@ -566,6 +568,14 @@ export default class VideoSystemController {
      */
     onShowAllProductions(productions) {
         this.#view.showAllProductions(productions);
+    }
+
+    handleCreateProductionsForm = () => {
+        this.onShowCreateProductionsForm();
+    }
+
+    onShowCreateProductionsForm() {
+        this.#view.showCreateProductionForm();
     }
 
     /**
