@@ -374,6 +374,19 @@ export default class VideoSystemController {
             this.#view.showCategoriesInCentralZone(elem.category, this.#model.getProductionsCategory(elem.category));
     }
 
+    #categoryExists(categoryName) {
+        let exists = false;
+
+        for(const elem of this.#model.categories) {
+            if(elem.category.name === categoryName) {
+                exists = true;
+                break;
+            }
+        }
+
+        return exists;
+    }
+
     constructor(model, view) {
         this.#model = model;
         this.#view = view;
@@ -387,7 +400,7 @@ export default class VideoSystemController {
         this.#view.bindActors(this.handleActors);
 
         // Le pasamos un objeto literal con los handlers que necesitamos.
-        this.#view.bindCreateCategory({h1: this.validateFormCreateCategoryHandler, h2: this.submitCreateCategoryFormHandler});
+        this.#view.bindCreateCategory(this.validateFormCreateCategoryHandler);
         this.#view.bindDeleteCategory(this.handleSelectCategory);
     }
 
@@ -426,7 +439,7 @@ export default class VideoSystemController {
      * del modelo.
      */
     onShowCategoriesMenu() {
-        for(const elem of this.#model.categories) this.#view.showCategoriesMenu(elem.category);
+        this.#view.showCategoriesMenu(this.#model.categories);
     }
     
     /**
@@ -461,63 +474,36 @@ export default class VideoSystemController {
      * Handler que valida el formulario de crear categorías.
      * @param {*} title El titulo de la categoría.
      */
-    validateFormCreateCategoryHandler = (title) => {
-        if(title.value === "") {
-            if(title.classList.contains("is-valid")) {
-                title.classList.remove("is-valid");
-            }
-            title.classList.add("is-invalid");
-        }else{
-            if(title.classList.contains("is-invalid")) {
-                title.classList.remove("is-invalid");
-            }
-            title.classList.add("is-valid");
-        }
-    };
-
-    /**
-     * Handler que controla el evento submit del formulario
-     * de crear categorías.
-     * @param {*} title El título de la categoría.
-     * @param {*} desc La descripción de la categoría.
-     */
-    submitCreateCategoryFormHandler = (title, desc) => {
-        let exists = false;
+    validateFormCreateCategoryHandler = (title, desc) => {
+        const feedback = document.querySelector(".add-category-form > div.mb-3 > div.error-message");
         const submitInfo = document.querySelector(".add-category-form > div.submit-info");
+        const exists = this.#categoryExists(title.value);
 
         if(!title.value) {
-            if(submitInfo.classList.contains("text-success")) {
-                submitInfo.classList.remove("text-success");
-            }
-            submitInfo.classList.add("text-danger");
-            submitInfo.textContent = "Hay fallos en el formulario.";
+            title.classList.add("is-invalid");
+            feedback.classList.add("text-danger");
+            feedback.textContent = "El nombre de categoría está vacío";
+        }else if(exists) {
+            title.classList.add("is-invalid");
+            feedback.classList.add("text-danger");
+            feedback.textContent = "La categoría ya existe";
         }else{
-            for(const elem of this.#model.categories) {
-                if(elem.category.name === title.value) {
-                    exists = true;
-                    break;
-                }
-            }
+            title.classList.remove("is-invalid");
+            feedback.textContent = "";
 
-            if(exists) {
-                if(!(submitInfo.classList.contains("text-danger"))) {
-                    submitInfo.classList.add("text-danger");
-                }
-                submitInfo.textContent = "La categoría ya existe!";
-            }else{
-                if(submitInfo.classList.contains("text-danger")) {
-                    submitInfo.classList.remove("text-danger");
-                }
+            this.#createCategory(title.value, desc.value);
 
-                submitInfo.classList.add("text-success");
-                submitInfo.textContent = "Categoría creada";
-    
-                this.#createCategory(title.value, desc.value);
+            // Actualizamos componentes
+            this.#view.emptySelectCategories();
+            this.#view.fillSelectCategories(this.#model.categories);
+            this.#view.emptyDropdownCategoriesContainer();
+            this.#view.showCategoriesMenu(this.#model.categories);
 
-                title.classList.remove("is-valid");
-                title.value = "";
-                desc.value = "";
-            }
+            submitInfo.classList.add("text-success");
+            submitInfo.textContent = "Categoría creada";
+
+            title.value = "";
+            desc.value = "";
         }
     };
 

@@ -52,19 +52,25 @@ export default class VideoSystemView {
         $(".navbar-brand").on("click", handler);
     }
 
+    emptyDropdownCategoriesContainer() {
+        this.categoriesMenu.empty();
+    }
+
     /**
      * Método que muestra las categorias que hay en el sistema en la navbar.
      * @param {*} category El objeto category que le llega del iterador 
      * de categorias del modelo.
      */
-    showCategoriesMenu(category) {
-        this.categoriesMenu.append(
-            `<li>
-                <a class="dropdown-item">
-                    ${category.name}
-                </a>
-            </li>`
-        );
+    showCategoriesMenu(categories) {
+        for(const elem of categories) {
+            this.categoriesMenu.append(
+                `<li>
+                    <a class="dropdown-item">
+                        ${elem.category.name}
+                    </a>
+                </li>`
+            );
+        }
     }
 
     /**
@@ -118,10 +124,10 @@ export default class VideoSystemView {
 
         modal.append(
             `<form name="add-category-form" class="add-category-form" method="POST" action="#" novalidate role="form">
-                <div class="needs-validation mb-3">
+                <div class="mb-3">
                     <label for="category-title" class="form-label">Category title</label>
                     <input type="text" placeholder="Ex: Action films" class="form-control bg-dark text-white" name="category-title" id="catTitle">
-                    <div class="invalid-feedback">El título no puede estar vacío.</div>
+                    <div class="error-message"></div>
                 </div>
                 <div class="mb-3">
                     <label for="category-description" class="form-label">Description</label>
@@ -140,17 +146,13 @@ export default class VideoSystemView {
      * @param {*} handlers Un objeto literal con los manejadores
      * para validar el formulario y controlar el evento submit.
      */
-    bindCreateCategory(handlers) {
+    bindCreateCategory(handler) {
         const title = document.getElementById("catTitle");
         const desc = document.getElementById("catDescription");
 
-        title.addEventListener("change", function() {
-            handlers.h1(title);
-        });
-
         document.forms[0].addEventListener("submit", function(e) {
             e.preventDefault();
-            handlers.h2(title, desc);
+            handler(title, desc);
         });
     }
 
