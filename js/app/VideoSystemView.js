@@ -43,7 +43,7 @@ export default class VideoSystemView {
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Pelicula
                                 </label>
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-movie">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-movie" value="radio-movie">
                             </div>
                         </div>
                         
@@ -52,7 +52,7 @@ export default class VideoSystemView {
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Serie
                                 </label>
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-serie">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-serie" value="radio-serie">
                             </div>
                         </div>
                     </div>
@@ -78,16 +78,15 @@ export default class VideoSystemView {
                     <div class="needs-validation mb-3">
                         <label for="production-synopsis" class="form-label">Synopsis</label>
                         <textarea class="form-control bg-dark text-white" name="production-synopsis" id="pSynopsis"></textarea>
-                        <div class="invalid-feedback"></div>
                     </div>
 
-                    <div class="needs-validation mb-3">
+                    <div class="duration-field needs-validation mb-3 d-none">
                         <label for="production-duration" class="form-label">Duration</label>
                         <input type="number" class="form-control bg-dark text-white" name="production-duration" id="pDuration">
                         <div class="invalid-feedback"></div>
                     </div>
 
-                    <div class="needs-validation mb-3">
+                    <div class="seasons-field needs-validation mb-3 d-none">
                         <label for="production-seasons" class="form-label">Seasons</label>
                         <input type="number" class="form-control bg-dark text-white" name="production-seasons" id="pSeasons">
                         <div class="invalid-feedback"></div>
@@ -404,6 +403,7 @@ export default class VideoSystemView {
     }
 
     bindCreateProduction(handler) {
+        const form = document.getElementsByClassName("add-production-form")[0];
         // Recogemos todos los campos del formulario.
         const fields = {
             rBtn1: document.getElementById("radio-movie"),
@@ -412,13 +412,27 @@ export default class VideoSystemView {
             pNationality: document.getElementById("pNationality"),
             pDate: document.getElementById("pDate"),
             pSynopsis: document.getElementById("pSynopsis"),
-            pDuration: document.getElementById("pDuration"),
-            pSeasons: document.getElementById("pSeasons")
+            pDuration: document.getElementsByClassName("duration-field")[0],
+            pSeasons: document.getElementsByClassName("seasons-field")[0]
         };
 
-        document.getElementsByClassName("add-production-form")[0].addEventListener("submit", function(e) {
+        let radioButtonValue = null;
+
+        fields.rBtn1.addEventListener("click", function(e) {
+            radioButtonValue = this.value;
+            fields.pDuration.classList.remove("d-none");
+            fields.pSeasons.classList.add("d-none");
+        });
+
+        fields.rBtn2.addEventListener("click", function(e) {
+            radioButtonValue = this.value;
+            fields.pDuration.classList.add("d-none");
+            fields.pSeasons.classList.remove("d-none");
+        });
+
+        form.addEventListener("submit", function(e) {
             e.preventDefault();
-            handler(fields);
+            handler(form, fields, radioButtonValue);    // Validación del resto de campos.
         });
     }
 

@@ -387,6 +387,37 @@ export default class VideoSystemController {
         return exists;
     }
 
+    #createNewProduction(values) {
+        let production = null;
+
+        if(values.pType === "radio-movie") {
+            production = new Entities.Movie(
+                values.pTitle, 
+                values.pNationality,
+                new Date(values.pDate),
+                values.pSynopsis,
+                "C:\\Users\\images",
+                new Entities.Resource(+values.pDuration, `videosystem.com\\${values.pTitle}`),
+                []
+            );
+        }
+        
+        if(values.pType === "radio-serie") {
+            production = new Entities.Serie(
+                values.pTitle, 
+                values.pNationality,
+                new Date(values.pDate),
+                values.pSynopsis,
+                "C:\\Users\\images",
+                [],
+                [],
+                values.pSeasons
+            );
+        }
+
+        this.#model.addProduction(production);
+    }
+
     constructor(model, view) {
         this.#model = model;
         this.#view = view;
@@ -579,8 +610,109 @@ export default class VideoSystemController {
         this.#view.showCreateProductionForm();
     }
 
-    validateFormCreateProductionHandler = (fields) => {
-        console.log("Funciona");
+    validateFormCreateProductionHandler = (form, fields, radio) => {
+        const submitInfo = document.querySelector(".add-production-form > div.submit-info");
+        const fieldDuration = fields.pDuration.querySelector("#pDuration");
+        const fieldSeasons = fields.pSeasons.querySelector("#pSeasons");
+        // Obtenemos una colección con todos los feedbacks.
+        const feedbacks = [...form.getElementsByClassName("invalid-feedback")];
+        let fieldsValid = 0;
+
+        // Validación de los radiobuttons.
+        if(!radio) {
+            submitInfo.classList.remove("text-success");
+            submitInfo.classList.add("text-danger");
+            submitInfo.textContent = "No se ha seleccionado un tipo de producción!";
+        }else{
+            fieldsValid++;
+            submitInfo.classList.remove("text-danger");
+            submitInfo.textContent = "";
+        }
+
+        // Validando el título de la producción:
+        if(!fields.pTitle.value) {
+            fields.pTitle.classList.remove("is-valid");
+            fields.pTitle.classList.add("is-invalid");
+            feedbacks[0].classList.add("d-block");
+            feedbacks[0].textContent = "El titulo de la producción está vacío.";
+        }else{
+            fieldsValid++;
+            fields.pTitle.classList.add("is-valid");
+            fields.pTitle.classList.remove("is-invalid");
+            feedbacks[0].classList.add("d-none");
+        }
+
+        if(!fields.pNationality.value) {
+            fields.pNationality.classList.remove("is-valid");
+            fields.pNationality.classList.add("is-invalid");
+            feedbacks[1].classList.add("d-block");
+            feedbacks[1].textContent = "La nacionalidad está vacía.";
+        }else{
+            fieldsValid++;
+            fields.pNationality.classList.add("is-valid");
+            fields.pNationality.classList.remove("is-invalid");
+            feedbacks[1].classList.add("d-none");
+        }
+
+        if(!fields.pDate.value) {
+            fields.pDate.classList.remove("is-valid");
+            fields.pDate.classList.add("is-invalid");
+            feedbacks[2].classList.add("d-block");
+            feedbacks[2].textContent = "La fecha de publicación está vacía.";
+        }else{
+            fieldsValid++;
+            fields.pDate.classList.add("is-valid");
+            fields.pDate.classList.remove("is-invalid");
+            feedbacks[2].classList.add("d-none");
+        }
+
+        // Validando los 2 últimos campos:
+        if(radio === "radio-movie") {
+            if(!fieldDuration.value) {
+                fieldDuration.classList.remove("is-valid");
+                fieldDuration.classList.add("is-invalid");
+                feedbacks[3].classList.add("d-block");
+                feedbacks[3].textContent = "No se ha especificado cuanto dura la película.";
+            }else{
+                fieldsValid++;
+                fieldDuration.classList.add("is-valid");
+                fieldDuration.classList.remove("is-invalid");
+                feedbacks[3].classList.add("d-none");
+            }
+        }
+
+        if(radio === "radio-serie") {
+            if(!fieldSeasons.value) {
+                fieldSeasons.classList.remove("is-valid");
+                fieldSeasons.classList.add("is-invalid");
+                feedbacks[4].classList.add("d-block");
+                feedbacks[4].textContent = "No se ha especificado cuantas temporadas tiene la serie.";
+            }else{
+                fieldsValid++;
+                fieldSeasons.classList.add("is-valid");
+                fieldSeasons.classList.remove("is-invalid");
+                feedbacks[4].classList.add("d-none");
+            }
+        }
+
+        // Si todos los campos son correctos, pasamos a crear la producción.
+        if(fieldsValid === 5) {
+            const values = {
+                pType: radio,
+                pTitle: fields.pTitle.value,
+                pNationality: fields.pNationality.value,
+                pDate: fields.pDate.value,
+                pSynopsis: fields.pSynopsis.value,
+                pDuration: fieldDuration.value,
+                pSeasons: fieldSeasons.value
+            };
+
+            this.#createNewProduction(values);
+
+            submitInfo.classList.remove("text-danger");
+            submitInfo.classList.add("text-success");
+            submitInfo.textContent = "Producción creada";
+        }
     };
 
     /**
