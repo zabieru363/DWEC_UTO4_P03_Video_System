@@ -644,7 +644,27 @@ export const VideoSystem = (function() {
             }
 
             * getCast(production) {
+                let casting = null;
+                let exists = false;
 
+                for(const elem of this.productions) {
+                    if(elem.production.title === production.title) {
+                        casting = elem;
+                        break;
+                    }
+                }
+
+                for(const elem of this.actors) {
+                    exists = elem.productions.some(p => p.title === production.title);
+                    if(exists) casting.cast.push(elem.actor);
+                }
+
+                for(const elem of this.directors) {
+                    exists = elem.productions.some(p => p.title === production.title);
+                    if(exists) casting.cast.push(elem.director);
+                }
+
+                for(let i = 0; i < casting.cast.length; i++) yield casting.cast[i];
             }
 
             /**

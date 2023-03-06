@@ -374,6 +374,12 @@ export default class VideoSystemController {
             this.#view.showCategoriesInCentralZone(elem.category, this.#model.getProductionsCategory(elem.category));
     }
 
+    /**
+     * Método que comprueba si existe una categoría
+     * en el modelo.
+     * @param {*} categoryName El nombre de la categoría a buscar.
+     * @returns True si existe, false si no es así.
+     */
     #categoryExists(categoryName) {
         let exists = false;
 
@@ -387,6 +393,12 @@ export default class VideoSystemController {
         return exists;
     }
 
+    /**
+     * Método privado que crea una nueva producción en el modelo
+     * con los valores recogidos del formulario de crear producción.
+     * @param {*} values Objeto literal con los valores del
+     * formulario.
+     */
     #createNewProduction(values) {
         let production = null;
 
@@ -411,7 +423,7 @@ export default class VideoSystemController {
                 "C:\\Users\\images",
                 [],
                 [],
-                values.pSeasons
+                +values.pSeasons
             );
         }
 
@@ -602,14 +614,29 @@ export default class VideoSystemController {
         this.#view.showAllProductions(productions);
     }
 
+    /**
+     * Handler que permite mostrar el formulario de crear
+     * producciones al ser ejecutado.
+     */
     handleCreateProductionsForm = () => {
         this.onShowCreateProductionsForm();
     }
 
+    /**
+     * Método que invoca al método que muestra el
+     * formulario de crear producciones de la vista.
+     */
     onShowCreateProductionsForm() {
         this.#view.showCreateProductionForm();
     }
 
+    /**
+     * Handler que valída el formulario de crear producciones al
+     * dispararse el evento submit.
+     * @param {*} form El formulario de crear producciones.
+     * @param {*} fields Objeto literal con los campos sin validar.
+     * @param {*} radio El radio que ha escogido el usuario.
+     */
     validateFormCreateProductionHandler = (form, fields, radio) => {
         const submitInfo = document.querySelector(".add-production-form > div.submit-info");
         const fieldDuration = fields.pDuration.querySelector("#pDuration");
@@ -617,6 +644,7 @@ export default class VideoSystemController {
         // Obtenemos una colección con todos los feedbacks.
         const feedbacks = [...form.getElementsByClassName("invalid-feedback")];
         let fieldsValid = 0;
+        let exists = false;
 
         // Validación de los radiobuttons.
         if(!radio) {
@@ -697,21 +725,34 @@ export default class VideoSystemController {
 
         // Si todos los campos son correctos, pasamos a crear la producción.
         if(fieldsValid === 5) {
-            const values = {
-                pType: radio,
-                pTitle: fields.pTitle.value,
-                pNationality: fields.pNationality.value,
-                pDate: fields.pDate.value,
-                pSynopsis: fields.pSynopsis.value,
-                pDuration: fieldDuration.value,
-                pSeasons: fieldSeasons.value
-            };
+            for(const elem of this.#model.productions) {
+                if(elem.production.title === fields.pTitle.value) {
+                    exists = true;
+                    break;
+                }
+            }
 
-            this.#createNewProduction(values);
-
-            submitInfo.classList.remove("text-danger");
-            submitInfo.classList.add("text-success");
-            submitInfo.textContent = "Producción creada";
+            if(!exists) {
+                const values = {
+                    pType: radio,
+                    pTitle: fields.pTitle.value,
+                    pNationality: fields.pNationality.value,
+                    pDate: fields.pDate.value,
+                    pSynopsis: fields.pSynopsis.value,
+                    pDuration: fieldDuration.value,
+                    pSeasons: fieldSeasons.value
+                };
+    
+                this.#createNewProduction(values);
+    
+                submitInfo.classList.remove("text-danger");
+                submitInfo.classList.add("text-success");
+                submitInfo.textContent = "Producción creada";
+            }else{
+                submitInfo.classList.remove("text-success");
+                submitInfo.classList.add("text-danger");
+                submitInfo.textContent = "La producción ya existe.";
+            }
         }
     };
 
