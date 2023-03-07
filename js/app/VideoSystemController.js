@@ -488,6 +488,7 @@ export default class VideoSystemController {
         this.#view.bindCreateProduction(this.validateFormCreateProductionHandler);
         this.#view.bindShowDeleteProductionForm(this.showDeleteProductionsFormHandler);
         this.#view.bindDeleteProduction(this.validateDeleteProductionFormHandler);
+        this.#view.bindAddPersonForm(this.showAddPersonFormHandler);
     }
 
     /**
@@ -907,5 +908,22 @@ export default class VideoSystemController {
         for(const elem of this.#model.actors) {
             this.#view.showAllActors(elem.actor, this.#model.getProductionsActor(elem.actor));
         }
+    }
+
+    /**
+     * Handler que invoca al método que invoca al método
+     * que muestra el formulario al hacer clic en el botón
+     * de añadir persona en la vista.
+     */
+    showAddPersonFormHandler = () => {
+        this.onShowAddPersonForm();
+    };
+
+    /**
+     * Método que invoca al método de la vista que muestra el
+     * formulario de añadir actores o directores de la vista.
+     */
+    onShowAddPersonForm() {
+        this.#view.showAddPersonForm();
     }
 }

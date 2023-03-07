@@ -29,6 +29,7 @@ export default class VideoSystemView {
         this.carousel.empty();
         this.main.empty();
 
+        // Formulario para añadir producciones.
         this.main.append(
             `<div class="container mt-3 mb-3 w-50 create-production-form-container d-none">
                 <h1>Create new production</h1>
@@ -97,6 +98,7 @@ export default class VideoSystemView {
             </div>`
         );
 
+        // Formulario para eliminar producciones.
         this.main.append(
             `<div class="container mt-3 mb-3 w-50 delete-production-form-container d-none">
                 <h1>Delete production</h1>
@@ -107,6 +109,48 @@ export default class VideoSystemView {
                         <div class="invalid-feedback"></div>
                     </div>
                     <button type="submit" class="btn btn-danger">Delete production</button>
+                    <div class="submit-info"></div>
+                </form>
+            </div>`
+        );
+
+        // Formulario para crear actores o directores.
+        this.main.append(
+            `<div class="container mt-3 mb-3 w-50 add-person-form-container d-none">
+                <h1>Add new person</h1>
+                <form name="add-person-form" class="add-person-form" method="POST" action="#" novalidate role="form">
+                    <p>¿Que quieres crear?</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Un actor
+                                </label>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-movie" value="radio-actor">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Un director
+                                </label>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-serie" value="radio-director">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 needs-validation">
+                        <label class="form-label" for="name-person">Name</label>
+                        <input type="text" class="form-control" name="name-person" id="pName">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3 needs-validation">
+                        <label class="form-label" for="lastName-person">Lastname</label>
+                        <input type="text" class="form-control" name="lastName-person" id="pLastname">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Delete production</button>
                     <div class="submit-info"></div>
                 </form>
             </div>`
@@ -198,6 +242,9 @@ export default class VideoSystemView {
                 </button>
                 <button class="delete-production-btn btn btn-danger">
                     <i class="fa-solid fa-film"></i> Delete production
+                </button>
+                <button class="add-person-btn btn btn-success">
+                    <i class="fa-solid fa-user"></i> Add person
                 </button>
             </div>`
         );
@@ -409,14 +456,27 @@ export default class VideoSystemView {
         }
     }
 
+    /**
+     * Método que hace visible el formulario para crear producciones.
+     */
     showCreateProductionForm() {
         $(".create-production-form-container").removeClass("d-none");
     }
 
+    /**
+     * Método que ejecuta el método que hace visible el formulario
+     * de crear producciones al pulsar en el botón de añadir producciones.
+     * @param {*} handler El manejador del controlador onShowCreateProductionForm
+     */
     bindCreateProductionForm(handler) {
         $(".add-production-btn").on("click", handler);
     }
 
+    /**
+     * Método que enlaza el método que valida del formulario del controlador
+     * con la vista.
+     * @param {*} handler La función manejadora que valida el formulario. 
+     */
     bindCreateProduction(handler) {
         const form = document.getElementsByClassName("add-production-form")[0];
         // Recogemos todos los campos del formulario.
@@ -570,6 +630,13 @@ export default class VideoSystemView {
     }
 
     /**
+     * Método que vacía el contenedor de directores.
+     */
+    emptyDirectorsContainer() {
+        $(".directors-container").empty();
+    }
+
+    /**
      * Método que muestra todos los directores con todas las producciones
      * en las que han participado en la zona central.
      * @param {*} director El director que le llega del controlador del iterador de directores del modelo.
@@ -643,6 +710,13 @@ export default class VideoSystemView {
     }
 
     /**
+     * Método que vacía el contenedor de actores.
+     */
+    emptyActorsContainer() {
+        $(".actors-container").empty();
+    }
+
+    /**
      * Método que muestra todos los actores con las producciones
      * en las que han participado en la zona central.
      * @param {*} actor El actor que le llega del controlador del modelo de categorias.
@@ -701,5 +775,23 @@ export default class VideoSystemView {
      */
     bindActors(handler) {
         this.actorsAnchor.on("click", handler);
+    }
+
+    /**
+     * Método que muestra el formulario de añadir actores o
+     * directores.
+     */
+    showAddPersonForm() {
+        $(".add-person-form-container").removeClass("d-none");
+    }
+
+    /**
+     * Método que enlaza el método que muestra el formulario de
+     * crear actores o directores del controlador con la vista.
+     * @param {*} handler La función manejadora que muestra el
+     * formulario de crear directores o actores del controlador.
+     */
+    bindAddPersonForm(handler) {
+        $(".add-person-btn").on("click", handler);
     }
 }
