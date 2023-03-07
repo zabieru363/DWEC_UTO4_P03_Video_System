@@ -427,7 +427,19 @@ export default class VideoSystemController {
             );
         }
 
-        this.#model.addProduction(production);
+        
+        const productionsPanel = document.querySelector("#productions-panel");
+        
+        // Si la vista de producciones aún no se ha creado
+        if(!productionsPanel) {
+            // Añadimos la producción al modelo.
+            this.#model.addProduction(production);
+        }else{
+            // Si no actualizamos la vista.
+            this.#model.addProduction(production);
+            this.#view.emptyProductionsContainer();
+            this.#view.showAllProductions(this.#model.productions);
+        }
     }
 
     constructor(model, view) {

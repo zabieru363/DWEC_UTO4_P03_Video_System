@@ -436,6 +436,10 @@ export default class VideoSystemView {
         });
     }
 
+    emptyProductionsContainer() {
+        $("#productions-panel").empty();
+    }
+
     /**
      * Método que muestra todas las producciones en la zona central.
      * @param {*} productions El iterador de producciones del modelo.
