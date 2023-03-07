@@ -13,9 +13,8 @@ export default class VideoSystemController {
     #view;
 
     /**
-     * Método privado que crea 3 categorías por defecto
-     * y las añade al videosystem. Estas categorias se
-     * muestran en la navbar y en la zona central.
+     * Método privado que crea los recursos de la página
+     * por defecto y los añade al sistema.
      */
     #createResources() {
         // * Usuario por defecto
@@ -278,21 +277,16 @@ export default class VideoSystemController {
         this.#model.assignCategory(c1, movie2);
         this.#model.assignCategory(c1, serie3);
         this.#model.assignCategory(c1, movie7);
-        
         this.#model.assignCategory(c2, movie3);
         this.#model.assignCategory(c2, movie4);
         this.#model.assignCategory(c2, movie5);
         this.#model.assignCategory(c2, movie8);
-
         this.#model.assignCategory(c3, serie3);
         this.#model.assignCategory(c3, serie4);
         this.#model.assignCategory(c3, serie5);
         this.#model.assignCategory(c3, serie7);
-
         this.#model.assignCategory(c4, serie6);
-
         this.#model.assignCategory(c5, movie6);
-
         this.#model.assignCategory(c6, movie6);
 
         // * Asignamos producciones a los directores.
@@ -323,16 +317,12 @@ export default class VideoSystemController {
         this.#model.assignActor(a9, movie7);
         this.#model.assignActor(a9, movie8);
         this.#model.assignActor(a9, movie8);
-
         this.#model.assignActor(a1, serie3);
         this.#model.assignActor(a2, serie3);
-
         this.#model.assignActor(a1, serie4);
         this.#model.assignActor(a2, serie4);
-
         this.#model.assignActor(a1, serie5);
         this.#model.assignActor(a2, serie5);
-
         this.#model.assignActor(a1, serie7);
         this.#model.assignActor(a2, serie7);
     }
@@ -343,7 +333,7 @@ export default class VideoSystemController {
      * @param {*} title El nombre de la categoría.
      * @param {*} desc La descripción de la categoría.
      */
-    #createCategory(title, desc) {
+    #createNewCategory(title, desc) {
         const category = new Entities.Category(title, desc);
         this.#model.addCategory(category);
 
@@ -356,12 +346,15 @@ export default class VideoSystemController {
         // Tenemos que actualizar también el select para que coja la categoría nueva.
         this.#view.emptySelectCategories();
         this.onfillSelectCategories(this.#model.categories);
+        this.#view.emptyDropdownCategoriesContainer();
+        this.#view.showCategoriesMenu(this.#model.categories);
     }
 
     /**
      * Método privado que elimina la categoría que se recoje
      * del select. Una vez eliminada, actualiza la vista.
-     * @param {*} value 
+     * @param {*} value El valor que se recogió del select
+     * del formulario de eliminar categorías.
      */
     #deleteCategory(value) {
         for(const elem of this.#model.categories) {
@@ -372,6 +365,9 @@ export default class VideoSystemController {
         
         for(const elem of this.#model.categories)
             this.#view.showCategoriesInCentralZone(elem.category, this.#model.getProductionsCategory(elem.category));
+        
+        this.#view.emptyDropdownCategoriesContainer();
+        this.#view.showCategoriesMenu(this.#model.categories);
     }
 
     /**
@@ -427,19 +423,51 @@ export default class VideoSystemController {
             );
         }
 
+        this.#model.addProduction(production);   // Eliminamos la producción del  modelo.
         
-        const productionsPanel = document.querySelector("#productions-panel");
-        
-        // Si la vista de producciones aún no se ha creado
-        if(!productionsPanel) {
-            // Añadimos la producción al modelo.
-            this.#model.addProduction(production);
-        }else{
-            // Si no actualizamos la vista.
-            this.#model.addProduction(production);
+        const productionsContainer = document.querySelector(".productions-container");
+
+        // Si la vista de producciones se ha creado
+        if(productionsContainer) {
+            // Actualizamos la vista.
             this.#view.emptyProductionsContainer();
             this.#view.showAllProductions(this.#model.productions);
         }
+    }
+
+    /**
+     * Método que elimina una producción que se ha seleccionado
+     * del formulario de eliminar producciones.
+     * @param {*} productionName El nombre de la producción que se
+     * ha escrito en el formulario de eliminar producciones.
+     */
+    #deleteProduction(productionName) {
+        // Primero tenemos que encontrar la producción.
+        let production = null;
+
+        for(const elem of this.#model.productions) {
+            if(elem.production.title === productionName) {
+                production = elem.production;
+                break;
+            }
+        }
+
+        this.#model.removeProduction(production);   // Eliminamos la producción del  modelo.
+        
+        const productionsContainer = document.querySelector(".productions-container");
+
+        // Si la vista de producciones se ha creado
+        if(productionsContainer) {
+            // Actualizamos la vista.
+            this.#view.emptyProductionsContainer();
+            this.#view.showAllProductions(this.#model.productions);
+        }
+
+        // Actualizamos la vista de categorías ya que tienen producciones en su interior.
+        this.#view.emptyCategoriesContainer();
+        
+        for(const elem of this.#model.categories)
+            this.#view.showCategoriesInCentralZone(elem.category, this.#model.getProductionsCategory(elem.category));
     }
 
     constructor(model, view) {
@@ -454,15 +482,17 @@ export default class VideoSystemController {
         this.#view.bindDirectors(this.handleDirectors);
         this.#view.bindActors(this.handleActors);
 
-        this.#view.bindCreateCategory(this.validateFormCreateCategoryHandler);
+        this.#view.bindCreateCategory(this.validateCreateCategoryFormHandler);
         this.#view.bindDeleteCategory(this.handleSelectCategory);
-        this.#view.bindCreateProductionForm(this.handleCreateProductionsForm);
+        this.#view.bindCreateProductionForm(this.createProductionsFormHandler);
         this.#view.bindCreateProduction(this.validateFormCreateProductionHandler);
+        this.#view.bindShowDeleteProductionForm(this.showDeleteProductionsFormHandler);
+        this.#view.bindDeleteProduction(this.validateDeleteProductionFormHandler);
     }
 
     /**
      * Método que muestra los componenetes principales
-     * de la página en la vista.
+     * de la página en la vista al recargar la página.
      */
     onInit = () => {
         this.#view.init();
@@ -474,8 +504,8 @@ export default class VideoSystemController {
     };
 
     /**
-     * Método que crea todos los recursos que utiliza
-     * la página por defecto.
+     * Método que invoca al método privado que crea
+     * todos los recursos que utiliza la página por defecto.
      */
     onLoad = () => {
         this.#createResources();
@@ -532,7 +562,7 @@ export default class VideoSystemController {
      * @param {*} title El titulo de la categoría.
      * @param {*} desc La descripción de la categoría.
      */
-    validateFormCreateCategoryHandler = (title, desc) => {
+    validateCreateCategoryFormHandler = (title, desc) => {
         const feedback = document.querySelector(".add-category-form > div.mb-3 > div.invalid-feedback");
         const submitInfo = document.querySelector(".add-category-form > div.submit-info");
         const exists = this.#categoryExists(title.value);
@@ -549,13 +579,7 @@ export default class VideoSystemController {
             title.classList.remove("is-invalid");
             feedback.textContent = "";
 
-            this.#createCategory(title.value, desc.value);
-
-            // Actualizamos componentes
-            this.#view.emptySelectCategories();
-            this.#view.fillSelectCategories(this.#model.categories);
-            this.#view.emptyDropdownCategoriesContainer();
-            this.#view.showCategoriesMenu(this.#model.categories);
+            this.#createNewCategory(title.value, desc.value);
 
             submitInfo.classList.add("text-success");
             submitInfo.textContent = "Categoría creada";
@@ -588,7 +612,8 @@ export default class VideoSystemController {
 
             // Eliminamos la categoría del modelo.
             this.#deleteCategory(select.value);
-            // Actulizamos el select.
+
+            // Actualizamos el select.
             this.#view.emptySelectCategories();
             this.onfillSelectCategories(this.#model.categories);
 
@@ -614,7 +639,8 @@ export default class VideoSystemController {
      * mostrar todas las producciones.
      */
     handleProductions = () => {
-        this.onShowAllProductions(this.#model.productions);
+        this.#view.createProductionsSection();  // Primero crea la sección de producciones
+        this.onShowAllProductions(this.#model.productions);     // Y después añade las producciones.
     };
 
     /**
@@ -630,16 +656,83 @@ export default class VideoSystemController {
      * Handler que permite mostrar el formulario de crear
      * producciones al ser ejecutado.
      */
-    handleCreateProductionsForm = () => {
+    createProductionsFormHandler = () => {
         this.onShowCreateProductionsForm();
     }
 
     /**
-     * Método que invoca al método que muestra el
+     * Handler que invoca al método que muestra el
      * formulario de crear producciones de la vista.
      */
     onShowCreateProductionsForm() {
         this.#view.showCreateProductionForm();
+    }
+
+    /**
+     * Handler que invoca al método que invoca al método
+     * de la vista que muestra el formulario de eliminar
+     * producciones.
+     */
+    showDeleteProductionsFormHandler = () => {
+        this.onShowDeleteProductionsForm();
+    };
+
+    /**
+     * Método que valida el formulario de eliminar producciones,
+     * al enviarse el formulario.
+     * @param {*} productions El iterador de producciones del modelo.
+     */
+    onValidateDeleteProductionForm(productions) {
+        const submitInfo = document.querySelector(".delete-production-form > div.submit-info");
+        const search = document.getElementById("input-search-production");
+        const feedback = document.querySelector(".delete-production-form > div.mb-3 > div.invalid-feedback");
+
+        let exists = false;
+
+        for(const elem of productions) {
+            if(elem.production.title === search.value) {
+                exists = true;
+            }
+        }
+
+        if(!search.value) {
+            feedback.textContent = "El campo de búsqueda está vacío.";
+            feedback.classList.add("d-block");
+            search.classList.remove("is-valid");
+            search.classList.add("is-invalid");
+            submitInfo.textContent = "";
+        }else if(!exists) {
+            feedback.textContent = "La producción no existe.";
+            feedback.classList.add("d-block");
+            search.classList.remove("is-valid");
+            search.classList.add("is-invalid");
+            submitInfo.textContent = "";
+        }else{
+            feedback.textContent = "";
+            search.classList.remove("is-invalid");
+            search.classList.add("is-valid");
+            submitInfo.classList.add("text-success");
+
+            this.#deleteProduction(search.value);
+
+            submitInfo.textContent = "Producción eliminada";
+        }
+    }
+
+    /**
+     * Handler que invoca al método que valida el formulario de
+     * eliminar producciones. Ocurre cuando se envia el formulario.
+     */
+    validateDeleteProductionFormHandler = () => {
+        this.onValidateDeleteProductionForm(this.#model.productions);
+    };
+
+    /**
+     * Método que invoca al método de la vista que
+     * muestra el formulario para eliminar producciones.
+     */
+    onShowDeleteProductionsForm() {
+        this.#view.showDeleteProductionsForm();
     }
 
     /**
@@ -760,6 +853,14 @@ export default class VideoSystemController {
                 submitInfo.classList.remove("text-danger");
                 submitInfo.classList.add("text-success");
                 submitInfo.textContent = "Producción creada";
+                
+                fields.pTitle.value = "";
+                fields.pNationality.value = "";
+                fields.pDate.value = "";
+                fields.pSynopsis.value = "";
+                fields.pType.value = "";
+                fieldDuration.value = "";
+                fieldSeasons.value = "";
             }else{
                 submitInfo.classList.remove("text-success");
                 submitInfo.classList.add("text-danger");

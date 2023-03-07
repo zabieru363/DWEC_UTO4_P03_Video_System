@@ -16,14 +16,12 @@ export default class VideoSystemView {
         this.username = $(".user-panel > span.username");
         this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
-        this.createFormContainer = $(".create-production-form-container");
         this.newTab = null;
     }
 
     /**
      * Método que inicia la página con los componentes
      * principales de la pagina.
-     * @param {*} categories El iterador de categorias del modelo.
      */
     init() {
         this.categoriesMenu.empty();
@@ -99,6 +97,21 @@ export default class VideoSystemView {
             </div>`
         );
 
+        this.main.append(
+            `<div class="container mt-3 mb-3 w-50 delete-production-form-container d-none">
+                <h1>Delete production</h1>
+                <form name="delete-category-form" class="delete-production-form" method="POST" action="#" novalidate role="form">
+                    <div class="mb-3 needs-validation">
+                        <label class="form-label" for="production">Type a production</label>
+                        <input type="text" class="form-control" name="input-search-production" id="input-search-production">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete production</button>
+                    <div class="submit-info"></div>
+                </form>
+            </div>`
+        );
+
         this.showOperationButtons();
         this.showCreateCategoryForm();
         this.showDeleteCategoryForm();
@@ -131,8 +144,7 @@ export default class VideoSystemView {
 
     /**
      * Método que muestra las categorias que hay en el sistema en la navbar.
-     * @param {*} category El objeto category que le llega del iterador 
-     * de categorias del modelo.
+     * @param {*} categories El iterador de categorías del modelo.
      */
     showCategoriesMenu(categories) {
         for(const elem of categories) {
@@ -147,14 +159,14 @@ export default class VideoSystemView {
     }
 
     /**
-     * Método que crea 2 botones que muestran un modal
-     * para crear y eliminar categorias.
+     * Método que crea los botones para realizar
+     * las operaciones con formularios.
      */
     showOperationButtons() {
         this.main.append(
             `<div class="mt-4 container-fluid">
-                <button class="add-category-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                    <i class="fa-solid fa-plus"></i> Add category
+                <button class="add-category-btn btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <i class="fa-solid fa-folder"></i> Add category
                 </button>
                 <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -168,7 +180,7 @@ export default class VideoSystemView {
                     </div>
                 </div>
                 <button class="delete-category-btn btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
-                    <i class="fa-solid fa-trash"></i> Delete category
+                    <i class="fa-solid fa-folder"></i>  Delete category
                 </button>
                 <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -181,8 +193,11 @@ export default class VideoSystemView {
                         </div>
                     </div>
                 </div>
-                <button class="add-production-btn btn btn-primary">
+                <button class="add-production-btn btn btn-success">
                     <i class="fa-solid fa-film"></i> Add production
+                </button>
+                <button class="delete-production-btn btn btn-danger">
+                    <i class="fa-solid fa-film"></i> Delete production
                 </button>
             </div>`
         );
@@ -198,8 +213,8 @@ export default class VideoSystemView {
         modal.append(
             `<form name="add-category-form" class="add-category-form" method="POST" action="#" novalidate role="form">
                 <div class="needs-validation mb-3">
-                    <label for="category-title" class="form-label">Category title</label>
-                    <input type="text" placeholder="Ex: Action films" class="form-control bg-dark text-white" name="category-title" id="catTitle">
+                    <label for="category-name" class="form-label">Category name</label>
+                    <input type="text" placeholder="Ex: Action films" class="form-control bg-dark text-white" name="category-name" id="catTitle">
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
@@ -216,8 +231,8 @@ export default class VideoSystemView {
     /**
      * Método que gestiona los eventos que ocurren en el
      * formulario de crear categorías.
-     * @param {*} handlers Un objeto literal con los manejadores
-     * para validar el formulario y controlar el evento submit.
+     * @param {*} handlers La función manejadora que valida
+     * el formulario al enviarlo.
      */
     bindCreateCategory(handler) {
         const title = document.getElementById("catTitle");
@@ -248,7 +263,7 @@ export default class VideoSystemView {
 
     /**
      * Método que rellena el select del formulario de eliminar categorías
-     * con las categorías que tneemos en el modelo.
+     * con las categorías que tenemos en el modelo.
      * @param {*} categories El iterador de categorías del modelo.
      */
     fillSelectCategories(categories) {
@@ -436,8 +451,53 @@ export default class VideoSystemView {
         });
     }
 
+    /**
+     * Manejador de eventos que muestra el formulario para eliminar
+     * una producción.
+     */
+    showDeleteProductionsForm() {
+        $(".delete-production-form-container").removeClass("d-none");
+    }
+
+    /**
+     * Bind que asigna un manejador de eventos al botón de
+     * eliminar producciones al hacer clic.
+     */
+    bindShowDeleteProductionForm(handler) {
+        $(".delete-production-btn").on("click", handler);
+    }
+
+    /**
+     * Método que vacía el contenedor de producciones.
+     */
     emptyProductionsContainer() {
-        $("#productions-panel").empty();
+        $(".productions-container").empty();
+    }
+
+    /**
+     * Bind que envia los datos del formulario de eliminar producción.
+     * @param {*} handler La función manejadora que valida los
+     * campos del formulario al ser enviado.
+     */
+    bindDeleteProduction(handler) {
+        const form = document.getElementsByClassName("delete-production-form")[0];
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            handler();
+        });
+    }
+
+    /**
+     * Método que crea la sección de producciones.
+     */
+    createProductionsSection() {
+        this.main.append(
+            `<section id="productions-panel">
+                <h1 class="display-5 mb-4">All productions</h1>
+                <div class="productions-container row"></div>
+            </section>`
+        );
     }
 
     /**
@@ -445,13 +505,6 @@ export default class VideoSystemView {
      * @param {*} productions El iterador de producciones del modelo.
      */
     showAllProductions(productions) {
-        this.main.append(
-            `<section id="productions-panel">
-                <h1 class="display-5 mb-4">All productions</h1>
-                <div class="productions-container row"></div>
-            </section>`
-        );
-
         const productionsContainer = $(".productions-container");
 
         for(const elem of productions) {
