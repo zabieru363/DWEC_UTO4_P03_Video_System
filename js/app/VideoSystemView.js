@@ -42,7 +42,7 @@ export default class VideoSystemView {
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Pelicula
                                 </label>
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-movie" value="radio-movie">
+                                <input class="form-check-input" type="radio" name="addProductionRadioGroup" id="radio-movie" value="radio-movie">
                             </div>
                         </div>
                         
@@ -51,7 +51,7 @@ export default class VideoSystemView {
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Serie
                                 </label>
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-serie" value="radio-serie">
+                                <input class="form-check-input" type="radio" name="addProductionRadioGroup" id="radio-serie" value="radio-serie">
                             </div>
                         </div>
                     </div>
@@ -526,35 +526,23 @@ export default class VideoSystemView {
      */
     bindCreateProduction(handler) {
         const form = document.getElementsByClassName("add-production-form")[0];
-        // Recogemos todos los campos del formulario.
-        const fields = {
-            rBtn1: document.getElementById("radio-movie"),
-            rBtn2: document.getElementById("radio-serie"),
-            pTitle: document.getElementById("pTitle"),
-            pNationality: document.getElementById("pNationality"),
-            pDate: document.getElementById("pDate"),
-            pSynopsis: document.getElementById("pSynopsis"),
-            pDuration: document.getElementsByClassName("duration-field")[0],
-            pSeasons: document.getElementsByClassName("seasons-field")[0]
-        };
+        const radio = [...form.addProductionRadioGroup];
+        const duration = document.getElementsByClassName("duration-field")[0];
+        const seasons = document.getElementsByClassName("seasons-field")[0];
 
-        let radioButtonValue = null;
-
-        fields.rBtn1.addEventListener("click", function(e) {
-            radioButtonValue = this.value;
-            fields.pDuration.classList.remove("d-none");
-            fields.pSeasons.classList.add("d-none");
+        radio[0].addEventListener("click", function(e) {
+            duration.classList.remove("d-none");
+            seasons.classList.add("d-none");
         });
 
-        fields.rBtn2.addEventListener("click", function(e) {
-            radioButtonValue = this.value;
-            fields.pDuration.classList.add("d-none");
-            fields.pSeasons.classList.remove("d-none");
+        radio[1].addEventListener("click", function(e) {
+            duration.classList.add("d-none");
+            seasons.classList.remove("d-none");
         });
 
         form.addEventListener("submit", function(e) {
             e.preventDefault();
-            handler(form, fields, radioButtonValue);    // Validación del resto de campos.
+            handler(this);
         });
     }
 
