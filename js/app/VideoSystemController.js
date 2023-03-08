@@ -531,6 +531,49 @@ export default class VideoSystemController {
         }
     }
 
+    #deletePerson(radio, fullname) {
+        let person = null;
+
+        const actorsContainer = document.querySelector(".actors-container");
+        const directorsContainer = document.querySelector(".directors-container");
+
+        if(radio === "radio-actor") {
+            for(const elem of this.#model.actors) {
+                if(elem.actor.name.includes(fullname)) {
+                    person = elem.actor;
+                    break;
+                }
+            }
+
+            this.#model.removeActor(person);
+
+            if(actorsContainer) {
+                this.#view.emptyActorsContainer();
+                for(const elem of this.#model.actors) {
+                    this.#view.showAllActors(elem.actor, this.#model.getProductionsActor(elem.actor));
+                }
+            }
+        }
+
+        if(radio === "radio-director") {
+            for(const elem of this.#model.directors) {
+                if(elem.director.name.includes(fullname)) {
+                    person = elem.director;
+                    break;
+                }
+            }
+
+            this.#model.removeDirector(person);
+
+            if(directorsContainer) {
+                this.#view.emptyDirectorsContainer();
+                for(const elem of this.#model.directors) {
+                    this.#view.showAllDirectors(elem.director, this.#model.getProductionsDirector(elem.director));
+                }
+            }
+        }
+    }
+
     /**
      * Método que comprueba si la persona existe en el modelo.
      * @param {*} type El tipo de entidad (actor o director)
@@ -541,7 +584,7 @@ export default class VideoSystemController {
 
         if(type === "radio-actor") {
             for(const elem of this.#model.actors) {
-                if(elem.actor.name === personName) {
+                if(elem.actor.fullName.includes(personName)) {
                     exists = true;
                     break;
                 }
@@ -550,7 +593,7 @@ export default class VideoSystemController {
 
         if(type === "radio-director") {
             for(const elem of this.#model.directors) {
-                if(elem.director.name === personName) {
+                if(elem.director.fullName.includes(personName)) {
                     exists = true;
                     break;
                 }
@@ -580,6 +623,8 @@ export default class VideoSystemController {
         this.#view.bindDeleteProduction(this.validateDeleteProductionFormHandler);
         this.#view.bindAddPersonForm(this.showAddPersonFormHandler);
         this.#view.bindAddPerson(this.validateAddPersonFormHandler);
+        this.#view.bindDeletePersonForm(this.showDeletePersonFormHandler)
+        this.#view.bindDeletePerson(this.validateDeletePersonFormHandler);
     }
 
     /**
@@ -1018,6 +1063,12 @@ export default class VideoSystemController {
         this.#view.showAddPersonForm();
     }
 
+    /**
+     * Handler que valida el formulario que permite crear
+     * actores o directores.
+     * @param {*} form El formulario que permite crear actores
+     * y directores.
+     */
     validateAddPersonFormHandler = (form) => {
         // Recogemos los campos.
         const radio = form.addPersonRadioGroup.value;
@@ -1104,6 +1155,71 @@ export default class VideoSystemController {
 
             checker.forEach(field => field.classList.remove("is-valid"));
             submitInfo.textContent = "La entidad se añadío correctamente.";
+        }
+    };
+
+    /**
+     * Handler que permite a la vista mostrar el formulario
+     * de eliminar actores o directores.
+     */
+    showDeletePersonFormHandler = () => {
+        this.onShowDeletePersonForm();
+    };
+
+    /**
+     * Método que invoca al método de la vista que
+     * muestra el formulario de eliminar actores o directores.
+     */
+    onShowDeletePersonForm() {
+        this.#view.showDeletePersonForm();
+    }
+
+    /**
+     * Handler que valida el formulario de eliminar
+     * actores o directores.
+     * @param {*} form El formulario de eliminar
+     * actores o directores
+     */
+    validateDeletePersonFormHandler = (form) => {
+        const radio = form.deletePersonRadioGroup.value;
+        const fullname = form["fullname-person"];
+        const feedback = form.getElementsByClassName("invalid-feedback")[0];
+        const submitInfo =  form.querySelector(".submit-info");
+
+        if(!radio) {
+            submitInfo.classList.remove("text-success");
+            submitInfo.classList.add("text-danger");
+            submitInfo.textContent = "No se ha seleccionado un tipo de entidad.";
+        }else{
+            submitInfo.textContent = "";
+        }
+
+        if(!fullname.value) {
+            fullname.classList.remove("is-valid");
+            fullname.classList.add("is-invalid");
+            feedback.textContent = "El campo de busqueda está vacío.";
+        }else if(/\d/g.test(fullname.value)) {
+            fullname.classList.remove("is-valid");
+            fullname.classList.add("is-invalid");
+            feedback.textContent = "El campo de busqueda no puede contener números.";
+        }else if(!(this.#personExists(radio, fullname.value))) {
+            fullname.classList.remove("is-valid");
+            fullname.classList.add("is-invalid");
+            feedback.textContent = "La entidad no existe";
+        }else{
+            fullname.classList.remove("is-invalid");
+            fullname.classList.add("is-valid");
+            feedback.textContent = "";
+            
+            submitInfo.classList.remove("text-danger");
+            submitInfo.classList.add("text-success");
+
+            this.#deletePerson(radio, fullname.value.trim());
+
+            fullname.classList.remove("is-valid");
+            fullname.value = "";
+
+            submitInfo.textContent = "La persona se ha eliminado correctamente del sistema";
         }
     };
 }

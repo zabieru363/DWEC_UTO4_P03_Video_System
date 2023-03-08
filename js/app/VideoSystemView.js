@@ -102,7 +102,7 @@ export default class VideoSystemView {
         this.main.append(
             `<div class="container mt-3 mb-3 w-50 delete-production-form-container d-none">
                 <h1>Delete production</h1>
-                <form name="delete-category-form" class="delete-production-form" method="POST" action="#" novalidate role="form">
+                <form name="delete-production-form" class="delete-production-form" method="POST" action="#" novalidate role="form">
                     <div class="mb-3 needs-validation">
                         <label class="form-label" for="production">Type a production</label>
                         <input type="text" class="form-control" name="input-search-production" id="input-search-production">
@@ -160,6 +160,45 @@ export default class VideoSystemView {
                 </form>
             </div>`
         );
+
+        // Formulario para eliminar actores o directores.
+        this.main.append(
+            `<div class="container mt-3 mb-3 w-50 delete-person-form-container d-none">
+                <h1>Delete person</h1>
+                <form name="delete-person-form" class="delete-person-form" method="POST" action="#" novalidate role="form">
+                    <p>¿Que quieres eliminar?</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Un actor
+                                </label>
+                                <input class="form-check-input" type="radio" name="deletePersonRadioGroup" value="radio-actor">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Un director
+                                </label>
+                                <input class="form-check-input" type="radio" name="deletePersonRadioGroup" value="radio-director">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 needs-validation">
+                        <label class="form-label" for="fullname-person">Name</label>
+                        <input type="text" class="form-control bg-dark text-white" name="fullname-person">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete person</button>
+                    <div class="submit-info"></div>
+                </form>
+            </div>`
+        );
+
+        // Formulario para eliminar actores o directores.
 
         this.showOperationButtons();
         this.showCreateCategoryForm();
@@ -250,6 +289,9 @@ export default class VideoSystemView {
                 </button>
                 <button class="add-person-btn btn btn-success">
                     <i class="fa-solid fa-user"></i> Add person
+                </button>
+                <button class="delete-person-btn btn btn-danger">
+                    <i class="fa-solid fa-user"></i> Delete person
                 </button>
             </div>`
         );
@@ -807,6 +849,38 @@ export default class VideoSystemView {
      */
     bindAddPerson(handler) {
         const form = document.getElementsByClassName("add-person-form")[0];
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            handler(this);
+        });
+    }
+
+    /**
+     * Método que muestra el formulario de eliminar
+     * un actor o un director.
+     */
+    showDeletePersonForm() {
+        $(".delete-person-form-container").removeClass("d-none");
+    }
+
+    /**
+     * Método que ejecuta el método que hace visible el
+     * formulario de eliminar actores o directores.
+     * @param {*} handler 
+     */
+    bindDeletePersonForm(handler) {
+        $(".delete-person-btn").on("click", handler);
+    }
+
+    /**
+     * Método que manda la acción de eliminar un actor
+     * o director al controlador.
+     * @param {*} handler La función manejadora que valida
+     * el formulario de eliminar persona.
+     */
+    bindDeletePerson(handler) {
+        const form = document.getElementsByClassName("delete-person-form")[0];
 
         form.addEventListener("submit", function(e) {
             e.preventDefault();
