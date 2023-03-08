@@ -463,6 +463,24 @@ export default class VideoSystemController {
             this.#view.showAllProductions(this.#model.productions);
         }
 
+        // Comprobamos también si la producción estaba asociada a una categoría.
+        for(const elem of this.#model.categories) {
+            const resource = elem.productions.find(p => p.title === productionName);
+            if(resource) this.#model.deassignCategory(elem.category, resource);
+        }
+
+        // Hacemos lo mismo para los actores.
+        for(const elem of this.#model.actors) {
+            const resource = elem.productions.find(p => p.title === productionName);
+            if(resource) this.#model.deassignActor(elem.actor, resource);
+        }
+
+        // Y para los directores.
+        for(const elem of this.#model.directors) {
+            const resource = elem.productions.find(p => p.title === productionName);
+            if(resource) this.#model.deassignDirector(elem.director, resource);
+        }
+
         // Actualizamos la vista de categorías ya que tienen producciones en su interior.
         this.#view.emptyCategoriesContainer();
         
