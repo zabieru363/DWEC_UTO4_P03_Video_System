@@ -127,7 +127,7 @@ export default class VideoSystemView {
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Un actor
                                 </label>
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-movie" value="radio-actor">
+                                <input class="form-check-input" type="radio" name="addPersonRadioGroup" value="radio-actor">
                             </div>
                         </div>
                         
@@ -136,21 +136,26 @@ export default class VideoSystemView {
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Un director
                                 </label>
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="radio-serie" value="radio-director">
+                                <input class="form-check-input" type="radio" name="addPersonRadioGroup" value="radio-director">
                             </div>
                         </div>
                     </div>
                     <div class="mb-3 needs-validation">
                         <label class="form-label" for="name-person">Name</label>
-                        <input type="text" class="form-control" name="name-person" id="pName">
+                        <input type="text" class="form-control bg-dark text-white" name="name-person" id="name-person">
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3 needs-validation">
                         <label class="form-label" for="lastName-person">Lastname</label>
-                        <input type="text" class="form-control" name="lastName-person" id="pLastname">
+                        <input type="text" class="form-control bg-dark text-white" name="lastname-person" id="lastname-person">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Delete production</button>
+                    <div class="mb-3 needs-validation">
+                        <label class="form-label" for="date-person">Birthdate</label>
+                        <input type="date" class="form-control bg-dark text-white" name="date-person" id="date-person">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add person</button>
                     <div class="submit-info"></div>
                 </form>
             </div>`
@@ -793,5 +798,19 @@ export default class VideoSystemView {
      */
     bindAddPersonForm(handler) {
         $(".add-person-btn").on("click", handler);
+    }
+
+    /**
+     * Método que enlaza el envio del formulario con el controlador.
+     * @param {*} handler La función manejadora que validará el
+     * formulario al ser enviado.
+     */
+    bindAddPerson(handler) {
+        const form = document.getElementsByClassName("add-person-form")[0];
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            handler(this);
+        });
     }
 }

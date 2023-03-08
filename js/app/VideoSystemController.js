@@ -488,6 +488,78 @@ export default class VideoSystemController {
             this.#view.showCategoriesInCentralZone(elem.category, this.#model.getProductionsCategory(elem.category));
     }
 
+    /**
+     * Método que añade una persona (puede ser un actor o un director)
+     * al modelo por medio del formulario añadir persona.
+     * @param {*} radio La opción que escogío el usuario. Puede ser actor o director.
+     * @param {*} fields Un objeto literal con los campos del formulario.
+     */
+    #addPerson(radio, fields) {
+        const full = fields.lastName.value.split(" ");
+
+        if(!full[1]) full[1] = "";
+
+        const person = new Entities.Person(
+            fields.name.value,
+            full[0],
+            full[1],
+            new Date(fields.date.value),
+            'C:\\Users\\images'
+        );
+
+        const actorsContainer = document.querySelector(".actors-container");
+        const directorsContainer = document.querySelector(".directors-container");
+
+        if(radio === "radio-actor") {
+            this.#model.addActor(person);
+            if(actorsContainer) {
+                this.#view.emptyActorsContainer();
+                for(const elem of this.#model.actors) {
+                    this.#view.showAllActors(elem.actor, this.#model.getProductionsActor(elem.actor));
+                }
+            }
+        }
+
+        if(radio === "radio-director") {
+            this.#model.addDirector(person);
+            if(directorsContainer) {
+                this.#view.emptyDirectorsContainer();
+                for(const elem of this.#model.directors) {
+                    this.#view.showAllDirectors(elem.director, this.#model.getProductionsDirector(elem.director));
+                }
+            }
+        }
+    }
+
+    /**
+     * Método que comprueba si la persona existe en el modelo.
+     * @param {*} type El tipo de entidad (actor o director)
+     * @param {*} personName El nombre de la persona.
+     */
+    #personExists(type, personName) {
+        let exists = false;
+
+        if(type === "radio-actor") {
+            for(const elem of this.#model.actors) {
+                if(elem.actor.name === personName) {
+                    exists = true;
+                    break;
+                }
+            }
+        }
+
+        if(type === "radio-director") {
+            for(const elem of this.#model.directors) {
+                if(elem.director.name === personName) {
+                    exists = true;
+                    break;
+                }
+            }
+        }
+
+        return exists;
+    }
+
     constructor(model, view) {
         this.#model = model;
         this.#view = view;
@@ -507,6 +579,7 @@ export default class VideoSystemController {
         this.#view.bindShowDeleteProductionForm(this.showDeleteProductionsFormHandler);
         this.#view.bindDeleteProduction(this.validateDeleteProductionFormHandler);
         this.#view.bindAddPersonForm(this.showAddPersonFormHandler);
+        this.#view.bindAddPerson(this.validateAddPersonFormHandler);
     }
 
     /**
@@ -944,4 +1017,93 @@ export default class VideoSystemController {
     onShowAddPersonForm() {
         this.#view.showAddPersonForm();
     }
+
+    validateAddPersonFormHandler = (form) => {
+        // Recogemos los campos.
+        const radio = form.addPersonRadioGroup.value;
+        const name = form["name-person"];
+        const lastName = form["lastname-person"];
+        const date = form["date-person"];
+        const feedbacks = form.getElementsByClassName("invalid-feedback");
+        const submitInfo =  form.querySelector(".submit-info");
+
+        const fields = {
+            name,
+            lastName,
+            date
+        };
+
+        // Comenzamos a validar:
+        if(!radio) {
+            submitInfo.classList.remove("text-success");
+            submitInfo.classList.add("text-danger");
+            submitInfo.textContent = "No se ha seleccionado un tipo de entidad.";
+        }else{
+            submitInfo.textContent = "";
+        }
+
+        // Comprobamos si existe la entiedad en el modelo.
+
+        if(!name.value) {
+            name.classList.remove("is-valid");
+            name.classList.add("is-invalid");
+            feedbacks[0].textContent = "El nombre no puede estar vacío.";
+        }else if(/\d/g.test(name.value)) {
+            name.classList.remove("is-valid");
+            name.classList.add("is-invalid");
+            feedbacks[0].textContent = "El nombre no puede contener números.";
+        }else if(this.#personExists(radio, name.value)) {
+            name.classList.remove("is-valid");
+            name.classList.add("is-invalid");
+            feedbacks[0].textContent = "La entidad ya existe.";
+        }else{
+            name.classList.remove("is-invalid");
+            name.classList.add("is-valid");
+            feedbacks[0].textContent = "";
+        }
+
+        const full = lastName.value.split(" ");
+
+        // Controlamos que la persona tenga al menos un apellido.
+        if(!(fields.lastName.value.split(" ")[0])) {
+            lastName.classList.remove("is-valid");
+            lastName.classList.add("is-invalid");
+            feedbacks[1].textContent = "Debe contener al menos un apellido.";
+        }else if(/\d/g.test(full[0]) || /\d/g.test(full[1])) {
+            lastName.classList.remove("is-valid");
+            lastName.classList.add("is-invalid");
+            feedbacks[1].textContent = "El apellido o los apellidos no pueden contener números";
+        }else{
+            lastName.classList.remove("is-invalid");
+            lastName.classList.add("is-valid");
+            feedbacks[1].textContent = "";
+        }
+
+        if(!date.value) {
+            date.classList.remove("is-valid");
+            date.classList.add("is-invalid");
+            feedbacks[2].textContent = "La fecha de nacimiento no puede estar vacía.";
+        }else{
+            date.classList.remove("is-invalid");
+            date.classList.add("is-valid");
+            feedbacks[2].textContent = "";
+        }
+
+        const checker = [...Object.values(fields)];
+        const status = checker.every(field => field.classList.contains("is-valid"));
+
+        if(status) {
+            submitInfo.classList.remove("text-danger");
+            submitInfo.classList.add("text-success");
+
+            this.#addPerson(radio, fields);
+
+            fields.name.value = "";
+            fields.lastName.value = "";
+            fields.date.value = "";
+
+            checker.forEach(field => field.classList.remove("is-valid"));
+            submitInfo.textContent = "La entidad se añadío correctamente.";
+        }
+    };
 }
