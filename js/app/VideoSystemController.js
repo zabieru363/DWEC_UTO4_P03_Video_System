@@ -397,7 +397,7 @@ export default class VideoSystemController {
         if(values.radio === "radio-movie") {
             production = new Entities.Movie(
                 values.title.value, 
-                values.title.value,
+                values.nationality.value,
                 new Date(values.date.value),
                 values.synopsis.value,
                 "C:\\Users\\images",
@@ -409,7 +409,7 @@ export default class VideoSystemController {
         if(values.radio === "radio-serie") {
             production = new Entities.Serie(
                 values.title.value, 
-                values.title.value,
+                values.nationality.value,
                 new Date(values.date.value),
                 values.synopsis.value,
                 "C:\\Users\\images",
@@ -428,6 +428,22 @@ export default class VideoSystemController {
             // Actualizamos la vista.
             this.#view.emptyProductionsContainer();
             this.onShowAllProductions(this.#model.productions);
+        }
+
+        const categoryValue = values.category.value;
+        let category = null;
+
+        if(categoryValue) {
+            for(const elem of this.#model.categories) {
+                if(elem.category.name === categoryValue) {
+                    category = elem.category;
+                    break;
+                }
+            }
+
+            this.#model.assignCategory(category, production);
+            this.#view.emptyCategoriesContainer();
+            this.onShowCategoriesInCentralZone();
         }
     }
 
@@ -508,7 +524,7 @@ export default class VideoSystemController {
      * @param {*} radio La opción que escogío el usuario. Puede ser actor o director.
      * @param {*} fields Un objeto literal con los campos del formulario.
      */
-    #addPerson(radio, fields) {
+    #addPerson(radio, fields, selectValue) {
         const full = fields.lastName.value.split(" ");
 
         if(!full[1]) full[1] = "";
@@ -530,6 +546,23 @@ export default class VideoSystemController {
                 this.#view.emptyActorsContainer();
                 this.onShowAllActors();
             }
+
+            let production = null;
+
+            if(selectValue) {
+                for(const elem of this.#model.productions) {
+                    if(elem.production.title === selectValue) {
+                        production = elem.production;
+                    }
+                }
+
+                this.#model.assignActor(person, production);
+
+                if(actorsContainer) {
+                    this.#view.emptyActorsContainer();
+                    this.onShowAllActors();
+                }
+            }
         }
 
         if(radio === "radio-director") {
@@ -537,6 +570,23 @@ export default class VideoSystemController {
             if(directorsContainer) {
                 this.#view.emptyDirectorsContainer();
                 this.onShowAllDirectors();
+            }
+
+            let production = null;
+
+            if(selectValue) {
+                for(const elem of this.#model.productions) {
+                    if(elem.production.title === selectValue) {
+                        production = elem.production;
+                    }
+                }
+
+                this.#model.assignDirector(person, production);
+
+                if(directorsContainer) {
+                    this.#view.emptyDirectorsContainer();
+                    this.onShowAllDirectors();
+                }
             }
         }
     }
@@ -615,7 +665,20 @@ export default class VideoSystemController {
 
         this.onLoad();
         this.onInit();
-        
+    }
+
+    /**
+     * Método que muestra los componenetes principales
+     * de la página en la vista al recargar la página.
+     */
+    onInit = () => {
+        this.#view.init();
+        this.onShowCategoriesMenu();
+        this.onShowUser(this.#model.users);
+        this.onShowProductionsInCarousel(this.#model.productions);
+        this.onfillSelectCategories(this.#model.categories);
+        this.onShowCategoriesInCentralZone();
+
         this.#view.bindInit(this.handleInit);
         this.#view.bindProductions(this.handleProductions);
         this.#view.bindDirectors(this.handleDirectors);
@@ -631,19 +694,6 @@ export default class VideoSystemController {
         this.#view.bindAddPerson(this.validateAddPersonFormHandler);
         this.#view.bindDeletePersonForm(this.showDeletePersonFormHandler)
         this.#view.bindDeletePerson(this.validateDeletePersonFormHandler);
-    }
-
-    /**
-     * Método que muestra los componenetes principales
-     * de la página en la vista al recargar la página.
-     */
-    onInit = () => {
-        this.#view.init();
-        this.onShowCategoriesMenu();
-        this.onShowUser(this.#model.users);
-        this.onShowProductionsInCarousel(this.#model.productions);
-        this.onfillSelectCategories(this.#model.categories);
-        this.onShowCategoriesInCentralZone();
     };
 
     /**
@@ -895,6 +945,7 @@ export default class VideoSystemController {
         const synopsis = form["production-synopsis"];
         const duration = form["production-duration"];
         const seasons = form["production-seasons"];
+        const category = form.querySelector(".select-categories");
 
         let field = null;
         let feedbackIndex = 0;
@@ -981,7 +1032,7 @@ export default class VideoSystemController {
 
         // Si todos los campos son correctos, pasamos a crear la producción.
         if(valid) {
-            const target = {radio, synopsis};
+            const target = {radio, synopsis, category};
             const full = Object.assign(target, fields);
             this.#createNewProduction(full);
 
@@ -1054,6 +1105,16 @@ export default class VideoSystemController {
      */
     onShowAddPersonForm() {
         this.#view.showAddPersonForm();
+        this.onFillSelectProductions();
+    }
+
+    /**
+     * Método que invoca al método de la vista que rellena
+     * el select de producciones con todas las producciones
+     * del modelo.
+     */
+    onFillSelectProductions() {
+        this.#view.fillSelectProductions(this.#model.productions);
     }
 
     /**
@@ -1068,6 +1129,7 @@ export default class VideoSystemController {
         const name = form["name-person"];
         const lastName = form["lastname-person"];
         const date = form["date-person"];
+        const select = document.getElementsByClassName("select-productions")[0];
         const feedbacks = form.getElementsByClassName("invalid-feedback");
         const submitInfo =  form.querySelector(".submit-info");
 
@@ -1140,7 +1202,7 @@ export default class VideoSystemController {
             submitInfo.classList.remove("text-danger");
             submitInfo.classList.add("text-success");
 
-            this.#addPerson(radio, fields);
+            this.#addPerson(radio, fields, select.value);
 
             fields.name.value = "";
             fields.lastName.value = "";

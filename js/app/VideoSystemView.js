@@ -91,9 +91,11 @@ export default class VideoSystemView {
                         <div class="invalid-feedback"></div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <label class="form-label" for="select-categories">Select a category</label>
+                    <select class="select-categories form-select mb-3" aria-label="Default select example"></select>
+
+                    <button type="submit" class="btn btn-primary">Create production</button>
                     <div class="submit-info"></div>
-                    <hr>
                 </form>
             </div>`
         );
@@ -155,6 +157,10 @@ export default class VideoSystemView {
                         <input type="date" class="form-control bg-dark text-white" name="date-person" id="date-person">
                         <div class="invalid-feedback"></div>
                     </div>
+
+                    <label class="form-label" for="select-categories">Assign production</label>
+                    <select class="select-productions form-select mb-3" aria-label="Default select example"></select>
+
                     <button type="submit" class="btn btn-primary">Add person</button>
                     <div class="submit-info"></div>
                 </form>
@@ -640,6 +646,16 @@ export default class VideoSystemView {
                     </div>`
                 );
             }
+        }
+    }
+
+    fillSelectProductions(productions) {
+        const select = $(".select-productions");
+
+        for(const elem of productions) {
+            select.append(
+                `<option value="${elem.production.title}">${elem.production.title}</option>`
+            );
         }
     }
 
