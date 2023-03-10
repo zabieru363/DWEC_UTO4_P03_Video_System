@@ -158,7 +158,7 @@ export default class VideoSystemView {
                         <div class="invalid-feedback"></div>
                     </div>
 
-                    <label class="form-label" for="select-categories">Assign production</label>
+                    <label class="form-label" for="select-productions">Assign production</label>
                     <select class="select-productions form-select mb-3" aria-label="Default select example"></select>
 
                     <button type="submit" class="btn btn-primary">Add person</button>
@@ -199,6 +199,55 @@ export default class VideoSystemView {
                         <div class="invalid-feedback"></div>
                     </div>
                     <button type="submit" class="btn btn-danger">Delete person</button>
+                    <div class="submit-info"></div>
+                </form>
+            </div>`
+        );
+
+        // Formulario para asignar producciones.
+        this.main.append(
+            `<div class="container mt-3 mb-3 w-50 assign-production-form-container d-none">
+                <h1>Delete person</h1>
+                <form name="assign-production-form" class="assign-production-form" method="POST" action="#" novalidate role="form">
+                    <p>Asignar producción a</p>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Un actor
+                                </label>
+                                <input class="form-check-input" type="radio" name="assignProductionRadioGroup" value="radio-actor">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Un director
+                                </label>
+                                <input class="form-check-input" type="radio" name="assignProductionRadioGroup" value="radio-director">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Una categoría
+                                </label>
+                                <input class="form-check-input" type="radio" name="assignProductionRadioGroup" value="radio-director">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 needs-validation dynamic-select"></div>
+
+                    <div class="mb-3 needs-validation">
+                        <label class="form-label" for="select-categories">Assign production</label>
+                        <select class="select-productions form-select mb-3" aria-label="Default select example"></select>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger">Assign production</button>
                     <div class="submit-info"></div>
                 </form>
             </div>`
@@ -298,6 +347,9 @@ export default class VideoSystemView {
                 </button>
                 <button class="delete-person-btn btn btn-danger">
                     <i class="fa-solid fa-user"></i> Delete person
+                </button>
+                <button class="assign-productions-btn btn btn-primary">
+                    <i class="fa-sharp fa-solid fa-link"></i> Assign productions
                 </button>
             </div>`
         );
