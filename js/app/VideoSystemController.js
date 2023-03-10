@@ -659,6 +659,69 @@ export default class VideoSystemController {
         return exists;
     }
 
+    #assignProduction(fields) {
+        const actorsContainer = document.querySelector(".actors-container");
+        const directorsContainer = document.querySelector(".directors-container");
+
+        let actor = null;
+        let director = null;
+        let category = null;
+        let production = null;
+
+        for(const elem of this.#model.productions) {
+            if(elem.production.title === fields.productionName) {
+                production = elem.production;
+                break;
+            }
+        }
+
+        if(fields.type === "radio-actor") {
+            for(const elem of this.#model.actors) {
+                if(elem.actor.fullName === fields.entity) {
+                    actor = elem.actor;
+                    break;
+                }
+            }
+
+            this.#model.assignActor(actor, production);
+
+            if(actorsContainer) {
+                this.#view.emptyActorsContainer();
+                this.onShowAllActors();
+            }
+        }
+
+        if(fields.type === "radio-director") {
+            for(const elem of this.#model.directors) {
+                if(elem.director.fullName === fields.entity) {
+                    director = elem.director;
+                    break;
+                }
+            }
+
+            this.#model.assignDirector(director, production);
+
+            if(directorsContainer) {
+                this.#view.emptyDirectorsContainer();
+                this.onShowAllDirectors();
+            }
+        }
+
+        if(fields.type === "radio-category") {
+            for(const elem of this.#model.categories) {
+                if(elem.category.name === fields.entity) {
+                    category = elem.category;
+                    break;
+                }
+            }
+
+            this.#model.assignCategory(category, production);
+
+            this.#view.emptyCategoriesContainer();
+            this.onShowCategoriesInCentralZone();
+        }
+    }
+
     constructor(model, view) {
         this.#model = model;
         this.#view = view;
@@ -694,6 +757,9 @@ export default class VideoSystemController {
         this.#view.bindAddPerson(this.validateAddPersonFormHandler);
         this.#view.bindDeletePersonForm(this.showDeletePersonFormHandler)
         this.#view.bindDeletePerson(this.validateDeletePersonFormHandler);
+        this.#view.bindAssignProductionForm(this.showAssignProductionFormHandler);
+        this.#view.bindDynamicSelect(this.dynamicSelectHandler);
+        this.#view.bindAssignProduction(this.validateAssignProductionFormHandler);
     };
 
     /**
@@ -1116,6 +1182,20 @@ export default class VideoSystemController {
     onFillSelectProductions() {
         this.#view.fillSelectProductions(this.#model.productions);
     }
+    
+    /**
+     * Método que manda a la vista rellenar el select de actores.
+     */
+    onfillSelectActors() {
+        this.#view.fillSelectActors(this.#model.actors);
+    }
+
+    /**
+     * Método que manda a la vista rellenar el select de directores.
+     */
+    onfillSelectDirectors() {
+        this.#view.fillSelectDirectors(this.#model.directors);
+    }
 
     /**
      * Handler que valida el formulario que permite crear
@@ -1275,6 +1355,113 @@ export default class VideoSystemController {
             fullname.value = "";
 
             submitInfo.textContent = "La persona se ha eliminado correctamente del sistema";
+        }
+    };
+
+    /**
+     * Handler que manda a la vista mostrar el formulario de
+     * asignar producciones, carga también el select de producciones
+     * con las producciones del modelo.
+     */
+    showAssignProductionFormHandler = () => {
+        this.onShowAssignProductionForm();
+        this.onFillSelectProductions();
+    }
+
+    /**
+     * Método que ejecuta el método de la vista que muestra
+     * el formulario de asignar producciones.
+     */
+    onShowAssignProductionForm() {
+        this.#view.showAssignProductionForm();
+    }
+
+    /**
+     * Handler que rellena el select correspondiente que
+     * haya elegido el usuario.
+     * @param {*} dynamicSelect El select que ha elegido el usuario.
+     */
+    dynamicSelectHandler = (dynamicSelect) => {
+        const select = dynamicSelect.find(".ds");
+
+        if(select.hasClass("select-actors")) {
+            this.#view.emptySelectActors();
+            this.onfillSelectActors();
+        }
+        
+        if(select.hasClass("select-directors")) {
+            this.#view.emptySelectDirectors();
+            this.onfillSelectDirectors();
+        }
+        
+        if(select.hasClass("select-categories")) {
+            this.#view.emptySelectCategories();
+            this.onfillSelectCategories(this.#model.categories);
+        }
+    };
+
+    /**
+     * Handler que valida el formulario de asignar producciones
+     * a una entidad. Si está todo correcto asigna la producción
+     * a la entidad que se haya escogido.
+     * @param {*} form El formulario de asignar producciones
+     * a una entidad.
+     */
+    validateAssignProductionFormHandler = (form) => {
+        const radio = form.assignProductionRadioGroup.value;
+        const dynamicSelect = form.getElementsByClassName("ds")[0];
+        const production = form.getElementsByClassName("select-productions")[0];
+        const feedbacks = form.getElementsByClassName("invalid-feedback");
+        const submitInfo = form.getElementsByClassName("submit-info")[0];
+
+        let feedbackIndex = 0;
+        let message = "";
+
+        if(radio === "radio-actor") message = "No se ha seleccionado ningún actor.";
+        if(radio === "radio-director") message = "No se ha seleccionado ningún director.";
+        if(radio === "radio-category") message = "No se ha seleccionado ninguna categoría.";
+
+        if(!dynamicSelect) {
+            submitInfo.classList.add("text-danger");
+            submitInfo.textContent = "No se ha seleccionado un tipo de entidad.";
+        }else if(!dynamicSelect.value) {
+            feedbackIndex = 1;
+            dynamicSelect.classList.remove("is-valid");
+            dynamicSelect.classList.add("is-invalid");
+            feedbacks[0].textContent = message;
+            submitInfo.textContent = "";
+        }else{
+            dynamicSelect.classList.remove("is-invalid");
+            dynamicSelect.classList.add("is-valid");
+            submitInfo.textContent = "";
+        }
+        
+        if(!production.value) {
+            production.classList.remove("is-valid");
+            production.classList.add("is-invalid");
+            feedbacks[feedbackIndex].textContent = "No se ha seleccionado ninguna producción.";
+        }else{
+            production.classList.remove("is-invalid");
+            production.classList.add("is-valid");
+        }
+
+        if(dynamicSelect && dynamicSelect.value && production.value) {
+            const fields = {
+                type: radio,
+                entity: dynamicSelect.value,
+                productionName: production.value
+            };
+
+            this.#assignProduction(fields);
+            submitInfo.classList.remove("text-danger");
+            submitInfo.classList.add("text-success");
+            submitInfo.textContent = "Operación realizada correctamente.";
+
+            dynamicSelect.classList.remove("is-valid");
+            production.classList.remove("is-valid");
+
+            dynamicSelect.value = "";
+            production.value = "";
         }
     };
 }
