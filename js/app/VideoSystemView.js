@@ -92,7 +92,7 @@ export default class VideoSystemView {
                     </div>
 
                     <label class="form-label" for="select-categories">Assign category</label>
-                    <select class="select-categories form-select mb-3" aria-label="Default select example"></select>
+                    <select class="select-categories bg-dark text-white form-select mb-3" aria-label="Default select example"></select>
 
                     <button type="submit" class="btn btn-primary">Create production</button>
                     <div class="submit-info"></div>
@@ -107,7 +107,7 @@ export default class VideoSystemView {
                 <form name="delete-production-form" class="delete-production-form" method="POST" action="#" novalidate role="form">
                     <div class="mb-3 needs-validation">
                         <label class="form-label" for="production">Type a production</label>
-                        <input type="text" class="form-control" name="input-search-production" id="input-search-production">
+                        <input type="text" class="form-control bg-dark text-white" name="input-search-production" id="input-search-production">
                         <div class="invalid-feedback"></div>
                     </div>
                     <button type="submit" class="btn btn-danger">Delete production</button>
@@ -244,11 +244,61 @@ export default class VideoSystemView {
 
                     <div class="mb-3 needs-validation">
                         <label class="form-label" for="select-productions">Assign production</label>
-                        <select class="select-productions form-select mb-3" aria-label="Default select example"></select>
+                        <select class="select-productions form-select bg-dark text-white" aria-label="Default select example"></select>
                         <div class="invalid-feedback"></div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Assign production</button>
+                    <div class="submit-info"></div>
+                </form>
+            </div>`
+        );
+
+        // Formulario para desasignar producciones.
+        this.main.append(
+            `<div class="container mt-3 mb-3 w-50 deassign-production-form-container d-none">
+                <h1>Deassign production</h1>
+                <form name="deassign-production-form" class="deassign-production-form" method="POST" action="#" novalidate role="form">
+                    <p>Eliminar producciones de</p>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Un actor
+                                </label>
+                                <input class="form-check-input" type="radio" name="deassignProductionRadioGroup" value="radio-actor">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Un director
+                                </label>
+                                <input class="form-check-input" type="radio" name="deassignProductionRadioGroup" value="radio-director">
+                            </div>
+                        </div>
+c
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Una categoría
+                                </label>
+                                <input class="form-check-input" type="radio" name="deassignProductionRadioGroup" value="radio-category">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 needs-validation dynamic-select"></div>
+
+                    <div class="mb-3 needs-validation">
+                        <label class="form-label" for="deasing-productions-input">Type a production</label>
+                        <input type="text" class="form-control bg-dark text-white" name="deassign-productions-input">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger">Deassign production</button>
                     <div class="submit-info"></div>
                 </form>
             </div>`
@@ -307,6 +357,9 @@ export default class VideoSystemView {
     showOperationButtons() {
         this.main.append(
             `<div class="mt-4 container-fluid">
+                <h1 class="display-5">Control Panel</h1>
+            </div>
+            <div class="mt-4 container-fluid">
                 <button class="add-category-btn btn btn-success" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                     <i class="fa-solid fa-folder"></i> Add category
                 </button>
@@ -349,6 +402,9 @@ export default class VideoSystemView {
                 </button>
                 <button class="assign-production-btn btn btn-primary">
                     <i class="fa-sharp fa-solid fa-link"></i> Assign productions
+                </button>
+                <button class="deassign-production-btn btn btn-secondary">
+                    <i class="fa-solid fa-link-slash"></i> Deassign productions
                 </button>
             </div>`
         );
@@ -448,9 +504,11 @@ export default class VideoSystemView {
      * el formulario
      */
     bindDeleteCategory(handler) {
-        document.getElementsByClassName("delete-category-form")[0].addEventListener("submit", function(e) {
+        const form = document.getElementsByClassName("delete-category-form")[0];
+
+        form.addEventListener("submit", function(e) {
             e.preventDefault();
-            handler();
+            handler(this);
         });
     }
 
@@ -1036,7 +1094,7 @@ export default class VideoSystemView {
      * @param {*} handler La función manejadora que rellena el
      * select correspondiente.
      */
-    bindDynamicSelect(handler) {
+    bindDynamicSelectAssignProductionsForm(handler) {
         const form = document.getElementsByClassName("assign-production-form")[0];
         const radios = [...form.assignProductionRadioGroup];
 
@@ -1047,7 +1105,7 @@ export default class VideoSystemView {
             dynamicSelect.empty();
             dynamicSelect.append(
                 `<label class="form-label" for="select-actors">Select actor</label>
-                <select class="ds select-actors form-select" aria-label="Default select example"></select>
+                <select class="ds select-actors form-select bg-dark text-white" aria-label="Default select example"></select>
                 <div class="invalid-feedback"></div>`
             );
             handler(dynamicSelect);
@@ -1057,7 +1115,7 @@ export default class VideoSystemView {
             dynamicSelect.empty();
             dynamicSelect.append(
                 `<label class="form-label" for="select-directors">Select director</label>
-                <select class="ds select-directors form-select" aria-label="Default select example"></select>
+                <select class="ds select-directors form-select bg-dark text-white" aria-label="Default select example"></select>
                 <div class="invalid-feedback"></div>`
             );
             handler(dynamicSelect);
@@ -1067,7 +1125,7 @@ export default class VideoSystemView {
             dynamicSelect.empty();
             dynamicSelect.append(
                 `<label class="form-label" for="select-categories">Select category</label>
-                <select class="ds select-categories form-select" aria-label="Default select example"></select>
+                <select class="ds select-categories form-select bg-dark text-white" aria-label="Default select example"></select>
                 <div class="invalid-feedback"></div>`
             );
             handler(dynamicSelect);
@@ -1082,6 +1140,78 @@ export default class VideoSystemView {
      */
     bindAssignProduction(handler) {
         const form = document.getElementsByClassName("assign-production-form")[0];
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            handler(form);
+        });
+    }
+
+    /**
+     * Método que hace visible el formulario de desasignar producciones
+     * de entidades.
+     */
+    showDeassignProductionForm() {
+        $(".deassign-production-form-container").removeClass("d-none");
+    }
+
+    /**
+     * Método que enlaza la vista con el controlador para poder
+     * mostrar el formulario de desasignar producciones de una
+     * entidad al hacer clic en el botón deassign productions.
+     * @param {*} handler La función manejadora del controlador
+     * que permite mostrar el formulario.
+     */
+    bindDeassignProductionForm(handler) {
+        $(".deassign-production-btn").on("click", handler);
+    }
+
+    bindDynamicSelectDeassignProductionsForm(handler) {
+        const form = document.getElementsByClassName("deassign-production-form")[0];
+        const radios = [...form.deassignProductionRadioGroup];
+
+        // Recogiendo el select dinámico:
+        const dynamicSelect = $(".deassign-production-form > div.dynamic-select");
+
+        radios[0].addEventListener("click", function(e) {
+            dynamicSelect.empty();
+            dynamicSelect.append(
+                `<label class="form-label" for="select-actors">Select actor</label>
+                <select class="ds select-actors form-select bg-dark text-white" aria-label="Default select example"></select>
+                <div class="invalid-feedback"></div>`
+            );
+            handler(dynamicSelect);
+        });
+
+        radios[1].addEventListener("click", function(e) {
+            dynamicSelect.empty();
+            dynamicSelect.append(
+                `<label class="form-label" for="select-directors">Select director</label>
+                <select class="ds select-directors form-select bg-dark text-white" aria-label="Default select example"></select>
+                <div class="invalid-feedback"></div>`
+            );
+            handler(dynamicSelect);
+        });
+
+        radios[2].addEventListener("click", function(e) {
+            dynamicSelect.empty();
+            dynamicSelect.append(
+                `<label class="form-label" for="select-categories">Select category</label>
+                <select class="ds select-categories form-select bg-dark text-white" aria-label="Default select example"></select>
+                <div class="invalid-feedback"></div>`
+            );
+            handler(dynamicSelect);
+        });
+    }
+
+    /**
+     * Bind que manda la orden de desasignar una producción al
+     * controlador al enviar el formulario.
+     * @param {*} handler La función manejadora que valida el
+     * formulario de desasignar producciones de una entidad.
+     */
+    bindDeassignProduction(handler) {
+        const form = document.getElementsByClassName("deassign-production-form")[0];
 
         form.addEventListener("submit", function(e) {
             e.preventDefault();

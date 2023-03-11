@@ -376,7 +376,7 @@ export default class VideoSystemController {
         let exists = false;
 
         for(const elem of this.#model.categories) {
-            if(elem.category.name === categoryName) {
+            if(elem.category.name.toLowerCase() === categoryName.toLowerCase()) {
                 exists = true;
                 break;
             }
@@ -458,7 +458,7 @@ export default class VideoSystemController {
         let exists = false;
 
         for(const elem of this.#model.productions) {
-            if(elem.production.title === productionName) {
+            if(elem.production.title.toLowerCase() === productionName.toLowerCase()) {
                 exists = true;
                 break;
             }
@@ -478,7 +478,7 @@ export default class VideoSystemController {
         let production = null;
 
         for(const elem of this.#model.productions) {
-            if(elem.production.title === productionName) {
+            if(elem.production.title.toLowerCase() === productionName.toLowerCase()) {
                 production = elem.production;
                 break;
             }
@@ -659,6 +659,12 @@ export default class VideoSystemController {
         return exists;
     }
 
+    /**
+     * Método privado que asigna una producción a una entidad que se
+     * haya elegido en el formulario de asignar producciones.
+     * @param {*} fields Un objeto literal con los valores recogidos
+     * del formulario de asignar producciones.
+     */
     #assignProduction(fields) {
         const actorsContainer = document.querySelector(".actors-container");
         const directorsContainer = document.querySelector(".directors-container");
@@ -669,7 +675,7 @@ export default class VideoSystemController {
         let production = null;
 
         for(const elem of this.#model.productions) {
-            if(elem.production.title === fields.productionName) {
+            if(elem.production.title.toLowerCase() === fields.productionName.toLowerCase()) {
                 production = elem.production;
                 break;
             }
@@ -677,7 +683,7 @@ export default class VideoSystemController {
 
         if(fields.type === "radio-actor") {
             for(const elem of this.#model.actors) {
-                if(elem.actor.fullName === fields.entity) {
+                if(elem.actor.fullName.toLowerCase() === fields.entity.toLowerCase()) {
                     actor = elem.actor;
                     break;
                 }
@@ -693,7 +699,7 @@ export default class VideoSystemController {
 
         if(fields.type === "radio-director") {
             for(const elem of this.#model.directors) {
-                if(elem.director.fullName === fields.entity) {
+                if(elem.director.fullName.toLowerCase() === fields.entity.toLowerCase()) {
                     director = elem.director;
                     break;
                 }
@@ -709,13 +715,148 @@ export default class VideoSystemController {
 
         if(fields.type === "radio-category") {
             for(const elem of this.#model.categories) {
-                if(elem.category.name === fields.entity) {
+                if(elem.category.name.toLowerCase() === fields.entity.toLowerCase()) {
                     category = elem.category;
                     break;
                 }
             }
 
             this.#model.assignCategory(category, production);
+
+            this.#view.emptyCategoriesContainer();
+            this.onShowCategoriesInCentralZone();
+        }
+    }
+
+    // #entityHasProduction(entityType, entityName, productionName) {
+    //     let actor = null;
+    //     let director = null;
+    //     let category = null;
+    //     let production = null;
+
+    //     let exists = false;
+
+    //     for(const elem of this.#model.productions) {
+    //         if(elem.production.title === productionName) {
+    //             production = elem.production;
+    //             break;
+    //         }
+    //     }
+
+    //     if(entityType === "radio-actor") {
+    //         for(const elem of this.#model.actors) {
+    //             if(elem.actor.fullName === entityName) {
+    //                 actor = elem.actor;
+    //                 break;
+    //             }
+    //         }
+
+    //         const productions = this.#model.getProductionsActor(actor);
+
+    //         for(const p of productions) {
+    //             if(p.production.title === productionName) {
+    //                 exists = true;
+    //                 break;
+    //             }
+    //         }
+    //     }
+
+    //     if(entityType === "radio-director") {
+    //         for(const elem of this.#model.directors) {
+    //             if(elem.director.fullName === entityName) {
+    //                 director = elem.actor;
+    //                 break;
+    //             }
+    //         }
+
+    //         const productions = this.#model.getProductionsDirector(director);
+
+    //         for(const p of productions) {
+    //             if(p.production.title === productionName) {
+    //                 exists = true;
+    //                 break;
+    //             }
+    //         }
+    //     }
+
+    //     if(entityType === "radio-category") {
+    //         for(const elem of this.#model.categories) {
+    //             if(elem.category.name === entityName) {
+    //                 category = elem.category;
+    //                 break;
+    //             }
+    //         }
+
+    //         const productions = this.#model.getProductionsCategory(category);
+
+    //         for(const p of productions) {
+    //             if(p.production.title === productionName) {
+    //                 exists = true;
+    //                 break;
+    //             }
+    //         }
+    //     }
+
+    //     return exists;
+    // }
+
+    #deassignProduction(fields) {
+        const actorsContainer = document.querySelector(".actors-container");
+        const directorsContainer = document.querySelector(".directors-container");
+
+        let actor = null;
+        let director = null;
+        let category = null;
+        let production = null;
+
+        for(const elem of this.#model.productions) {
+            if(elem.production.title.toLowerCase() === fields.productionName.toLowerCase()) {
+                production = elem.production;
+                break;
+            }
+        }
+
+        if(fields.type === "radio-actor") {
+            for(const elem of this.#model.actors) {
+                if(elem.actor.fullName.toLowerCase() === fields.entity.toLowerCase()) {
+                    actor = elem.actor;
+                    break;
+                }
+            }
+
+            this.#model.deassignActor(actor, production);
+
+            if(actorsContainer) {
+                this.#view.emptyActorsContainer();
+                this.onShowAllActors();
+            }
+        }
+
+        if(fields.type === "radio-director") {
+            for(const elem of this.#model.directors) {
+                if(elem.director.fullName.toLowerCase() === fields.entity.toLowerCase()) {
+                    director = elem.director;
+                    break;
+                }
+            }
+
+            this.#model.deassignDirector(director, production);
+
+            if(directorsContainer) {
+                this.#view.emptyDirectorsContainer();
+                this.onShowAllDirectors();
+            }
+        }
+
+        if(fields.type === "radio-category") {
+            for(const elem of this.#model.categories) {
+                if(elem.category.name.toLowerCase() === fields.entity.toLowerCase()) {
+                    category = elem.category;
+                    break;
+                }
+            }
+
+            this.#model.deassignCategory(category, production);
 
             this.#view.emptyCategoriesContainer();
             this.onShowCategoriesInCentralZone();
@@ -758,8 +899,11 @@ export default class VideoSystemController {
         this.#view.bindDeletePersonForm(this.showDeletePersonFormHandler)
         this.#view.bindDeletePerson(this.validateDeletePersonFormHandler);
         this.#view.bindAssignProductionForm(this.showAssignProductionFormHandler);
-        this.#view.bindDynamicSelect(this.dynamicSelectHandler);
+        this.#view.bindDynamicSelectAssignProductionsForm(this.dynamicSelectHandler);
         this.#view.bindAssignProduction(this.validateAssignProductionFormHandler);
+        this.#view.bindDeassignProductionForm(this.showDeassignProductionFormHandler);
+        this.#view.bindDynamicSelectDeassignProductionsForm(this.dynamicSelectHandler);
+        this.#view.bindDeassignProduction(this.validateDeassignProductionHandler);
     };
 
     /**
@@ -853,9 +997,9 @@ export default class VideoSystemController {
      * Handler que valida el formulario de eliminar
      * categorías. Si todo está correcto elimina la categoría.
      */
-    handleSelectCategory = () => {
+    handleSelectCategory = (form) => {
         const submitInfo = document.querySelector(".delete-category-form > div.submit-info");
-        const select = document.getElementsByClassName("select-categories")[0];
+        const select = form.getElementsByClassName("select-categories")[0];
 
         if(!select.value) {
             if(submitInfo.classList.contains("text-success")) {
@@ -1453,6 +1597,83 @@ export default class VideoSystemController {
             };
 
             this.#assignProduction(fields);
+            submitInfo.classList.remove("text-danger");
+            submitInfo.classList.add("text-success");
+            submitInfo.textContent = "Operación realizada correctamente.";
+
+            dynamicSelect.classList.remove("is-valid");
+            production.classList.remove("is-valid");
+
+            dynamicSelect.value = "";
+            production.value = "";
+        }
+    };
+
+    /**
+     * Handler que ejecuta el método de la vista que
+     * muestra el formulario que permite desasignar
+     * una producción de una entidad.
+     */
+    showDeassignProductionFormHandler = () => {
+        this.#view.showDeassignProductionForm();
+    }
+
+    /**
+     * Handler que valida el formulario de desasignar
+     * una producción de una entidad al ser enviado.
+     * @param {*} form El formulario que permite desasignar
+     * una producción de una entidad.
+     */
+    validateDeassignProductionHandler = (form) => {
+        const radio = form.deassignProductionRadioGroup.value;
+        const dynamicSelect = form.getElementsByClassName("ds")[0];
+        const production = form["deassign-productions-input"];
+        const feedbacks = form.getElementsByClassName("invalid-feedback");
+        const submitInfo = form.getElementsByClassName("submit-info")[0];
+
+        let feedbackIndex = 0;
+        let message = "";
+
+        if(radio === "radio-actor") message = "No se ha seleccionado ningún actor.";
+        if(radio === "radio-director") message = "No se ha seleccionado ningún director.";
+        if(radio === "radio-category") message = "No se ha seleccionado ninguna categoría.";
+
+        if(!dynamicSelect) {
+            submitInfo.classList.add("text-danger");
+            submitInfo.textContent = "No se ha seleccionado un tipo de entidad.";
+        }else if(!dynamicSelect.value) {
+            feedbackIndex = 1;
+            dynamicSelect.classList.remove("is-valid");
+            dynamicSelect.classList.add("is-invalid");
+            feedbacks[0].textContent = message;
+            submitInfo.textContent = "";
+        }else{
+            dynamicSelect.classList.remove("is-invalid");
+            dynamicSelect.classList.add("is-valid");
+            submitInfo.textContent = "";
+        }
+        
+        if(!production.value) {
+            production.classList.remove("is-valid");
+            production.classList.add("is-invalid");
+            feedbacks[feedbackIndex].textContent = "El campo de búsqueda está vacío.";
+        }else if(!(this.#productionExists(production.value))) {
+            production.classList.remove("is-valid");
+            production.classList.add("is-invalid");
+            feedbacks[feedbackIndex].textContent = "La producción no existe.";
+        }else{
+            production.classList.remove("is-invalid");
+            production.classList.add("is-valid");
+        }
+
+        if(dynamicSelect && dynamicSelect.value && production.value) {
+            const fields = {
+                type: radio,
+                entity: dynamicSelect.value,
+                productionName: production.value
+            };
+
+            this.#deassignProduction(fields);
             submitInfo.classList.remove("text-danger");
             submitInfo.classList.add("text-success");
             submitInfo.textContent = "Operación realizada correctamente.";
