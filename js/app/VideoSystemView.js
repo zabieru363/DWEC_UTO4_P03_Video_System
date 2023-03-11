@@ -30,11 +30,11 @@ export default class VideoSystemView {
         this.main.empty();
 
         // Formulario para añadir producciones.
-        this.main.append(
+        this.main.prepend(
             `<div class="container mt-3 mb-3 w-50 create-production-form-container d-none">
                 <h1>Create new production</h1>
                 <form name="add-production-form" class="add-production-form" method="POST" action="#">
-                    <p>La producción es una...</p>
+                    <p>* La producción es una...</p>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -57,19 +57,19 @@ export default class VideoSystemView {
                     </div>
 
                     <div class="needs-validation mb-3">
-                        <label for="production-title" class="form-label">Production title</label>
+                        <label for="production-title" class="form-label">Production title *</label>
                         <input type="text" placeholder="Ex: Breaking Bad" class="form-control bg-dark text-white" name="production-title" id="pTitle">
                         <div class="invalid-feedback"></div>
                     </div>
 
                     <div class="needs-validation mb-3">
-                        <label for="production-nationality" class="form-label">Production nationality</label>
+                        <label for="production-nationality" class="form-label">Production nationality *</label>
                         <input type="text" placeholder="Ex: 🇺🇸" class="form-control bg-dark text-white" name="production-nationality" id="pNationality">
                         <div class="invalid-feedback"></div>
                     </div>
 
                     <div class="needs-validation mb-3">
-                        <label for="production-date" class="form-label">Production date</label>
+                        <label for="production-date" class="form-label">Production date *</label>
                         <input type="date" class="form-control bg-dark text-white" name="production-date" id="pDate">
                         <div class="invalid-feedback"></div>
                     </div>
@@ -80,13 +80,13 @@ export default class VideoSystemView {
                     </div>
 
                     <div class="duration-field needs-validation mb-3 d-none">
-                        <label for="production-duration" class="form-label">Duration</label>
+                        <label for="production-duration" class="form-label">Duration *</label>
                         <input type="number" class="form-control bg-dark text-white" name="production-duration" id="pDuration">
                         <div class="invalid-feedback"></div>
                     </div>
 
                     <div class="seasons-field needs-validation mb-3 d-none">
-                        <label for="production-seasons" class="form-label">Seasons</label>
+                        <label for="production-seasons" class="form-label">Seasons *</label>
                         <input type="number" class="form-control bg-dark text-white" name="production-seasons" id="pSeasons">
                         <div class="invalid-feedback"></div>
                     </div>
@@ -96,32 +96,34 @@ export default class VideoSystemView {
 
                     <button type="submit" class="btn btn-primary">Create production</button>
                     <div class="submit-info"></div>
+                    <hr>
                 </form>
             </div>`
         );
 
         // Formulario para eliminar producciones.
-        this.main.append(
+        this.main.prepend(
             `<div class="container mt-3 mb-3 w-50 delete-production-form-container d-none">
                 <h1>Delete production</h1>
                 <form name="delete-production-form" class="delete-production-form" method="POST" action="#" novalidate role="form">
                     <div class="mb-3 needs-validation">
-                        <label class="form-label" for="production">Type a production</label>
-                        <input type="text" class="form-control bg-dark text-white" name="input-search-production" id="input-search-production">
+                        <label class="form-label" for="production">Type a production *</label>
+                        <input type="text" class="form-control bg-dark text-white" placeholder="Ex: Fullmetal Alchemist" name="input-search-production" id="input-search-production">
                         <div class="invalid-feedback"></div>
                     </div>
                     <button type="submit" class="btn btn-danger">Delete production</button>
                     <div class="submit-info"></div>
+                    <hr>
                 </form>
             </div>`
         );
 
         // Formulario para crear actores o directores.
-        this.main.append(
+        this.main.prepend(
             `<div class="container mt-3 mb-3 w-50 add-person-form-container d-none">
                 <h1>Add new person</h1>
                 <form name="add-person-form" class="add-person-form" method="POST" action="#" novalidate role="form">
-                    <p>¿Que quieres crear?</p>
+                    <p>* ¿Que quieres crear?</p>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -143,36 +145,37 @@ export default class VideoSystemView {
                         </div>
                     </div>
                     <div class="mb-3 needs-validation">
-                        <label class="form-label" for="name-person">Name</label>
-                        <input type="text" class="form-control bg-dark text-white" name="name-person" id="name-person">
+                        <label class="form-label" for="name-person">Name *</label>
+                        <input type="text" class="form-control bg-dark text-white" placeholder="Ex: Tom" name="name-person" id="name-person">
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3 needs-validation">
-                        <label class="form-label" for="lastName-person">Lastname</label>
-                        <input type="text" class="form-control bg-dark text-white" name="lastname-person" id="lastname-person">
+                        <label class="form-label" for="lastName-person">Lastname *</label>
+                        <input type="text" class="form-control bg-dark text-white" placeholder="Ex: Holand" name="lastname-person" id="lastname-person">
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3 needs-validation">
-                        <label class="form-label" for="date-person">Birthdate</label>
+                        <label class="form-label" for="date-person">Birthdate *</label>
                         <input type="date" class="form-control bg-dark text-white" name="date-person" id="date-person">
                         <div class="invalid-feedback"></div>
                     </div>
 
                     <label class="form-label" for="select-productions">Assign production</label>
-                    <select class="select-productions form-select mb-3" aria-label="Default select example"></select>
+                    <select class="select-productions form-select bg-dark text-white mb-3" aria-label="Default select example"></select>
 
                     <button type="submit" class="btn btn-primary">Add person</button>
                     <div class="submit-info"></div>
+                    <hr>
                 </form>
             </div>`
         );
 
         // Formulario para eliminar actores o directores.
-        this.main.append(
+        this.main.prepend(
             `<div class="container mt-3 mb-3 w-50 delete-person-form-container d-none">
                 <h1>Delete person</h1>
                 <form name="delete-person-form" class="delete-person-form" method="POST" action="#" novalidate role="form">
-                    <p>¿Que quieres eliminar?</p>
+                    <p>* ¿Que quieres eliminar?</p>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -194,22 +197,23 @@ export default class VideoSystemView {
                         </div>
                     </div>
                     <div class="mb-3 needs-validation">
-                        <label class="form-label" for="fullname-person">Name</label>
-                        <input type="text" class="form-control bg-dark text-white" name="fullname-person">
+                        <label class="form-label" for="fullname-person">Name *</label>
+                        <input type="text" class="form-control bg-dark text-white" placeholder="Ex: Tom Holand" name="fullname-person">
                         <div class="invalid-feedback"></div>
                     </div>
                     <button type="submit" class="btn btn-danger">Delete person</button>
                     <div class="submit-info"></div>
+                    <hr>
                 </form>
             </div>`
         );
 
         // Formulario para asignar producciones.
-        this.main.append(
+        this.main.prepend(
             `<div class="container mt-3 mb-3 w-50 assign-production-form-container d-none">
                 <h1>Assign production</h1>
                 <form name="assign-production-form" class="assign-production-form" method="POST" action="#" novalidate role="form">
-                    <p>Asignar producción a</p>
+                    <p>* Asignar producción a</p>
 
                     <div class="row">
                         <div class="col-md-4">
@@ -243,23 +247,24 @@ export default class VideoSystemView {
                     <div class="mb-3 needs-validation dynamic-select"></div>
 
                     <div class="mb-3 needs-validation">
-                        <label class="form-label" for="select-productions">Assign production</label>
+                        <label class="form-label" for="select-productions">Select production *</label>
                         <select class="select-productions form-select bg-dark text-white" aria-label="Default select example"></select>
                         <div class="invalid-feedback"></div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Assign production</button>
                     <div class="submit-info"></div>
+                    <hr>
                 </form>
             </div>`
         );
 
         // Formulario para desasignar producciones.
-        this.main.append(
+        this.main.prepend(
             `<div class="container mt-3 mb-3 w-50 deassign-production-form-container d-none">
                 <h1>Deassign production</h1>
                 <form name="deassign-production-form" class="deassign-production-form" method="POST" action="#" novalidate role="form">
-                    <p>Eliminar producciones de</p>
+                    <p>* Eliminar producciones de</p>
 
                     <div class="row">
                         <div class="col-md-4">
@@ -279,7 +284,7 @@ export default class VideoSystemView {
                                 <input class="form-check-input" type="radio" name="deassignProductionRadioGroup" value="radio-director">
                             </div>
                         </div>
-c
+
                         <div class="col-md-4">
                             <div class="form-check">
                                 <label class="form-check-label" for="flexRadioDefault2">
@@ -293,13 +298,14 @@ c
                     <div class="mb-3 needs-validation dynamic-select"></div>
 
                     <div class="mb-3 needs-validation">
-                        <label class="form-label" for="deasing-productions-input">Type a production</label>
-                        <input type="text" class="form-control bg-dark text-white" name="deassign-productions-input">
+                        <label class="form-label" for="deasing-productions-input">Type a production *</label>
+                        <input type="text" class="form-control bg-dark text-white" placeholder="Fullmetal Alchemist" name="deassign-productions-input">
                         <div class="invalid-feedback"></div>
                     </div>
 
                     <button type="submit" class="btn btn-danger">Deassign production</button>
                     <div class="submit-info"></div>
+                    <hr>
                 </form>
             </div>`
         );
@@ -355,7 +361,7 @@ c
      * las operaciones con formularios.
      */
     showOperationButtons() {
-        this.main.append(
+        this.main.prepend(
             `<div class="mt-4 container-fluid">
                 <h1 class="display-5">Control Panel</h1>
             </div>
@@ -420,7 +426,7 @@ c
         modal.append(
             `<form name="add-category-form" class="add-category-form" method="POST" action="#" novalidate role="form">
                 <div class="needs-validation mb-3">
-                    <label for="category-name" class="form-label">Category name</label>
+                    <label for="category-name" class="form-label">Category name *</label>
                     <input type="text" placeholder="Ex: Action films" class="form-control bg-dark text-white" name="category-name" id="catTitle">
                     <div class="invalid-feedback"></div>
                 </div>
@@ -460,8 +466,8 @@ c
 
         modal.append(
             `<form name="delete-category-form" class="delete-category-form" method="POST" action="#" novalidate role="form">
-                <label class="form-label" for="category">Select a category</label>
-                <select class="select-categories form-select mb-3" aria-label="Default select example"></select>
+                <label class="form-label" for="category">Select a category *</label>
+                <select class="select-categories form-select bg-dark text-white mb-3" aria-label="Default select example"></select>
                 <button type="submit" class="btn btn-danger">Delete category</button>
                 <div class="submit-info"></div>
             </form>`
@@ -1104,7 +1110,7 @@ c
         radios[0].addEventListener("click", function(e) {
             dynamicSelect.empty();
             dynamicSelect.append(
-                `<label class="form-label" for="select-actors">Select actor</label>
+                `<label class="form-label" for="select-actors">Select actor *</label>
                 <select class="ds select-actors form-select bg-dark text-white" aria-label="Default select example"></select>
                 <div class="invalid-feedback"></div>`
             );
@@ -1114,7 +1120,7 @@ c
         radios[1].addEventListener("click", function(e) {
             dynamicSelect.empty();
             dynamicSelect.append(
-                `<label class="form-label" for="select-directors">Select director</label>
+                `<label class="form-label" for="select-directors">Select director *</label>
                 <select class="ds select-directors form-select bg-dark text-white" aria-label="Default select example"></select>
                 <div class="invalid-feedback"></div>`
             );
@@ -1124,7 +1130,7 @@ c
         radios[2].addEventListener("click", function(e) {
             dynamicSelect.empty();
             dynamicSelect.append(
-                `<label class="form-label" for="select-categories">Select category</label>
+                `<label class="form-label" for="select-categories">Select category *</label>
                 <select class="ds select-categories form-select bg-dark text-white" aria-label="Default select example"></select>
                 <div class="invalid-feedback"></div>`
             );
@@ -1176,7 +1182,7 @@ c
         radios[0].addEventListener("click", function(e) {
             dynamicSelect.empty();
             dynamicSelect.append(
-                `<label class="form-label" for="select-actors">Select actor</label>
+                `<label class="form-label" for="select-actors">Select actor *</label>
                 <select class="ds select-actors form-select bg-dark text-white" aria-label="Default select example"></select>
                 <div class="invalid-feedback"></div>`
             );
@@ -1186,7 +1192,7 @@ c
         radios[1].addEventListener("click", function(e) {
             dynamicSelect.empty();
             dynamicSelect.append(
-                `<label class="form-label" for="select-directors">Select director</label>
+                `<label class="form-label" for="select-directors">Select director *</label>
                 <select class="ds select-directors form-select bg-dark text-white" aria-label="Default select example"></select>
                 <div class="invalid-feedback"></div>`
             );
@@ -1196,7 +1202,7 @@ c
         radios[2].addEventListener("click", function(e) {
             dynamicSelect.empty();
             dynamicSelect.append(
-                `<label class="form-label" for="select-categories">Select category</label>
+                `<label class="form-label" for="select-categories">Select category *</label>
                 <select class="ds select-categories form-select bg-dark text-white" aria-label="Default select example"></select>
                 <div class="invalid-feedback"></div>`
             );

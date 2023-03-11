@@ -599,7 +599,7 @@ export default class VideoSystemController {
 
         if(radio === "radio-actor") {
             for(const elem of this.#model.actors) {
-                if(elem.actor.fullName.includes(fullname)) {
+                if(elem.actor.fullName === fullname) {
                     person = elem.actor;
                     break;
                 }
@@ -615,7 +615,7 @@ export default class VideoSystemController {
 
         if(radio === "radio-director") {
             for(const elem of this.#model.directors) {
-                if(elem.director.fullName.includes(fullname)) {
+                if(elem.director.fullName === fullname) {
                     person = elem.director;
                     break;
                 }
@@ -640,7 +640,7 @@ export default class VideoSystemController {
 
         if(type === "radio-actor") {
             for(const elem of this.#model.actors) {
-                if(elem.actor.fullName.includes(personName)) {
+                if(elem.actor.fullName === personName) {
                     exists = true;
                     break;
                 }
@@ -649,7 +649,7 @@ export default class VideoSystemController {
 
         if(type === "radio-director") {
             for(const elem of this.#model.directors) {
-                if(elem.director.fullName.includes(personName)) {
+                if(elem.director.fullName === personName) {
                     exists = true;
                     break;
                 }
@@ -1091,21 +1091,13 @@ export default class VideoSystemController {
         const search = document.getElementById("input-search-production");
         const feedback = document.querySelector(".delete-production-form > div.mb-3 > div.invalid-feedback");
 
-        let exists = false;
-
-        for(const elem of productions) {
-            if(elem.production.title === search.value) {
-                exists = true;
-            }
-        }
-
         if(!search.value) {
             feedback.textContent = "El campo de búsqueda está vacío.";
             feedback.classList.add("d-block");
             search.classList.remove("is-valid");
             search.classList.add("is-invalid");
             submitInfo.textContent = "";
-        }else if(!exists) {
+        }else if(!(this.#productionExists(search.value))) {
             feedback.textContent = "La producción no existe.";
             feedback.classList.add("d-block");
             search.classList.remove("is-valid");
@@ -1666,7 +1658,7 @@ export default class VideoSystemController {
             production.classList.add("is-valid");
         }
 
-        if(dynamicSelect && dynamicSelect.value && production.value) {
+        if(dynamicSelect && dynamicSelect.value && production.value && this.#productionExists(production.value)) {
             const fields = {
                 type: radio,
                 entity: dynamicSelect.value,
