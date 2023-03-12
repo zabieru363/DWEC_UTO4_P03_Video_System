@@ -18,7 +18,7 @@ export default class VideoSystemController {
      */
     #createResources() {
         // * Usuario por defecto
-        const user = new Entities.User("zabieru363", "zabierujlc@gmail.com", "12345678");
+        const user = new Entities.User("admin", "zabierujlc@gmail.com", "admin1234");
 
         // * Añadimos el usuario al sistema.
         this.#model.addUser(user);
@@ -868,7 +868,18 @@ export default class VideoSystemController {
         this.#view = view;
 
         this.onLoad();
-        this.onInit();
+        this.onNotAuthenticatedUserInit();
+
+        const promise = new Promise((resolve, reject) => {
+            if(this.#cookieExists("authenticated", "true")) {
+                resolve();
+            }else{
+                reject();
+            }
+        });
+
+        promise.then(this.onInit)
+            .catch(() => console.log("Algo ha ido mal"));
     }
 
     /**
@@ -915,12 +926,93 @@ export default class VideoSystemController {
     };
 
     /**
+     * Método que carga el inicio de la página (carga los
+     * componentes esenciales) cuando el usuario no se ha
+     * autenticado.
+     */
+    onNotAuthenticatedUserInit = () => {
+        this.#view.createLoginForm();
+        this.#view.bindSignIn(this.authenticateUser);
+    };
+
+    /**
      * Manejador para enlazar en la vista los enlaces
      * del logo y del inicio.
      */
     handleInit = () => {
         this.onInit();
     };
+
+    /**
+     * Handler que comprueba si el usuario y la contraseña
+     * son admin del formulario de login.
+     * @param {*} username El nombre de usuario del formulario de login.
+     * @param {*} password La contraseña del formulario de login. 
+     */
+    authenticateUser = (form, username, password) => {
+        let valid = false;
+        const submitInfo = form.getElementsByClassName("submit-info")[0];
+
+        if(username.value !== "admin" || password.value !== "admin1234") {
+            username.classList.add("is-invalid");
+            password.classList.add("is-invalid");
+
+            submitInfo.classList.add("text-danger");
+            submitInfo.textContent = "Usuario incorrecto";
+        }else{
+            this.#setCookie("authenticated", "true", 20);
+            valid = true;
+        }
+
+        return valid;
+    }
+
+    /**
+     * Método que añade una cookie.
+     * @param {*} cname Nombre de la cookie.
+     * @param {*} cvalue Valor de la cookie.
+     * @param {*} exdays Dias que tarda en expirar la cookie.
+     */
+    #setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        const expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    /**
+     * Método que obtiene una cookie del documento.
+     * @param {*} cname El nombre de la cookie.
+     * @returns El valor de la cookie.
+     */
+    #getCookie(cname) {
+        const regex = new RegExp('(?:(?:^|.*;\\s*)' + cname +
+            '\\s*\\=\\s*([^;]*).*$)|^.*$');
+
+        return document.cookie.replace(regex, "$1");
+    }
+
+    /**
+     * Método que comprueba si existe una cookie.
+     * @param {*} cname El nombre de la cookie.
+     * @param {*} cvalue El valor de la cookie.
+     */
+    #cookieExists(cname, cvalue) {
+        let exists = false;
+
+        const cookies = document.cookie.split(";");
+
+        for(const cookie of cookies) {
+            const [name, value] = cookie.split("=");
+
+            if(name === cname && value === cvalue) {
+                exists = true;
+                break;
+            }
+        }
+
+        return exists;
+    }
 
     /**
      * Método que invoca al método que muestra las categorias

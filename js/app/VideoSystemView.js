@@ -323,6 +323,31 @@ export default class VideoSystemView {
     }
 
     /**
+     * Método que crea el formulario de login para que el
+     * usuario pueda iniciar sesión.
+     */
+    createLoginForm() {
+        this.main.append(
+            `<div class="container mt-5 mb-3 w-50 login-form-container">
+                <h1 class="mb-3">Sign in</h1>
+                <form name="login-form" class="login-form" method="POST" action="#" novalidate role="form">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control bg-dark text-white" placeholder="username" name="Your username" id="username">
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control bg-dark text-white" placeholder="Your password" name="pwd" id="pwd">
+                        <label for="pwd">Password</label>
+                    </div>
+
+                    <div class="submit-info"></div>
+                    <button class="btn btn-primary mt-3" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+                </form>
+            </div>`
+        );
+    }
+
+    /**
      * Método que aplica un evento clic a los enlaces del
      * logo y del home para que la página se restaure.
      * @param {*} handler El manejador (sería el método onInit del controlador)
@@ -588,7 +613,23 @@ export default class VideoSystemView {
      */
     showUser(users) {
         const [user] = users;
-        this.username.append("User " + user.username);
+        this.username.append(`<i class="bg-danger p-2 rounded-circle px-2 fa-solid fa-solid fa-user"></i> User ${user.username}`);
+    }
+
+    /**
+     * Método que enlaza el inicio de sesión con el controlador
+     * @param {*} handler La función manejadora del controlador
+     * que comprueba si el usuario y la contraseña son correctos.
+     */
+    bindSignIn(handler) {
+        const form = document.getElementsByClassName("login-form")[0];
+        const usernameInput = form["username"];
+        const passwordInput = form["pwd"];
+
+        form.addEventListener("submit", function(e) {
+            const valid = handler(this, usernameInput, passwordInput);
+            if(!valid) e.preventDefault(); 
+        });
     }
 
     /**
