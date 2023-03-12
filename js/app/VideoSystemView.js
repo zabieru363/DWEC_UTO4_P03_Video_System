@@ -767,6 +767,16 @@ export default class VideoSystemView {
         }
     }
 
+    bindProductionWindow(handler) {
+        const buttons = document.querySelectorAll(".open-window-btn");
+
+        buttons.forEach(button => button.addEventListener("click", function() {
+            const cardBody = button.parentElement;
+            const pTitle = cardBody.querySelector(".p-title");
+            handler(pTitle.textContent);
+        }));
+    }
+
     /**
      * Método que rellena el select de producciones.
      * @param {*} productions El iterador de producciones del modelo.

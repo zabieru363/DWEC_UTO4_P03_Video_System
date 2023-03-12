@@ -1054,7 +1054,62 @@ export default class VideoSystemController {
      */
     onShowAllProductions(productions) {
         this.#view.showAllProductions(productions);
+        this.#view.bindProductionWindow(this.openWindowHandler);
     }
+
+    openWindowHandler = (productionTitle) => {
+        let production = null;
+        const self = this;  // Guardamos el contexto de this en una variable por si lo necesitamos.
+
+        for(const elem of this.#model.productions) {
+            if(elem.production.title === productionTitle) {
+                production = elem.production;
+            }
+        }
+
+        const myWindow = window.open("productionDetails.html", `Detalles de ${productionTitle}`, "width=800, height=600, top=250, left=250, titlebar=yes, toolbar=no, menubar=no, location=no");
+
+        myWindow.addEventListener("DOMContentLoaded", function() {
+            myWindow.focus();
+
+            const title = this.document.querySelector(".p-title");
+            const type = this.document.querySelector(".p-type");
+            const resources = this.document.querySelector(".p-resource");
+            const date = this.document.querySelector(".p-date");
+            const nationality = this.document.querySelector(".p-nationality");
+            const synopsis = this.document.querySelector(".p-synopsis");
+            const castingContainer = $(this.document).find(".production-casting");
+
+            title.textContent = production.title;
+            
+            if(production instanceof Entities.Movie) {
+                type.textContent = "Película";
+                resources.textContent = `Duración ${production.resource.duration} minutos`;
+            }
+
+            if(production instanceof Entities.Serie) {
+                type.textContent = "Serie";
+                resources.textContent =  `Número de temporadas ${production.seasons}`;
+            }
+
+            date.textContent = production.publication.toLocaleDateString();
+            nationality.textContent = production.nationality;
+            synopsis.textContent = production.synopsis;
+
+            const casting = self.#model.getCast(production);
+
+            castingContainer.empty();
+
+            for(const person of casting) {
+                const elem = $(`<li class="list-group-item">${person.fullName}</li>`);
+                castingContainer.append(elem);
+            }
+
+            const closeWindowBtn = myWindow.document.getElementsByClassName("close-window-btn")[0];
+            closeWindowBtn.addEventListener("click", () => this.close());
+        });
+
+    };
 
     /**
      * Handler que permite mostrar el formulario de crear
