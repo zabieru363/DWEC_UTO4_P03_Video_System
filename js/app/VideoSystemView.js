@@ -16,7 +16,6 @@ export default class VideoSystemView {
         this.username = $(".user-panel > span.username");
         this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
-        this.newTab = null;
     }
 
     /**
@@ -382,6 +381,17 @@ export default class VideoSystemView {
     }
 
     /**
+     * Método que enlaza el logout con el controlador y le
+     * manda la acción de eliminar la cookie de autenticación.
+     * @param {*} handler La función manejadora del controlador
+     * que elimina la cookie.
+     */
+    bindLogout(handler) {
+        const logoutBtn = this.username.find(".logout-btn");
+        logoutBtn.on("click", handler);
+    }
+
+    /**
      * Método que crea los botones para realizar
      * las operaciones con formularios.
      */
@@ -613,7 +623,8 @@ export default class VideoSystemView {
      */
     showUser(users) {
         const [user] = users;
-        this.username.append(`<i class="bg-danger p-2 rounded-circle px-2 fa-solid fa-solid fa-user"></i> User ${user.username}`);
+        this.username.append(`<i class="bg-danger p-2 rounded-circle px-2 fa-solid fa-solid fa-user"></i> User ${user.username} `);
+        this.username.append(`<span class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i></span>`);
     }
 
     /**

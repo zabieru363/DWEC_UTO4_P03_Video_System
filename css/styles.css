@@ -15,6 +15,10 @@ nav {
     background: #2a83cc;
 }
 
+.logout-btn {
+    cursor: pointer;
+}
+
 .car {
     background: #1C6097;
 }

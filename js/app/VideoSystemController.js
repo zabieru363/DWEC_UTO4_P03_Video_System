@@ -895,6 +895,7 @@ export default class VideoSystemController {
         this.onShowCategoriesInCentralZone();
 
         this.#view.bindInit(this.handleInit);
+        this.#view.bindLogout(this.handleLogout);
         this.#view.bindProductions(this.handleProductions);
         this.#view.bindDirectors(this.handleDirectors);
         this.#view.bindActors(this.handleActors);
@@ -966,6 +967,15 @@ export default class VideoSystemController {
 
         return valid;
     }
+
+    /**
+     * Handler que comunica a la vista el cierre de sesión.
+     * Para ello borra la cookie de autenticación.
+     */
+    handleLogout = () => {
+        this.#setCookie("authenticated", "", 0);
+        window.location.reload();
+    };
 
     /**
      * Método que añade una cookie.
