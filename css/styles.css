@@ -19,6 +19,10 @@ nav {
     cursor: pointer;
 }
 
+.p-title {
+    display: inline;
+}
+
 .car {
     background: #1C6097;
 }
@@ -66,6 +70,10 @@ div.circle > i.fa-solid.fa-folder,
 div.circle > i.fa-solid.fa-user-tie,
 div.circle > i.fa-solid.fa-graduation-cap {
     color: #14456D;
+}
+
+.production-saved {
+    color: #ecdc00
 }
 
 /* Footer styles */

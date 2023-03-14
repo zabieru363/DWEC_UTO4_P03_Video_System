@@ -12,6 +12,7 @@ export default class VideoSystemView {
         this.categoriesMenu = $(".navbar-categories-menu");
         this.productionsAnchor = $(".productions");
         this.directorsAnchor = $(".directors");
+        this.favouritesAnchor = $(".favourites");
         this.actorsAnchor = $(".actors");
         this.username = $(".user-panel > span.username");
         this.carousel = $(".car > div.carousel-inner");
@@ -784,7 +785,7 @@ export default class VideoSystemView {
                     `<div class="col-md-3">
                         <div class="production-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
                             <div class="card-body">
-                                <h4 class="p-title">${elem.production.title}</h4>
+                                <h4 class="p-title">${elem.production.title}</h4> <i title="Guardar en favoritos" class="save-production fa-regular fa-star"></i>
                                 <h6 class="p-type">Pelicula</h6>
                                 <p class="p-duration">Duración ${elem.production.resource.duration} minutos</p>
                                 <p class="p-date">${elem.production.publication.toLocaleDateString()}</p>
@@ -803,7 +804,7 @@ export default class VideoSystemView {
                     `<div class="col-md-3">
                         <div class="production-card shadow p-3 mb-5 ml-2 rounded card mx-auto" style="width: 18rem;">
                             <div class="card-body">
-                                <h4 class="p-title">${elem.production.title}</h4>
+                                <h4 class="p-title">${elem.production.title}</h4> <i title="Guardar en favoritos" class="save-production fa-regular fa-star"></i>
                                 <h6 class="p-type">Serie</h6>
                                 <p class="p-date">${elem.production.publication.toLocaleDateString()}</p>
                                 <p class="p-seasons">Temporadas ${elem.production.seasons}</p>
@@ -819,6 +820,12 @@ export default class VideoSystemView {
         }
     }
 
+    /**
+     * Método que enlaza la acción de abrir una ventana con los
+     * detalles de la producción con el controlador.
+     * @param {*} handler La función manejadora del controlador
+     * que abre la ventana con los detalles de la producción.
+     */
     bindProductionWindow(handler) {
         const buttons = document.querySelectorAll(".open-window-btn");
 
@@ -827,6 +834,47 @@ export default class VideoSystemView {
             const pTitle = cardBody.querySelector(".p-title");
             handler(pTitle.textContent);
         }));
+    }
+
+    /**
+     * Método que enlaza la operación de guardar favoritos
+     * en el localstorage con el controlador.
+     */
+    bindSaveInFavs(handler) {
+        const stars = document.querySelectorAll(".save-production");
+        stars.forEach(star => star.addEventListener("click", function(e) {
+            e.stopPropagation();
+
+            const parent = $(star).parent();
+            const production = parent.find(".p-title");
+            $(star).remove();
+
+            production.after(`<i title="Quitar de favoritos" class="production-saved fa-solid fa-star"></i>`);
+
+            handler(production.text());
+        }));
+    }
+
+    /**
+     * Método que enlaza la vista con el controlador para
+     * mostrar el panel de favoritos.
+     * @param {*} handler 
+     */
+    bindFavourites(handler) {
+        this.favouritesAnchor.one("click", handler);
+    }
+
+    /**
+     * Método que permite mostrar el panel de producciones
+     * favoritas del usuario.
+     */
+    showFavouritesPanel() {
+        this.main.prepend(
+            `<div class="container-fluid w-50 favourites-panel">
+                <h1 class="display-5">List of favourites</h1>
+                <div class="favourites-list list-group"></div>
+            </div>`
+        );
     }
 
     /**
@@ -910,7 +958,7 @@ export default class VideoSystemView {
      * @param {*} handler El manejador (sería el método onshowAllProductions del controlador)
      */
     bindProductions(handler) {
-        this.productionsAnchor.on("click", handler);
+        this.productionsAnchor.one("click", handler);
     }
 
     /**
@@ -990,7 +1038,7 @@ export default class VideoSystemView {
      * @param {*} handler El manejador (sería el método onshowAllDirectors del controlador)
      */
     bindDirectors(handler) {
-        this.directorsAnchor.on("click", handler);
+        this.directorsAnchor.one("click", handler);
     }
 
     /**
@@ -1070,7 +1118,7 @@ export default class VideoSystemView {
      * @param {*} handler El manejador (sería el método onshowAllActors del controlador)
      */
     bindActors(handler) {
-        this.actorsAnchor.on("click", handler);
+        this.actorsAnchor.one("click", handler);
     }
 
     /**

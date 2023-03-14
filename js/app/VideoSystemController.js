@@ -1,6 +1,7 @@
 "use strict";
 
 import * as Entities from "../entities/entities.js";
+import countProductionsClossure from "../utilities/util.js";
 
 /**
  * Clase controlodar para el objeto Videosystem.
@@ -11,6 +12,7 @@ export default class VideoSystemController {
     // Campos privados
     #model;
     #view;
+    #counter = countProductionsClossure();
 
     /**
      * Método privado que crea los recursos de la página
@@ -916,6 +918,8 @@ export default class VideoSystemController {
         this.#view.bindDeassignProductionForm(this.showDeassignProductionFormHandler);
         this.#view.bindDynamicSelectDeassignProductionsForm(this.dynamicSelectHandler);
         this.#view.bindDeassignProduction(this.validateDeassignProductionHandler);
+
+        this.#view.bindFavourites(this.showFavouritesPanelHandler);
     };
 
     /**
@@ -1145,8 +1149,14 @@ export default class VideoSystemController {
     onShowAllProductions(productions) {
         this.#view.showAllProductions(productions);
         this.#view.bindProductionWindow(this.openWindowHandler);
+        this.#view.bindSaveInFavs(this.saveInFavsHandler);
     }
 
+    /**
+     * Handler que permite a la vista de producciones abrir
+     * una ventana con los detalles de la producción.
+     * @param {*} productionTitle El nombre de la producción.
+     */
     openWindowHandler = (productionTitle) => {
         let production = null;
         const self = this;  // Guardamos el contexto de this en una variable por si lo necesitamos.
@@ -1198,8 +1208,55 @@ export default class VideoSystemController {
             const closeWindowBtn = myWindow.document.getElementsByClassName("close-window-btn")[0];
             closeWindowBtn.addEventListener("click", () => this.close());
         });
-
     };
+
+    /**
+     * Handler que va guardando en el localstorage las producciones
+     * favoritas del usuario.
+     * @param {*} productionName El nombre de la producción.
+     */
+    saveInFavsHandler = (productionName) => {
+        if(localStorage.getItem(this.#counter.returnProductionInstances()) !== productionName) {
+            localStorage.setItem(this.#counter.returnProductionInstances(), productionName);
+            this.#counter.increment();
+        }
+    };
+
+    /**
+     * Handler que ejecuta el método que ejecuta el método
+     * de la vista que muestra el panel de producciones favoritas.
+     */
+    showFavouritesPanelHandler = () => {
+        this.onShowFavouritesPanel();
+    }
+    
+    /**
+     * Método que muestra el panel de producciones favoritas
+     * del usuario.
+     */
+    onShowFavouritesPanel() {
+        this.#view.showFavouritesPanel();
+        this.fillListOfFavourites();
+    }
+
+    /**
+     * Método que rellena la lista de favoritos con las
+     * producciones que hay guardadas dentro del localstorage.
+     */
+    fillListOfFavourites() {
+        const favouritesList = document.querySelector(".favourites-list");
+
+        if(localStorage.length === 0) {
+            favouritesList.innerHTML = "Todavía no has añadido nada a favoritos.";
+        }else{
+            for(let i = 0; i < localStorage.length; i++) {
+                const li = document.createElement("li");
+                li.textContent = localStorage.getItem(i);
+                li.classList.add("list-group-item");
+                favouritesList.appendChild(li);
+            }
+        }
+    }
 
     /**
      * Handler que permite mostrar el formulario de crear
