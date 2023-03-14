@@ -206,8 +206,8 @@ export const VideoSystem = (function() {
              */
             addCategory(category) {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
-                if(!(category instanceof Entities.Category)) 
-                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Category, "category");
+                // if(!(category instanceof Entities.Category)) 
+                //     throw exceptionFactory.throwError("NoValidObjectException", Entities.Category, "category");
                 
                 const exists = this.#categoryExists(category);
                 if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Category);
@@ -258,8 +258,8 @@ export const VideoSystem = (function() {
              */
             addUser(user) {
                 if(!user) throw exceptionFactory.throwError("EmptyValueException", null, "user");
-                if(!(user instanceof Entities.User)) 
-                    throw exceptionFactory.throwError("NoValidObjectException", Entities.User, "user");
+                // if(!(user instanceof Entities.User)) 
+                //     throw exceptionFactory.throwError("NoValidObjectException", Entities.User, "user");
 
                 const usernameExists = this.#userNameExists(user);
                 const emailExists = this.#emailExists(user);

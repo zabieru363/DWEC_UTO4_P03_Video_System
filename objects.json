@@ -1,0 +1,316 @@
+{
+    "users": [
+        {
+            "username": "admin",
+            "email": "zabierujlc@gmail.com",
+            "password": "admin1234"
+        }
+    ],
+
+    "categories": [
+        {
+            "name": "Aventura",
+            "description": "Series y películas de aventuras."
+        },
+        {
+            "name": "Terror",
+            "description": "Series y películas de terror."
+        },
+        {
+            "name": "Anime",
+            "description": "Series y peliculas del mundo del manga y el anime."
+        },
+        {
+            "name": "Videojuegos",
+            "description": "Series y peliculas del mundo de los videojuegos"
+        },
+        {
+            "name": "Comedia",
+            "description": "Series y peliculas de comedia"
+        },
+        {
+            "name": "Marvel",
+            "description": "Series y peliculas del mundo de Marvel Studios"
+        }
+    ],
+
+    "productions": [
+        {
+            "title": "Avatar 2: El sentido del agua",
+            "nationality": "🇺🇸",
+            "publication": "2022-11-16",
+            "synopsis": "Una pelicula que relata la vida de unos seres llamados Na'vi que viven en los bosques de Pandora",
+            "image": "C:\\Users\\images",
+            "resource": {
+                "duration": 120,
+                "link": "videosystem.com\\avatar2"
+            },
+            "locations": []
+        },
+        {
+            "title": "Interstellar",
+            "nationality": "🇺🇸",
+            "publication": "2014-10-7",
+            "synopsis": "Un grupo de exploradores emprende una misión que puede ser la más importante de la historia de la humanidad viajar más allá de nuestra galaxia para descubrir algún planeta en otra que pueda garantizar el futuro de la raza humana.",
+            "image": "C:\\Users\\images",
+            "resource": {
+                "duration": 169,
+                "link": "videosystem.com\\interstellar"
+            },
+            "locations": []
+        },
+        {
+            "title": "Joker",
+            "nationality": "🇺🇸",
+            "publication": "2019-9-4",
+            "synopsis": "Arthur Fleck (Phoenix) vive en Gotham con su madre, y su única motivación en la vida es hacer reír a la gente. Actúa haciendo de payaso en pequeños trabajos, pero tiene problemas mentales que hacen que la gente le vea como un bicho raro.",
+            "image": "C:\\Users\\images",
+            "resource": {
+                "duration": 169,
+                "link": "videosystem.com\\joker"
+            },
+            "locations": []
+        },
+        {
+            "title": "Multiple",
+            "nationality": "🇺🇸",
+            "publication": "2017-0-21",
+            "synopsis": "Tres chicas, Claire, Marcia y Casey, son secuestradas por «Dennis», una de las veintitrés personalidades presentes en la mente de Kevin Wendell Crumb, víctima de abuso a quien se le diagnosticó trastorno de identidad disociativo.",
+            "image": "C:\\Users\\images",
+            "resource": {
+                "duration": 157,
+                "link": "videosystem.com\\split"
+            },
+            "locations": []
+        },
+        {
+            "title": "It",
+            "nationality": "🇺🇸",
+            "publication": "2017-8-8",
+            "synopsis": "Un payaso aesino se dedica a atrapar a niños pequeños por las lluviosas calles de la pequeña ciudad de Derry.",
+            "image": "C:\\Users\\images",
+            "resource": {
+                "duration": 135,
+                "link": "videosystem.com\\it"
+            },
+            "locations": []
+        },
+        {
+            "title": "Deadpool",
+            "nationality": "🇺🇸",
+            "publication": "2016-8-8",
+            "synopsis": "Wade Wilson, tras ser sometido a un cruel experimento científico, adquiere poderes especiales que le convierten en Deadpool. Armado con sus nuevas habilidades y un retorcido sentido del humor tratará de dar caza al hombre que casi destruye su vida.",
+            "image": "C:\\Users\\images",
+            "resource": {
+                "duration": 109,
+                "link": "videosystem.com\\deadpool"
+            },
+            "locations": []
+        },
+        {
+            "title": "Black Adam",
+            "nationality": "🇺🇸",
+            "publication": "2022-9-21",
+            "synopsis": "Casi 5.000 años después de haber sido dotado de los poderes omnipotentes de los antiguos dioses, Black Adam (Johnson) es liberado de su tumba terrenal, listo para desatar su forma única de justicia en el mundo moderno.",
+            "image": "C:\\Users\\images",
+            "resource": {
+                "duration": 125,
+                "link": "videosystem.com\\blackadam"
+            },
+            "locations": []
+        },
+        {
+            "title": "Slender Man",
+            "nationality": "🇺🇸",
+            "publication": "2018-2-12",
+            "synopsis": "El hombre más pálido. El traje más oscuro. Más grande que el gigante más alto. Ten miedo de este hombre: Slender Man ya que puede hacer lo que nadie puede”. Estas son algunas de las características que usuarios del internet dieron al personaje ficticio de terror Slender Man (el hombre delgado).",
+            "image": "C:\\Users\\images",
+            "resource": {
+                "duration": 140,
+                "link": "videosystem.com\\slenderman"
+            },
+            "locations": []
+        },
+        {
+            "title": "The Walking Dead",
+            "nationality": "🇺🇸",
+            "publication": "2010-9-31",
+            "synopsis": "Un mundo invadido por zombis en el cuál unos cuantos supervivientes les deben hacer frente.",
+            "image": "C:\\Users\\images",
+            "resources": [],
+            "locations": [],
+            "seasons": 11
+        },
+        {
+            "title": "Alice in Borderland",
+            "nationality": "🇯🇵",
+            "publication": "2020-9-22",
+            "synopsis": "Un chico adicto a los videojuegos es transportado a un mundo en el que la humanidad ha desaparecido y junto a otros supervivientes que fueron transportados deberán participar en una serie de juegos en los que incluso pueden perder la vida.",
+            "image": "C:\\Users\\images",
+            "resources": [],
+            "locations": [],
+            "seasons": 2
+        },
+        {
+            "title": "Fullmetal Alchemist",
+            "nationality": "🇯🇵",
+            "publication": "2001-4-12",
+            "synopsis": "Un chico alquimista llamado Edward vive en un pueblo con su hermano Alphonse. Su madre sufre un trágico accidente y ellos tratan de revivirla por medio de la alquimia. Debido a esto el espiritu de Alphonse queda atrapado en una armadura, Edward tendrá que recorrer un largo camino para devolverle a su estado original.",
+            "image": "C:\\Users\\images",
+            "resources": [],
+            "locations": [],
+            "seasons": 2
+        },
+        {
+            "title": "Chainsaw Man",
+            "nationality": "🇯🇵",
+            "publication": "2022-9-11",
+            "synopsis": "Un adulto con su vida arruinada se convierte en un hombre con cabeza de motosierra",
+            "image": "C:\\Users\\images",
+            "resources": [],
+            "locations": [],
+            "seasons": 1
+        },
+        {
+            "title": "RELife",
+            "nationality": "🇯🇵",
+            "publication": "2016-6-2",
+            "synopsis": "Un hombre adulto con una vida miserable ingiere una pastilla que le permite volver a ser un estudiante de preparatoria y rehacer su vida. En el instituto conoce a la chica que será el amor de su vida.",
+            "image": "C:\\Users\\images",
+            "resources": [],
+            "locations": [],
+            "seasons": 1
+        },
+        {
+            "title": "Arcane",
+            "nationality": "🇯🇵",
+            "publication": "2021-10-6",
+            "synopsis": "Una serie del videojuego League of Legends en la que se cuenta la trama de Piltover y Zaun",
+            "image": "C:\\Users\\images",
+            "resources": [],
+            "locations": [],
+            "seasons": 1
+        },
+        {
+            "title": "Boku no Hero Academia",
+            "nationality": "🇯🇵",
+            "publication": "2016-4-3",
+            "synopsis": "El protagonista vive en un mundo en el que hay héroes y villanos. En este mundo casi todo el mundo nace con un poder o una habilidad especial. Para mala fortuna de Izuku Midoriya nació sin ningún poder. Sin embargo su vida cambiará drasticamente gracias al héroe número de Japón, All Might.",
+            "image": "C:\\Users\\images",
+            "resources": [],
+            "locations": [],
+            "seasons": 6
+        }
+    ],
+
+    "directors": [
+        {
+            "name": "James",
+            "lastname1": "Cameron",
+            "lastname2": "",
+            "born": "1954-7-16",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Christopher",
+            "lastname1": "Nolan",
+            "lastname2": "",
+            "born": "1970-6-30",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Todd",
+            "lastname1": "Phillips",
+            "lastname2": "",
+            "born": "1970-11-20",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Manoj",
+            "lastname1": "Night",
+            "lastname2": "Shyamalan",
+            "born": "1970-7-6",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Andrés",
+            "lastname1": "Muschietti",
+            "lastname2": "",
+            "born": "1973-7-26",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Kazuya",
+            "lastname1": "Murata",
+            "lastname2": "",
+            "born": "1964-0-1",
+            "image": "C:\\Users\\images"
+        }
+    ],
+
+    "actors": [
+        {
+            "name": "Sam",
+            "lastname1": "Worthington",
+            "lastname2": "",
+            "born": "1976-7-2",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Matthew",
+            "lastname1": "McConaughey",
+            "lastname2": "",
+            "born": "1969-10-4",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Joaquin",
+            "lastname1": "Phoenix",
+            "lastname2": "",
+            "born": "1974-9-28",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "James",
+            "lastname1": "McAvoy",
+            "lastname2": "",
+            "born": "1979-3-21",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Bill",
+            "lastname1": "Skarsgård",
+            "lastname2": "",
+            "born": "1990-7-9",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Zoe",
+            "lastname1": "Soldaña",
+            "lastname2": "",
+            "born": "1998-5-19",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Jessica",
+            "lastname1": "Chastain",
+            "lastname2": "",
+            "born": "1977-2-24",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Dwayne",
+            "lastname1": "Johnson",
+            "lastname2": "",
+            "born": "1972-5-2",
+            "image": "C:\\Users\\images"
+        },
+        {
+            "name": "Sarah",
+            "lastname1": "Shahi",
+            "lastname2": "",
+            "born": "1980-0-10",
+            "image": "C:\\Users\\images"
+        }
+    ]
+}

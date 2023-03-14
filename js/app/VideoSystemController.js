@@ -19,11 +19,24 @@ export default class VideoSystemController {
      * por defecto y los añade al sistema.
      */
     #createResources() {
+        fetch("objects.json")
+            .then(res => res.json())
+            .then(data => {
+                this.#model.addUser([data.users[0]]);
+                // * Añadimos las categorias al sistema.
+                // this.#model.addCategory(data.categories[0]);
+                // this.#model.addCategory(data.categories[1]);
+                // this.#model.addCategory(data.categories[2]);
+                // this.#model.addCategory(data.categories[3]);
+                // this.#model.addCategory(data.categories[4]);
+            })
+            .catch(error => console.log("Algo salió mal " + error));
+
         // * Usuario por defecto
-        const user = new Entities.User("admin", "zabierujlc@gmail.com", "admin1234");
+        // const user = new Entities.User("admin", "zabierujlc@gmail.com", "admin1234");
 
         // * Añadimos el usuario al sistema.
-        this.#model.addUser(user);
+        // this.#model.addUser(user);
 
         // * Categorias por defecto.
         const c1 = new Entities.Category("Aventura", "Series y películas de aventuras");
@@ -33,7 +46,6 @@ export default class VideoSystemController {
         const c5 = new Entities.Category("Comedia", "Series y peliculas de comedia");
         const c6 = new Entities.Category("Marvel", "Series y peliculas del mundo de Marvel Studios");
 
-        // * Añadimos las categorias al sistema.
         this.#model.addCategory(c1);
         this.#model.addCategory(c2);
         this.#model.addCategory(c3);
@@ -125,11 +137,11 @@ export default class VideoSystemController {
             "Slender Man",
             "🇺🇸",
             new Date(2018, 2, 12),
-            "“El hombre más pálido. El traje más oscuro. Más grande que el gigante más alto. Ten miedo de este " +
+            "El hombre más pálido. El traje más oscuro. Más grande que el gigante más alto. Ten miedo de este " +
             "hombre: Slender Man ya que puede hacer lo que nadie puede”. Estas son algunas de las características " + 
             "que usuarios del internet dieron al personaje ficticio de terror Slender Man (el hombre delgado).",
             "C:\\Users\\images",
-            new Entities.Resource(140, `videosystem.com\\blackadam`),
+            new Entities.Resource(140, `videosystem.com\\slenderman`),
             [new Entities.Coordinate(180, 293)]
         );
 
@@ -869,19 +881,26 @@ export default class VideoSystemController {
         this.#model = model;
         this.#view = view;
 
-        this.onLoad();
-        this.onNotAuthenticatedUserInit();
+        // this.onLoad();
+        // this.onNotAuthenticatedUserInit();
 
-        const promise = new Promise((resolve, reject) => {
-            if(this.#cookieExists("authenticated", "true")) {
-                resolve();
-            }else{
-                reject();
-            }
-        });
+        // const promise = new Promise((resolve, reject) => {
+        //     if(this.#cookieExists("authenticated", "true")) {
+        //         resolve();
+        //     }else{
+        //         reject();
+        //     }
+        // });
 
-        promise.then(this.onInit)
-            .catch(() => console.log("Algo ha ido mal"));
+        // promise.then(this.onInit)
+        //     .catch(() => console.log("Algo ha ido mal"));
+
+        if(this.#cookieExists("authenticated", "true")) {
+            this.onLoad();
+            this.onInit();
+        }else{
+            this.onNotAuthenticatedUserInit();
+        }
     }
 
     /**
@@ -1246,7 +1265,7 @@ export default class VideoSystemController {
     fillListOfFavourites() {
         const favouritesList = document.querySelector(".favourites-list");
 
-        if(localStorage.length === 0) {
+        if(!localStorage.length) {
             favouritesList.innerHTML = "Todavía no has añadido nada a favoritos.";
         }else{
             for(let i = 0; i < localStorage.length; i++) {
