@@ -991,18 +991,6 @@ export default class VideoSystemController {
     }
 
     /**
-     * Método que obtiene una cookie del documento.
-     * @param {*} cname El nombre de la cookie.
-     * @returns El valor de la cookie.
-     */
-    #getCookie(cname) {
-        const regex = new RegExp('(?:(?:^|.*;\\s*)' + cname +
-            '\\s*\\=\\s*([^;]*).*$)|^.*$');
-
-        return document.cookie.replace(regex, "$1");
-    }
-
-    /**
      * Método que comprueba si existe una cookie.
      * @param {*} cname El nombre de la cookie.
      * @param {*} cvalue El valor de la cookie.
