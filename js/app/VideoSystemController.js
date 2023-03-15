@@ -22,323 +22,412 @@ export default class VideoSystemController {
         fetch("objects.json")
             .then(res => res.json())
             .then(data => {
-                this.#model.addUser([data.users[0]]);
-                // * Añadimos las categorias al sistema.
-                // this.#model.addCategory(data.categories[0]);
-                // this.#model.addCategory(data.categories[1]);
-                // this.#model.addCategory(data.categories[2]);
-                // this.#model.addCategory(data.categories[3]);
-                // this.#model.addCategory(data.categories[4]);
+                // * Creamos y añadimos el usuario.
+                const user = new Entities.User(data.user.username, data.user.email, data.user.password);
+                this.#model.addUser(user);
+
+                const categories = data.categories;
+
+                // * Creamos las categorias.
+                const c1 = new Entities.Category(categories[0].name, categories[0].description);
+                const c2 = new Entities.Category(categories[1].name, categories[1].description);
+                const c3 = new Entities.Category(categories[2].name, categories[2].description);
+                const c4 = new Entities.Category(categories[3].name, categories[3].description);
+                const c5 = new Entities.Category(categories[4].name, categories[4].description);
+                const c6 = new Entities.Category(categories[5].name, categories[5].description);
+
+                // * Añadimos las categorías al modelo.
+                this.#model.addCategory(c1);
+                this.#model.addCategory(c2);
+                this.#model.addCategory(c3);
+                this.#model.addCategory(c4);
+                this.#model.addCategory(c5);
+                this.#model.addCategory(c6);
+
+                const productions = data.productions;
+
+                // * Creamos las producciones.
+                const movie1 = new Entities.Movie(
+                    productions[0].title,
+                    productions[0].nationality,
+                    new Date(productions[0].publication),
+                    productions[0].synopsis,
+                    productions[0].image,
+                    new Entities.Resource(productions[0].resource.duration, productions[0].resource.link),
+                    productions[0].locations
+                );
+
+                const movie2 = new Entities.Movie(
+                    productions[1].title,
+                    productions[1].nationality,
+                    new Date(productions[1].publication),
+                    productions[1].synopsis,
+                    productions[1].image,
+                    new Entities.Resource(productions[1].resource.duration, productions[1].resource.link),
+                    productions[1].locations
+                );
+
+                const movie3 = new Entities.Movie(
+                    productions[2].title,
+                    productions[2].nationality,
+                    new Date(productions[2].publication),
+                    productions[2].synopsis,
+                    productions[2].image,
+                    new Entities.Resource(productions[2].resource.duration, productions[2].resource.link),
+                    productions[2].locations
+                );
+
+                const movie4 = new Entities.Movie(
+                    productions[3].title,
+                    productions[3].nationality,
+                    new Date(productions[3].publication),
+                    productions[3].synopsis,
+                    productions[3].image,
+                    new Entities.Resource(productions[3].resource.duration, productions[3].resource.link),
+                    productions[3].locations
+                );
+
+                const movie5 = new Entities.Movie(
+                    productions[4].title,
+                    productions[4].nationality,
+                    new Date(productions[4].publication),
+                    productions[4].synopsis,
+                    productions[4].image,
+                    new Entities.Resource(productions[4].resource.duration, productions[4].resource.link),
+                    productions[4].locations
+                );
+
+                const movie6 = new Entities.Movie(
+                    productions[5].title,
+                    productions[5].nationality,
+                    new Date(productions[5].publication),
+                    productions[5].synopsis,
+                    productions[5].image,
+                    new Entities.Resource(productions[5].resource.duration, productions[5].resource.link),
+                    productions[5].locations
+                );
+
+                const movie7 = new Entities.Movie(
+                    productions[6].title,
+                    productions[6].nationality,
+                    new Date(productions[6].publication),
+                    productions[6].synopsis,
+                    productions[6].image,
+                    new Entities.Resource(productions[6].resource.duration, productions[6].resource.link),
+                    productions[6].locations
+                );
+
+                const movie8 = new Entities.Movie(
+                    productions[7].title,
+                    productions[7].nationality,
+                    new Date(productions[7].publication),
+                    productions[7].synopsis,
+                    productions[7].image,
+                    new Entities.Resource(productions[7].resource.duration, productions[7].resource.link),
+                    productions[7].locations
+                );
+
+                const serie1 = new Entities.Serie(
+                    productions[8].title,
+                    productions[8].nationality,
+                    new Date(productions[8].publication),
+                    productions[8].synopsis,
+                    productions[8].image,
+                    productions[8].resources,
+                    productions[8].locations,
+                    productions[8].seasons
+                );
+
+                const serie2 = new Entities.Serie(
+                    productions[9].title,
+                    productions[9].nationality,
+                    new Date(productions[9].publication),
+                    productions[9].synopsis,
+                    productions[9].image,
+                    productions[9].resources,
+                    productions[9].locations,
+                    productions[9].seasons
+                );
+
+                const serie3 = new Entities.Serie(
+                    productions[10].title,
+                    productions[10].nationality,
+                    new Date(productions[10].publication),
+                    productions[10].synopsis,
+                    productions[10].image,
+                    productions[10].resources,
+                    productions[10].locations,
+                    productions[10].seasons
+                );
+
+                const serie4 = new Entities.Serie(
+                    productions[11].title,
+                    productions[11].nationality,
+                    new Date(productions[11].publication),
+                    productions[11].synopsis,
+                    productions[11].image,
+                    productions[11].resources,
+                    productions[11].locations,
+                    productions[11].seasons
+                );
+
+                const serie5 = new Entities.Serie(
+                    productions[12].title,
+                    productions[12].nationality,
+                    new Date(productions[12].publication),
+                    productions[12].synopsis,
+                    productions[12].image,
+                    productions[12].resources,
+                    productions[12].locations,
+                    productions[12].seasons
+                );
+
+                const serie6 = new Entities.Serie(
+                    productions[13].title,
+                    productions[13].nationality,
+                    new Date(productions[13].publication),
+                    productions[13].synopsis,
+                    productions[13].image,
+                    productions[13].resources,
+                    productions[13].locations,
+                    productions[13].seasons
+                );
+
+                const serie7 = new Entities.Serie(
+                    productions[14].title,
+                    productions[14].nationality,
+                    new Date(productions[14].publication),
+                    productions[14].synopsis,
+                    productions[14].image,
+                    productions[14].resources,
+                    productions[14].locations,
+                    productions[14].seasons
+                );
+
+                // * Añadimos las producciones al sistema.
+                this.#model.addProduction(movie1);
+                this.#model.addProduction(movie2);
+                this.#model.addProduction(movie3);
+                this.#model.addProduction(movie4);
+                this.#model.addProduction(movie5);
+                this.#model.addProduction(movie6);
+                this.#model.addProduction(movie7);
+                this.#model.addProduction(movie8);
+                this.#model.addProduction(serie1);
+                this.#model.addProduction(serie2);
+                this.#model.addProduction(serie3);
+                this.#model.addProduction(serie4);
+                this.#model.addProduction(serie5);
+                this.#model.addProduction(serie6);
+                this.#model.addProduction(serie7);
+
+                const directors = data.directors;
+
+                // * Creando los directores.
+                const d1 = new Entities.Person(
+                    directors[0].name,
+                    directors[0].lastname1,
+                    directors[0].lastname2,
+                    new Date(directors[0].born),
+                    directors[0].image
+                );
+
+                const d2 = new Entities.Person(
+                    directors[1].name,
+                    directors[1].lastname1,
+                    directors[1].lastname2,
+                    new Date(directors[1].born),
+                    directors[1].image
+                );
+
+                const d3 = new Entities.Person(
+                    directors[2].name,
+                    directors[2].lastname1,
+                    directors[2].lastname2,
+                    new Date(directors[2].born),
+                    directors[2].image
+                );
+
+                const d4 = new Entities.Person(
+                    directors[3].name,
+                    directors[3].lastname1,
+                    directors[3].lastname2,
+                    new Date(directors[3].born),
+                    directors[3].image
+                );
+
+                const d5 = new Entities.Person(
+                    directors[4].name,
+                    directors[4].lastname1,
+                    directors[4].lastname2,
+                    new Date(directors[4].born),
+                    directors[4].image
+                );
+
+                const d6 = new Entities.Person(
+                    directors[5].name,
+                    directors[5].lastname1,
+                    directors[5].lastname2,
+                    new Date(directors[5].born),
+                    directors[5].image
+                );
+
+                // * Añadiendo los directores.
+                this.#model.addDirector(d1);
+                this.#model.addDirector(d2);
+                this.#model.addDirector(d3);
+                this.#model.addDirector(d4);
+                this.#model.addDirector(d5);
+                this.#model.addDirector(d6);
+
+                // * Creando los actores.
+
+                const actors = data.actors;
+
+                const a1 = new Entities.Person(
+                    actors[0].name,
+                    actors[0].lastname1,
+                    actors[0].lastname2,
+                    new Date(actors[0].born),
+                    actors[0].image
+                );
+
+                const a2 = new Entities.Person(
+                    actors[1].name,
+                    actors[1].lastname1,
+                    actors[1].lastname2,
+                    new Date(actors[1].born),
+                    actors[1].image
+                );
+
+                const a3 = new Entities.Person(
+                    actors[2].name,
+                    actors[2].lastname1,
+                    actors[2].lastname2,
+                    new Date(actors[2].born),
+                    actors[2].image
+                );
+
+                const a4 = new Entities.Person(
+                    actors[3].name,
+                    actors[3].lastname1,
+                    actors[3].lastname2,
+                    new Date(actors[3].born),
+                    actors[3].image
+                );
+
+                const a5 = new Entities.Person(
+                    actors[4].name,
+                    actors[4].lastname1,
+                    actors[4].lastname2,
+                    new Date(actors[4].born),
+                    actors[4].image
+                );
+
+                const a6 = new Entities.Person(
+                    actors[5].name,
+                    actors[5].lastname1,
+                    actors[5].lastname2,
+                    new Date(actors[5].born),
+                    actors[5].image
+                );
+
+                const a7 = new Entities.Person(
+                    actors[6].name,
+                    actors[6].lastname1,
+                    actors[6].lastname2,
+                    new Date(actors[5].born),
+                    actors[5].image
+                );
+
+                const a8 = new Entities.Person(
+                    actors[7].name,
+                    actors[7].lastname1,
+                    actors[7].lastname2,
+                    new Date(actors[7].born),
+                    actors[7].image
+                );
+
+                const a9 = new Entities.Person(
+                    actors[8].name,
+                    actors[8].lastname1,
+                    actors[8].lastname2,
+                    new Date(actors[8].born),
+                    actors[8].image
+                );
+
+                // * Añadimos los actores al sistema.
+                this.#model.addActor(a1);
+                this.#model.addActor(a2);
+                this.#model.addActor(a3);
+                this.#model.addActor(a4);
+                this.#model.addActor(a5);
+                this.#model.addActor(a6);
+                this.#model.addActor(a7);
+                this.#model.addActor(a8);
+                this.#model.addActor(a9);
+
+                // * Asignamos las producciones a las categorias.
+                this.#model.assignCategory(c1, movie1);
+                this.#model.assignCategory(c1, movie2);
+                this.#model.assignCategory(c1, serie3);
+                this.#model.assignCategory(c1, movie7);
+                this.#model.assignCategory(c2, movie3);
+                this.#model.assignCategory(c2, movie4);
+                this.#model.assignCategory(c2, movie5);
+                this.#model.assignCategory(c2, movie8);
+                this.#model.assignCategory(c3, serie3);
+                this.#model.assignCategory(c3, serie4);
+                this.#model.assignCategory(c3, serie5);
+                this.#model.assignCategory(c3, serie7);
+                this.#model.assignCategory(c4, serie6);
+                this.#model.assignCategory(c5, movie6);
+                this.#model.assignCategory(c6, movie6);
+
+                // * Asignamos producciones a los directores.
+                this.#model.assignDirector(d1, movie1);
+                this.#model.assignDirector(d2, movie2);
+                this.#model.assignDirector(d3, movie3);
+                this.#model.assignDirector(d4, movie4);
+                this.#model.assignDirector(d5, movie5);
+                this.#model.assignDirector(d5, movie7);
+                this.#model.assignDirector(d4, movie8);
+                this.#model.assignDirector(d6, serie3);
+                this.#model.assignDirector(d6, serie4);
+                this.#model.assignDirector(d6, serie5);
+                this.#model.assignDirector(d6, serie7);
+
+                // * Asignamos producciones a los actores.
+                this.#model.assignActor(a1, movie1);
+                this.#model.assignActor(a6, movie1);
+                this.#model.assignActor(a2, movie2);
+                this.#model.assignActor(a7, movie2);
+                this.#model.assignActor(a3, movie3);
+                this.#model.assignActor(a4, movie3);
+                this.#model.assignActor(a4, movie4);
+                this.#model.assignActor(a5, movie4);
+                this.#model.assignActor(a5, movie5);
+                this.#model.assignActor(a6, movie5);
+                this.#model.assignActor(a8, movie7);
+                this.#model.assignActor(a9, movie7);
+                this.#model.assignActor(a9, movie8);
+                this.#model.assignActor(a9, movie8);
+                this.#model.assignActor(a1, serie3);
+                this.#model.assignActor(a2, serie3);
+                this.#model.assignActor(a1, serie4);
+                this.#model.assignActor(a2, serie4);
+                this.#model.assignActor(a1, serie5);
+                this.#model.assignActor(a2, serie5);
+                this.#model.assignActor(a1, serie7);
+                this.#model.assignActor(a2, serie7);
+
+                if(this.#cookieExists("authenticated", "true")) {
+                    this.onInit();
+                }else{
+                    this.onNotAuthenticatedUserInit();
+                }
             })
             .catch(error => console.log("Algo salió mal " + error));
-
-        // * Usuario por defecto
-        // const user = new Entities.User("admin", "zabierujlc@gmail.com", "admin1234");
-
-        // * Añadimos el usuario al sistema.
-        // this.#model.addUser(user);
-
-        // * Categorias por defecto.
-        const c1 = new Entities.Category("Aventura", "Series y películas de aventuras");
-        const c2 = new Entities.Category("Terror", "Series y peliculas de terror");
-        const c3 = new Entities.Category("Anime", "Series y peliculas del mundo del manga y el anime");
-        const c4 = new Entities.Category("Videojuegos", "Series y peliculas del mundo de los videojuegos");
-        const c5 = new Entities.Category("Comedia", "Series y peliculas de comedia");
-        const c6 = new Entities.Category("Marvel", "Series y peliculas del mundo de Marvel Studios");
-
-        this.#model.addCategory(c1);
-        this.#model.addCategory(c2);
-        this.#model.addCategory(c3);
-        this.#model.addCategory(c4);
-        this.#model.addCategory(c5);
-        this.#model.addCategory(c6);
-
-        // * Producciones por defecto.
-        const movie1 = new Entities.Movie(
-            "Avatar 2: El sentido del agua",
-            "🇺🇸",
-            new Date(2022, 11, 16),
-            "Una pelicula que relata la vida de unos seres llamados Na'vi que viven en los bosques de Pandora",
-            "C:\\Users\\images",
-            new Entities.Resource(192, `videosystem.com\\avatar2`),
-            [new Entities.Coordinate(180, 293)]
-        );
-
-        const movie2 = new Entities.Movie(
-            "Interstellar",
-            "🇺🇸",
-            new Date(2014, 10, 7),
-            "Un grupo de exploradores emprende una misión que puede ser la más importante de la historia de "
-            + " la humanidad: viajar más allá de nuestra galaxia para descubrir algún planeta en otra que pueda " +
-            "garantizar el futuro de la raza humana.",
-            "C:\\Users\\images",
-            new Entities.Resource(169, `videosystem.com\\interstellar`),
-            [new Entities.Coordinate(180, 293)]
-        );
-
-        const movie3 = new Entities.Movie(
-            "Joker",
-            "🇺🇸",
-            new Date(2019, 9, 4),
-            "Arthur Fleck (Phoenix) vive en Gotham con su madre, y su única motivación en la vida es hacer " + 
-            "reír a la gente. Actúa haciendo de payaso en pequeños trabajos, pero tiene problemas mentales " + 
-            "que hacen que la gente le vea como un bicho raro.",
-            "C:\\Users\\images",
-            new Entities.Resource(169, `videosystem.com\\joker`),
-            [new Entities.Coordinate(180, 293)]
-        );
-
-        const movie4 = new Entities.Movie(
-            "Multiple",
-            "🇺🇸",
-            new Date(2017, 0, 21),
-            "Tres chicas, Claire, Marcia y Casey, son secuestradas por «Dennis», una de las " +
-            "veintitrés personalidades presentes en la mente de Kevin Wendell Crumb, víctima de " +
-            "abuso a quien se le diagnosticó trastorno de identidad disociativo.",
-            "C:\\Users\\images",
-            new Entities.Resource(157, `videosystem.com\\split`),
-            [new Entities.Coordinate(180, 293)]
-        );
-
-        const movie5 = new Entities.Movie(
-            "It",
-            "🇺🇸",
-            new Date(2017, 8, 8),
-            "Un payaso aesino se dedica a atrapar a niños pequeños por las lluviosas calles de la pequeña ciudad de Derry.",
-            "C:\\Users\\images",
-            new Entities.Resource(135, `videosystem.com\\it`),
-            [new Entities.Coordinate(180, 293)]
-        );
-
-        const movie6 = new Entities.Movie(
-            "Deadpool",
-            "🇺🇸",
-            new Date(2016, 8, 8),
-            "Wade Wilson, tras ser sometido a un cruel experimento científico, adquiere poderes especiales que " +
-            "le convierten en Deadpool. Armado con sus nuevas habilidades y un retorcido sentido del humor tratará " +
-            "de dar caza al hombre que casi destruye su vida.",
-            "C:\\Users\\images",
-            new Entities.Resource(109, `videosystem.com\\deadpool`),
-            [new Entities.Coordinate(180, 293)]
-        );
-
-        const movie7 = new Entities.Movie(
-            "Black Adam",
-            "🇺🇸",
-            new Date(2022, 9, 21),
-            "Casi 5.000 años después de haber sido dotado de los poderes omnipotentes de los antiguos dioses, " +
-            "Black Adam (Johnson) es liberado de su tumba terrenal, listo para desatar su forma única de justicia en el mundo moderno.",
-            "C:\\Users\\images",
-            new Entities.Resource(125, `videosystem.com\\blackadam`),
-            [new Entities.Coordinate(180, 293)]
-        );
-
-        const movie8 = new Entities.Movie(
-            "Slender Man",
-            "🇺🇸",
-            new Date(2018, 2, 12),
-            "El hombre más pálido. El traje más oscuro. Más grande que el gigante más alto. Ten miedo de este " +
-            "hombre: Slender Man ya que puede hacer lo que nadie puede”. Estas son algunas de las características " + 
-            "que usuarios del internet dieron al personaje ficticio de terror Slender Man (el hombre delgado).",
-            "C:\\Users\\images",
-            new Entities.Resource(140, `videosystem.com\\slenderman`),
-            [new Entities.Coordinate(180, 293)]
-        );
-
-        const serie1 = new Entities.Serie(
-            "The Walking Dead",
-            "🇺🇸",
-            new Date(2010, 9, 31),
-            "Un mundo invadido por zombis en el cuál unos cuantos supervivientes les deben hacer frente.",
-            "C:\\Users\\images",
-            [],
-            [],
-            11
-        );
-
-        const serie2 = new Entities.Serie(
-            "Alice in Borderland",
-            "🇯🇵",
-            new Date(2020, 9, 22),
-            "Un chico adicto a los videojuegos es transportado a un mundo en el que la humanidad ha " +
-            "desaparecido y junto a otros supervivientes que fueron transportados deberán participar en " +
-            "una serie de juegos en los que incluso pueden perder la vida.",
-            "C:\\Users\\images",
-            [],
-            [],
-            2
-        );
-
-        const serie3 = new Entities.Serie(
-            "Fullmetal Alchemist",
-            "🇯🇵",
-            new Date(2001, 4, 12),
-            "Un chico alquimista llamado Edward vive en un pueblo con su hermano Alphonse. Su " +
-            "madre sufre un trágico accidente y ellos tratan de revivirla por medio de la alquimia. " +
-            "Debido a esto el espiritu de Alphonse queda atrapado en una armadura, Edward tendrá que " +
-            "recorrer un largo camino para devolverle a su estado original.",
-            "C:\\Users\\images",
-            [],
-            [],
-            2
-        );
-
-        const serie4 = new Entities.Serie(
-            "Chainsaw Man",
-            "🇯🇵",
-            new Date(2022, 9, 11),
-            "Un adulto con su vida arruinada se convierte en un hombre con cabeza de motosierra",
-            "C:\\Users\\images",
-            [],
-            [],
-            1
-        );
-
-        const serie5 = new Entities.Serie(
-            "RELife",
-            "🇯🇵",
-            new Date(2016, 6, 2),
-            "Un hombre adulto con una vida miserable ingiere una pastilla que le permite volver a ser " + 
-            "un estudiante de preparatoria y rehacer su vida. En el instituto conoce a la chica que será " +
-            "el amor de su vida.",
-            "C:\\Users\\images",
-            [],
-            [],
-            1
-        );
-
-        const serie6 = new Entities.Serie(
-            "Arcane",
-            "🇺🇸",
-            new Date(2021, 10, 6),
-            "Una serie del videojuego League of Legends en la que se cuenta la trama de Piltover y Zaun",
-            "C:\\Users\\images",
-            [],
-            [],
-            1
-        );
-
-        const serie7 = new Entities.Serie(
-            "Boku no Hero Academia",
-            "🇯🇵",
-            new Date(2016, 4, 3),
-            "El protagonista vive en un mundo en el que hay héroes y villanos. En este mundo casi todo " +
-            "el mundo nace con un poder o una habilidad especial. Para mala fortuna de Izuku Midoriya nació " +
-            "sin ningún poder. Sin embargo su vida cambiará drasticamente gracias al héroe número de Japón, All Might.",
-            "C:\\Users\\images",
-            [],
-            [],
-            6
-        );
-
-        // * Añadimos las producciones al sistema.
-        this.#model.addProduction(movie1);
-        this.#model.addProduction(movie2);
-        this.#model.addProduction(movie3);
-        this.#model.addProduction(movie4);
-        this.#model.addProduction(movie5);
-        this.#model.addProduction(movie6);
-        this.#model.addProduction(movie7);
-        this.#model.addProduction(movie8);
-        this.#model.addProduction(serie1);
-        this.#model.addProduction(serie2);
-        this.#model.addProduction(serie3);
-        this.#model.addProduction(serie4);
-        this.#model.addProduction(serie5);
-        this.#model.addProduction(serie6);
-        this.#model.addProduction(serie7);
-
-        // * Directores por defecto.
-        const d1 = new Entities.Person("James", "Cameron", "", new Date(1954, 7, 16), 'C:\\Users\\images');
-        const d2 = new Entities.Person("Christopher", "Nolan", "", new Date(1970, 6, 30), 'C:\\Users\\images');
-        const d3 = new Entities.Person("Todd", "Phillips", "", new Date(1970, 11, 20), 'C:\\Users\\images');
-        const d4 = new Entities.Person("Manoj", "Night", "Shyamalan", new Date(1970, 7, 6), 'C:\\Users\\images');
-        const d5 = new Entities.Person("Andrés", "Muschietti", "", new Date(1973, 7, 26), 'C:\\Users\\images');
-        const d6 = new Entities.Person("Kazuya", "Murata", "", new Date(1964, 0, 1), 'C:\\Users\\images');
-
-        // * Añadimos los directores al sistema.
-        this.#model.addDirector(d1);
-        this.#model.addDirector(d2);
-        this.#model.addDirector(d3);
-        this.#model.addDirector(d4);
-        this.#model.addDirector(d5);
-        this.#model.addDirector(d6);
-        
-        // * Actores por defecto.
-        const a1 = new Entities.Person("Sam", "Worthington", "", new Date(1976, 7, 2), 'C:\\Users\\images');
-        const a2 = new Entities.Person("Matthew", "McConaughey", "", new Date(1969, 10, 4), 'C:\\Users\\images');
-        const a3 = new Entities.Person("Joaquin", "Phoenix", "", new Date(1974, 9, 28), 'C:\\Users\\images');
-        const a4 = new Entities.Person("James", "McAvoy", "", new Date(1979, 3, 21), 'C:\\Users\\images');
-        const a5 = new Entities.Person("Bill", "Skarsgård", "", new Date(1990, 7, 9), 'C:\\Users\\images');
-        const a6 = new Entities.Person("Zoe", "Soldaña", "", new Date(1998, 5, 19), 'C:\\Users\\images');
-        const a7 = new Entities.Person("Jessica", "Chastain", "", new Date(1977, 2, 24), 'C:\\Users\\images');
-        const a8 = new Entities.Person("Dwayne", "Johnson", "", new Date(1972, 5, 2), 'C:\\Users\\images');
-        const a9 = new Entities.Person("Sarah", "Shahi", "", new Date(1980, 0, 10), 'C:\\Users\\images');
-
-        // * Añadimos los actores al sistema.
-        this.#model.addActor(a1);
-        this.#model.addActor(a2);
-        this.#model.addActor(a3);
-        this.#model.addActor(a4);
-        this.#model.addActor(a5);
-        this.#model.addActor(a6);
-        this.#model.addActor(a7);
-        this.#model.addActor(a8);
-        this.#model.addActor(a9);
-
-        // * Asignamos las producciones a las categorias.
-        this.#model.assignCategory(c1, movie1);
-        this.#model.assignCategory(c1, movie2);
-        this.#model.assignCategory(c1, serie3);
-        this.#model.assignCategory(c1, movie7);
-        this.#model.assignCategory(c2, movie3);
-        this.#model.assignCategory(c2, movie4);
-        this.#model.assignCategory(c2, movie5);
-        this.#model.assignCategory(c2, movie8);
-        this.#model.assignCategory(c3, serie3);
-        this.#model.assignCategory(c3, serie4);
-        this.#model.assignCategory(c3, serie5);
-        this.#model.assignCategory(c3, serie7);
-        this.#model.assignCategory(c4, serie6);
-        this.#model.assignCategory(c5, movie6);
-        this.#model.assignCategory(c6, movie6);
-
-        // * Asignamos producciones a los directores.
-        this.#model.assignDirector(d1, movie1);
-        this.#model.assignDirector(d2, movie2);
-        this.#model.assignDirector(d3, movie3);
-        this.#model.assignDirector(d4, movie4);
-        this.#model.assignDirector(d5, movie5);
-        this.#model.assignDirector(d5, movie7);
-        this.#model.assignDirector(d4, movie8);
-        this.#model.assignDirector(d6, serie3);
-        this.#model.assignDirector(d6, serie4);
-        this.#model.assignDirector(d6, serie5);
-        this.#model.assignDirector(d6, serie7);
-
-        // * Asignamos producciones a los actores.
-        this.#model.assignActor(a1, movie1);
-        this.#model.assignActor(a6, movie1);
-        this.#model.assignActor(a2, movie2);
-        this.#model.assignActor(a7, movie2);
-        this.#model.assignActor(a3, movie3);
-        this.#model.assignActor(a4, movie3);
-        this.#model.assignActor(a4, movie4);
-        this.#model.assignActor(a5, movie4);
-        this.#model.assignActor(a5, movie5);
-        this.#model.assignActor(a6, movie5);
-        this.#model.assignActor(a8, movie7);
-        this.#model.assignActor(a9, movie7);
-        this.#model.assignActor(a9, movie8);
-        this.#model.assignActor(a9, movie8);
-        this.#model.assignActor(a1, serie3);
-        this.#model.assignActor(a2, serie3);
-        this.#model.assignActor(a1, serie4);
-        this.#model.assignActor(a2, serie4);
-        this.#model.assignActor(a1, serie5);
-        this.#model.assignActor(a2, serie5);
-        this.#model.assignActor(a1, serie7);
-        this.#model.assignActor(a2, serie7);
     }
 
     /**
@@ -881,26 +970,7 @@ export default class VideoSystemController {
         this.#model = model;
         this.#view = view;
 
-        // this.onLoad();
-        // this.onNotAuthenticatedUserInit();
-
-        // const promise = new Promise((resolve, reject) => {
-        //     if(this.#cookieExists("authenticated", "true")) {
-        //         resolve();
-        //     }else{
-        //         reject();
-        //     }
-        // });
-
-        // promise.then(this.onInit)
-        //     .catch(() => console.log("Algo ha ido mal"));
-
-        if(this.#cookieExists("authenticated", "true")) {
-            this.onLoad();
-            this.onInit();
-        }else{
-            this.onNotAuthenticatedUserInit();
-        }
+        this.onLoad();
     }
 
     /**

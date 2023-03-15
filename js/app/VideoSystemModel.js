@@ -258,8 +258,8 @@ export const VideoSystem = (function() {
              */
             addUser(user) {
                 if(!user) throw exceptionFactory.throwError("EmptyValueException", null, "user");
-                // if(!(user instanceof Entities.User)) 
-                //     throw exceptionFactory.throwError("NoValidObjectException", Entities.User, "user");
+                if(!(user instanceof Entities.User)) 
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.User, "user");
 
                 const usernameExists = this.#userNameExists(user);
                 const emailExists = this.#emailExists(user);

@@ -1,11 +1,9 @@
 {
-    "users": [
-        {
-            "username": "admin",
-            "email": "zabierujlc@gmail.com",
-            "password": "admin1234"
-        }
-    ],
+    "user": {
+        "username": "admin",
+        "email": "zabierujlc@gmail.com",
+        "password": "admin1234"
+    },
 
     "categories": [
         {
@@ -74,7 +72,7 @@
         {
             "title": "Multiple",
             "nationality": "🇺🇸",
-            "publication": "2017-0-21",
+            "publication": "2017-01-21",
             "synopsis": "Tres chicas, Claire, Marcia y Casey, son secuestradas por «Dennis», una de las veintitrés personalidades presentes en la mente de Kevin Wendell Crumb, víctima de abuso a quien se le diagnosticó trastorno de identidad disociativo.",
             "image": "C:\\Users\\images",
             "resource": {
@@ -183,7 +181,7 @@
         },
         {
             "title": "Arcane",
-            "nationality": "🇯🇵",
+            "nationality": "🇺🇸",
             "publication": "2021-10-6",
             "synopsis": "Una serie del videojuego League of Legends en la que se cuenta la trama de Piltover y Zaun",
             "image": "C:\\Users\\images",
@@ -243,7 +241,7 @@
             "name": "Kazuya",
             "lastname1": "Murata",
             "lastname2": "",
-            "born": "1964-0-1",
+            "born": "1964-01-01",
             "image": "C:\\Users\\images"
         }
     ],
