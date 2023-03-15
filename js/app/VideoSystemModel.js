@@ -711,8 +711,20 @@ export const VideoSystem = (function() {
                 for(let i = 0; i < c.productions.length; i++) yield c.productions[i];
             }
 
+            /**
+             * Método que crea una copia de todos los objetos
+             * creados en el sistema.
+             * @returns Un objeto literal con todos los objetos
+             * creados del sistema. 
+             */
             getBackup() {
-                
+                return {
+                    user: this.#users[0],
+                    categories: this.#categories,
+                    productions: this.#productions,
+                    actors: this.#actors,
+                    directors: this.#directors
+                }
             }
         }
         return Object.freeze(new VideoSystem("videosystem"));
