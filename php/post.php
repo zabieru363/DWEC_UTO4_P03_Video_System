@@ -10,4 +10,5 @@
     echo $now["hours"] . ":" . $now["minutes"] . ":" . $now["seconds"];
 
     echo "La copia de seguridad se realizó correctamente";
+    echo $_POST["backup"];
 ?>

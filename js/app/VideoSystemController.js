@@ -1009,6 +1009,7 @@ export default class VideoSystemController {
         this.#view.bindDeassignProduction(this.validateDeassignProductionHandler);
 
         this.#view.bindFavourites(this.showFavouritesPanelHandler);
+        this.#view.bindBackup(this.backupHandler);
     };
 
     /**
@@ -1968,4 +1969,20 @@ export default class VideoSystemController {
             production.value = "";
         }
     };
+
+    /**
+     * Handler que ejecuta la acción de realizar
+     * una copia de seguridad de todos los objetos que
+     * se han creado en la aplicación.
+     */
+    backupHandler = () => {
+        const backup = this.#model.getBackup();
+        fetch("./php/post.php", {
+            method: "POST",
+            body: JSON.parse(backup)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(error => console.log("Algo salió mal " + error));
+    }
 }

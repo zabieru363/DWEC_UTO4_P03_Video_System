@@ -12,8 +12,9 @@ export default class VideoSystemView {
         this.categoriesMenu = $(".navbar-categories-menu");
         this.productionsAnchor = $(".productions");
         this.directorsAnchor = $(".directors");
-        this.favouritesAnchor = $(".favourites");
         this.actorsAnchor = $(".actors");
+        this.favouritesAnchor = $(".favourites");
+        this.backupForm = $(".backup-form");
         this.username = $(".user-panel > span.username");
         this.carousel = $(".car > div.carousel-inner");
         this.main = $("main");
@@ -1332,6 +1333,22 @@ export default class VideoSystemView {
         form.addEventListener("submit", function(e) {
             e.preventDefault();
             handler(form);
+        });
+    }
+
+    /**
+     * Bind que enlaza la vista con el controlador para
+     * realizar la copia de seguridad de todos los objetos
+     * creados de la aplicación.
+     * @param {*} handler La función manejadora del controlador
+     * que realiza la copia de seguridad.
+     */
+    bindBackup(handler) {
+        const form = this.backupForm.get(0);
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            handler();
         });
     }
 }
