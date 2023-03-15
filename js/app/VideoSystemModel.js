@@ -206,8 +206,8 @@ export const VideoSystem = (function() {
              */
             addCategory(category) {
                 if(!category) throw exceptionFactory.throwError("EmptyValueException", null, "category");
-                // if(!(category instanceof Entities.Category)) 
-                //     throw exceptionFactory.throwError("NoValidObjectException", Entities.Category, "category");
+                if(!(category instanceof Entities.Category)) 
+                    throw exceptionFactory.throwError("NoValidObjectException", Entities.Category, "category");
                 
                 const exists = this.#categoryExists(category);
                 if(exists) throw exceptionFactory.throwError("RegisteredObjectException", Entities.Category);
@@ -643,6 +643,11 @@ export const VideoSystem = (function() {
                 return a.productions.length;
             }
 
+            /**
+             * Devuelve el casting con los actores y directores que participan
+             * en la producción que se le pasa cómo parámetro.
+             * @param {*} production Un objeto producción
+             */
             * getCast(production) {
                 let casting = null;
                 let exists = false;
@@ -704,6 +709,10 @@ export const VideoSystem = (function() {
 
                 const c = this.#getProductionsCategory(category);
                 for(let i = 0; i < c.productions.length; i++) yield c.productions[i];
+            }
+
+            getBackup() {
+                
             }
         }
         return Object.freeze(new VideoSystem("videosystem"));

@@ -19,7 +19,7 @@ export default class VideoSystemController {
      * por defecto y los añade al sistema.
      */
     #createResources() {
-        fetch("objects.json")
+        fetch("./js/utilities/objects.json")
             .then(res => res.json())
             .then(data => {
                 // * Creamos y añadimos el usuario.
