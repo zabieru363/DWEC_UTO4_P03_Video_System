@@ -1977,11 +1977,16 @@ export default class VideoSystemController {
      */
     backupHandler = () => {
         const backup = this.#model.getBackup();
+        const headers = new Headers();
+
+        headers.append("Content-Type", "application/json");
         fetch("./php/post.php", {
             method: "POST",
-            body: JSON.parse(backup)
+            headers: headers,
+            body: backup,
+            redirect: "follow"
         })
-            .then(res => res.json())
+            .then(res => res.text())
             .then(data => console.log(data))
             .catch(error => console.log("Algo salió mal " + error));
     }

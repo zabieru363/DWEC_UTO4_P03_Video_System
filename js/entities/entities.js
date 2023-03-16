@@ -41,6 +41,14 @@ class Person {
         return this.#name;
     }
 
+    get lastName1() {
+        return this.#lastName1;
+    }
+
+    get lastName2() {
+        return this.#lastName2;
+    }
+
     /**
      * Getter que devuelve el nombre completo de la persona.
      */
@@ -54,6 +62,10 @@ class Person {
 
     get born() {
         return this.#born;
+    }
+
+    get picture() {
+        return this.#picture;
     }
 }
 
@@ -113,6 +125,10 @@ class Resource {
 
     get duration() {
         return this.#duration;
+    }
+
+    get link() {
+        return this.#link;
     }
 }
 
@@ -181,6 +197,10 @@ class Production {
      */
     get synopsis() {
         return this.#synopsis;
+    }
+
+    get image() {
+        return this.#image;
     }
 }
 
@@ -279,6 +299,14 @@ class User {
      */
     set username(value) {
         this.#username = value;
+    }
+
+    get email() {
+        return this.#email;
+    }
+
+    get password() {
+        return this.#password;
     }
 }
 

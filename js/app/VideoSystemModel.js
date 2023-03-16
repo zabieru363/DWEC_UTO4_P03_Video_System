@@ -718,13 +718,88 @@ export const VideoSystem = (function() {
              * creados del sistema. 
              */
             getBackup() {
-                return {
-                    user: this.#users[0],
-                    categories: this.#categories,
-                    productions: this.#productions,
-                    actors: this.#actors,
-                    directors: this.#directors
+                const json = {
+                    "users": [],
+                    "categories": [],
+                    "productions": [],
+                    "actors": [],
+                    "directors": []
+                };
+
+                for(const user of this.users) {
+                    json.users.push({
+                        "username": user.username,
+                        "email": user.email,
+                        "password": user.password
+                    });
                 }
+
+                for(const elem of this.categories) {
+                    const category = elem.category;
+                    
+                    json.categories.push({
+                        "name": category.name,
+                        "description": category.description
+                    });
+                }
+
+                for(const elem of this.productions) {
+                    if(elem.production instanceof Entities.Movie) {
+                        const movie = {
+                            "title": elem.production.title,
+                            "nationality": "xd",
+                            "publication": elem.production.publication.toLocaleDateString(),
+                            "synopsis": elem.production.synopsis,
+                            "image": elem.production.image,
+                            "duration": elem.production.resource.duration,
+                            "link": elem.production.resource.link,
+                            "locations": []
+                        };
+
+                        json.productions.push(movie);
+                    }
+                    
+                    if(elem.production instanceof Entities.Serie) {
+                        const serie = {
+                            "title": elem.production.title,
+                            "nationality": "xd",
+                            "publication": elem.production.publication.toLocaleDateString(),
+                            "synopsis": elem.production.synopsis,
+                            "image": elem.production.image,
+                            "resources": [],
+                            "locations": [],
+                            "seasons": elem.production.seasons
+                        };
+
+                        json.productions.push(serie);
+                    }
+                }
+
+                for(const elem of this.actors) {
+                    const actor = elem.actor;
+
+                    json.actors.push({
+                        "name": actor.name,
+                        "lastname1": actor.lastName1,
+                        "lastname2": actor.lastName2,
+                        "born": actor.born.toLocaleDateString(),
+                        "picture": actor.picture
+                    });
+                }
+
+                for(const elem of this.directors) {
+                    const director = elem.director;
+
+                    json.actors.push({
+                        "name": director.name,
+                        "lastname1": director.lastName1,
+                        "lastname2": director.lastName2,
+                        "born": director.born.toLocaleDateString(),
+                        "picture": director.picture
+                    });
+                }
+
+                return JSON.stringify(json);
             }
         }
         return Object.freeze(new VideoSystem("videosystem"));
