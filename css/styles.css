@@ -76,6 +76,10 @@ div.circle > i.fa-solid.fa-graduation-cap {
     color: #ecdc00
 }
 
+#mapId {
+    height: 10rem;
+}
+
 /* Footer styles */
 footer {
     background: #2a83cc;

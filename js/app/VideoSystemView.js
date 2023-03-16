@@ -92,6 +92,9 @@ export default class VideoSystemView {
                         <div class="invalid-feedback"></div>
                     </div>
 
+                    <label class="form-label" for="mapId">Select coordinates</label>
+                    <div id="mapId"></div>
+
                     <label class="form-label" for="select-categories">Assign category</label>
                     <select class="select-categories bg-dark text-white form-select mb-3" aria-label="Default select example"></select>
 

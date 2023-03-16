@@ -1354,6 +1354,26 @@ export default class VideoSystemController {
      */
     createProductionsFormHandler = () => {
         this.onShowCreateProductionsForm();
+        this.showLeafletMap();
+    }
+
+    /**
+     * Método que muestra un mapa para añadir coordenadas
+     * en el formulario de añadir producciones.
+     */
+    showLeafletMap() {
+        const mymap = L.map("mapId").setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+            maxZoom: 18
+        }).addTo(mymap);
+
+        mymap.on("click", function(e) {
+            const latitude = e.latlng.lat;
+            const longitude = e.latlng.lng;
+            console.log("Latitud: " + latitude + ", Longitud: " + longitude);
+        });
     }
 
     /**
